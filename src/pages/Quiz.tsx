@@ -424,104 +424,88 @@ const Step2: React.FC<{
     >
       ¿Puedes llegar a nuestro studio?
     </h2>
-    <p style={{ fontSize: "13px", color: "#555555", marginBottom: "16px", fontFamily: "Montserrat, sans-serif" }}>
-      Atendemos con cita en Thornton, CO
+    <p style={{ fontSize: "13px", color: "#555555", marginBottom: "18px", fontFamily: "Montserrat, sans-serif" }}>
+      Estamos en Thornton, CO — solo con cita previa
     </p>
 
-    {/* Address info card — no map link, info only */}
+    {/* Address info card — clean, info-only, no left accent, no map link */}
     <div
       style={{
         background: "white",
-        border: "1px solid #f0d0da",
+        border: "1.5px solid #f0d0da",
         borderRadius: "12px",
-        padding: "14px 16px 14px 19px",
-        borderLeft: "3px solid #c2185b",
-        marginBottom: "20px",
+        padding: "14px 16px",
+        marginBottom: "24px",
+        textAlign: "center",
       }}
     >
       <p
         style={{
-          fontSize: "10px",
-          fontWeight: 600,
-          color: "#9e9e9e",
-          textTransform: "uppercase",
-          letterSpacing: "0.08em",
-          margin: "0 0 4px",
-          fontFamily: "Montserrat, sans-serif",
-        }}
-      >
-        📍 Nuestro Studio
-      </p>
-      <p
-        style={{
-          fontSize: "15px",
-          fontWeight: 700,
-          color: "#1a1a1a",
-          margin: "0 0 2px",
-          fontFamily: "Montserrat, sans-serif",
-        }}
-      >
-        2121 W 84th Ave
-      </p>
-      <p
-        style={{
-          fontSize: "13px",
-          color: "#616161",
+          fontSize: "14px",
+          fontWeight: 500,
+          color: "#444444",
           margin: 0,
           fontFamily: "Montserrat, sans-serif",
         }}
       >
-        Thornton, CO 80260
+        📍 2121 W 84th Ave, Thornton CO 80260
       </p>
     </div>
 
-    {/* YES button — primary action, large */}
-    <motion.button
-      whileTap={{ scale: 0.98 }}
-      onClick={onYes}
-      style={{
-        width: "100%",
-        height: "60px",
-        borderRadius: "10px",
-        background: "#c2185b",
-        color: "white",
-        fontSize: "16px",
-        fontWeight: 700,
-        border: "none",
-        cursor: "pointer",
-        marginBottom: "10px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontFamily: "Montserrat, sans-serif",
-        boxShadow: "0 4px 14px rgba(194,24,91,0.28)",
-      }}
-    >
-      Sí, puedo llegar →
-    </motion.button>
+    {/* Side-by-side option cards — equal visual weight, neither looks pre-selected */}
+    <div style={{ display: "flex", gap: "12px" }}>
+      {/* YES card */}
+      <motion.button
+        whileTap={{ scale: 0.96 }}
+        onClick={onYes}
+        style={{
+          flex: 1,
+          height: "120px",
+          borderRadius: "14px",
+          background: "white",
+          border: "1.5px solid #e0e0e0",
+          cursor: "pointer",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "10px",
+          fontFamily: "Montserrat, sans-serif",
+          padding: "16px 8px",
+        }}
+      >
+        <span style={{ fontSize: "32px", lineHeight: 1 }}>✅</span>
+        <span style={{ fontSize: "14px", fontWeight: 700, color: "#1a1a1a", lineHeight: 1.3, textAlign: "center" }}>
+          Sí, puedo<br />llegar
+        </span>
+      </motion.button>
 
-    {/* NO button — secondary, clearly smaller + gray */}
-    <motion.button
-      whileTap={{ scale: 0.98 }}
-      onClick={onNo}
-      style={{
-        width: "100%",
-        height: "52px",
-        borderRadius: "10px",
-        background: "#f5f5f5",
-        border: "1px solid #e0e0e0",
-        color: "#616161",
-        fontSize: "14px",
-        fontWeight: 500,
-        cursor: "pointer",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontFamily: "Montserrat, sans-serif",
-      }}
-    >
-      No, está muy lejos
-    </motion.button>
+      {/* NO card */}
+      <motion.button
+        whileTap={{ scale: 0.96 }}
+        onClick={onNo}
+        style={{
+          flex: 1,
+          height: "120px",
+          borderRadius: "14px",
+          background: "white",
+          border: "1.5px solid #e0e0e0",
+          cursor: "pointer",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "10px",
+          fontFamily: "Montserrat, sans-serif",
+          padding: "16px 8px",
+        }}
+      >
+        <span style={{ fontSize: "32px", lineHeight: 1 }}>🚗</span>
+        <span style={{ fontSize: "14px", fontWeight: 700, color: "#1a1a1a", lineHeight: 1.3, textAlign: "center" }}>
+          Muy lejos<br />para mí
+        </span>
+      </motion.button>
+    </div>
   </div>
 );
 
