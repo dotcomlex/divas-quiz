@@ -9,6 +9,7 @@ interface ServiceTileProps {
   isFlat?: boolean;
   isFavorite?: boolean;
   isSelected: boolean;
+  imageSrc?: string;
   onSelect: () => void;
 }
 
@@ -20,117 +21,180 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
   isFlat = false,
   isFavorite = false,
   isSelected,
+  imageSrc,
   onSelect,
 }) => {
   return (
     <motion.div
-      whileTap={{ scale: 0.96 }}
+      whileTap={{ scale: 0.97 }}
       onClick={onSelect}
-      className="relative flex flex-col items-center justify-center text-center cursor-pointer select-none"
+      className="relative flex flex-col cursor-pointer select-none"
       style={{
-        position: "relative",
-        background: isSelected ? "#fce4ec" : "#ffffff",
-        border: isSelected ? "2px solid #c2185b" : "1px solid #e0e0e0",
+        border: isSelected ? "2px solid #c2185b" : "1.5px solid #edd5df",
         borderRadius: "12px",
-        padding: "14px 8px",
-        minHeight: "120px",
-        transition: "border-color 150ms ease, background 150ms ease",
+        overflow: "hidden",
+        background: "white",
+        transition: "border-color 150ms ease, box-shadow 150ms ease",
+        boxShadow: isSelected
+          ? "0 2px 12px rgba(194,24,91,0.18)"
+          : "0 1px 4px rgba(0,0,0,0.06)",
       }}
     >
-      {/* Favorita badge */}
-      {isFavorite && (
-        <span
-          style={{
-            position: "absolute",
-            top: "6px",
-            left: "6px",
-            background: "#c2185b",
-            color: "white",
-            fontSize: "9px",
-            fontWeight: 600,
-            padding: "2px 6px",
-            borderRadius: "4px",
-            lineHeight: 1.4,
-            fontFamily: "Montserrat, sans-serif",
-          }}
-        >
-          ⭐ Favorita
-        </span>
-      )}
-
-      {/* Checkmark */}
-      {isSelected && (
-        <span
-          style={{
-            position: "absolute",
-            top: "8px",
-            right: "8px",
-            color: "#c2185b",
-            fontSize: "12px",
-            fontWeight: 700,
-            lineHeight: 1,
-          }}
-        >
-          ✓
-        </span>
-      )}
-
-      {/* Emoji */}
-      <span style={{ fontSize: "26px", lineHeight: 1 }}>{emoji}</span>
-
-      {/* Service name */}
-      <span
+      {/* ── Image / Emoji zone ── */}
+      <div
         style={{
-          fontSize: "13px",
-          fontWeight: 600,
-          color: "#1a1a1a",
-          marginTop: "8px",
-          fontFamily: "Montserrat, sans-serif",
-          lineHeight: 1.3,
+          position: "relative",
+          height: "88px",
+          borderRadius: "10px 10px 0 0",
+          overflow: "hidden",
+          flexShrink: 0,
         }}
       >
-        {name}
-      </span>
+        {imageSrc ? (
+          <img
+            src={imageSrc}
+            alt={name}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        ) : (
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              background: "linear-gradient(135deg, #fce4ec 0%, #fdf6f7 100%)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "30px",
+              lineHeight: 1,
+            }}
+          >
+            {emoji}
+          </div>
+        )}
 
-      {/* Pricing */}
-      {isFlat ? (
-        <span
-          style={{
-            fontSize: "13px",
-            fontWeight: 600,
-            color: "#1a1a1a",
-            marginTop: "4px",
-            fontFamily: "Montserrat, sans-serif",
-          }}
-        >
-          {salePrice}
-        </span>
-      ) : (
-        <div className="flex flex-col items-center" style={{ marginTop: "4px" }}>
-          {originalPrice && (
-            <span
-              style={{
-                fontSize: "11px",
-                color: "#9e9e9e",
-                textDecoration: "line-through",
-                fontFamily: "Montserrat, sans-serif",
-              }}
-            >
-              {originalPrice}
-            </span>
-          )}
+        {/* Selected tint overlay */}
+        {isSelected && (
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "rgba(194,24,91,0.08)",
+            }}
+          />
+        )}
+
+        {/* Favorita badge */}
+        {isFavorite && (
           <span
             style={{
-              fontSize: "14px",
+              position: "absolute",
+              top: "6px",
+              left: "6px",
+              background: "#c2185b",
+              color: "white",
+              fontSize: "9px",
+              fontWeight: 700,
+              padding: "2px 7px",
+              borderRadius: "4px",
+              lineHeight: 1.5,
+              fontFamily: "Montserrat, sans-serif",
+              letterSpacing: "0.04em",
+            }}
+          >
+            ⭐ FAVORITA
+          </span>
+        )}
+
+        {/* Checkmark */}
+        {isSelected && (
+          <span
+            style={{
+              position: "absolute",
+              top: "6px",
+              right: "7px",
+              width: "18px",
+              height: "18px",
+              borderRadius: "50%",
+              background: "#c2185b",
+              color: "white",
+              fontSize: "10px",
+              fontWeight: 700,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              lineHeight: 1,
+            }}
+          >
+            ✓
+          </span>
+        )}
+      </div>
+
+      {/* ── Info zone ── */}
+      <div
+        style={{
+          padding: "9px 10px 11px",
+          background: "white",
+          borderRadius: "0 0 10px 10px",
+        }}
+      >
+        {/* Service name */}
+        <p
+          style={{
+            fontSize: "12px",
+            fontWeight: 700,
+            color: "#1a1a1a",
+            margin: "0 0 3px",
+            fontFamily: "Montserrat, sans-serif",
+            lineHeight: 1.25,
+          }}
+        >
+          {name}
+        </p>
+
+        {/* Pricing */}
+        {isFlat ? (
+          <p
+            style={{
+              fontSize: "13px",
               fontWeight: 700,
               color: "#c2185b",
+              margin: 0,
               fontFamily: "Montserrat, sans-serif",
             }}
           >
             {salePrice}
-          </span>
-        </div>
-      )}
+          </p>
+        ) : (
+          <>
+            {originalPrice && (
+              <p
+                style={{
+                  fontSize: "11px",
+                  color: "#9e9e9e",
+                  textDecoration: "line-through",
+                  margin: "0 0 1px",
+                  fontFamily: "Montserrat, sans-serif",
+                }}
+              >
+                {originalPrice}
+              </p>
+            )}
+            <p
+              style={{
+                fontSize: "14px",
+                fontWeight: 700,
+                color: "#c2185b",
+                margin: 0,
+                fontFamily: "Montserrat, sans-serif",
+              }}
+            >
+              {salePrice}
+            </p>
+          </>
+        )}
+      </div>
     </motion.div>
   );
 };

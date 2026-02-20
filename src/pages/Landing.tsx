@@ -24,7 +24,7 @@ const Landing: React.FC = () => {
 
   return (
     <div
-      style={{ background: "hsl(350, 60%, 98%)", minHeight: "100dvh" }}
+      style={{ minHeight: "100dvh" }}
       className="flex items-start justify-center sm:items-center sm:py-8"
     >
       <div
