@@ -44,7 +44,7 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
       <div
         style={{
           position: "relative",
-          height: "88px",
+          height: "100px",
           borderRadius: "10px 10px 0 0",
           overflow: "hidden",
           flexShrink: 0,
@@ -142,7 +142,7 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
         {/* Service name */}
         <p
           style={{
-            fontSize: "12px",
+            fontSize: "13px",
             fontWeight: 700,
             color: "#1a1a1a",
             margin: "0 0 3px",
@@ -181,17 +181,35 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
                 {originalPrice}
               </p>
             )}
-            <p
-              style={{
-                fontSize: "14px",
-                fontWeight: 700,
-                color: "#c2185b",
-                margin: 0,
-                fontFamily: "Montserrat, sans-serif",
-              }}
-            >
-              {salePrice}
-            </p>
+            <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+              <p
+                style={{
+                  fontSize: "14px",
+                  fontWeight: 700,
+                  color: "#c2185b",
+                  margin: 0,
+                  fontFamily: "Montserrat, sans-serif",
+                }}
+              >
+                {salePrice}
+              </p>
+              <span
+                style={{
+                  fontSize: "9px",
+                  fontWeight: 700,
+                  color: "#7a5c00",
+                  background: "#fff8e1",
+                  border: "1px solid #ffe082",
+                  borderRadius: "4px",
+                  padding: "1px 5px",
+                  fontFamily: "Montserrat, sans-serif",
+                  letterSpacing: "0.02em",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                -10%
+              </span>
+            </div>
           </>
         )}
       </div>

@@ -4,16 +4,22 @@ import ProgressBar from "@/components/ProgressBar";
 import ServiceTile from "@/components/ServiceTile";
 import FaqAccordion from "@/components/FaqAccordion";
 import logoSrc from "@/assets/logo.png";
+import imgHybrid from "@/assets/services/hybrid.jpg";
+import imgClasico from "@/assets/services/clasico.jpg";
+import imgVolumen from "@/assets/services/volumen.jpg";
+import imgMega from "@/assets/services/mega.jpg";
+import imgLashlift from "@/assets/services/lashlift.jpg";
+import imgCejas from "@/assets/services/cejas.jpg";
 
 type Screen = "quiz" | "disqualified" | "success";
 
 const SERVICES = [
-  { emoji: "✨", name: "Set Híbrido", originalPrice: "$149.99", salePrice: "$134.99", isFavorite: true, isFlat: false },
-  { emoji: "🌸", name: "Set Clásico", originalPrice: "$99.99", salePrice: "$89.99", isFavorite: false, isFlat: false },
-  { emoji: "💎", name: "Set de Volumen", originalPrice: "$179.99", salePrice: "$161.99", isFavorite: false, isFlat: false },
-  { emoji: "👑", name: "Mega Volumen", originalPrice: "$119.99", salePrice: "$107.99", isFavorite: false, isFlat: false },
-  { emoji: "🌿", name: "Lash Lift", originalPrice: "$79.99", salePrice: "$71.99", isFavorite: false, isFlat: false },
-  { emoji: "🍃", name: "Laminado de Cejas", originalPrice: undefined, salePrice: "$50.00", isFavorite: false, isFlat: true },
+  { emoji: "✨", name: "Set Híbrido", originalPrice: "$149.99", salePrice: "$134.99", isFavorite: true, isFlat: false, imageSrc: imgHybrid },
+  { emoji: "🌸", name: "Set Clásico", originalPrice: "$99.99", salePrice: "$89.99", isFavorite: false, isFlat: false, imageSrc: imgClasico },
+  { emoji: "💎", name: "Set de Volumen", originalPrice: "$179.99", salePrice: "$161.99", isFavorite: false, isFlat: false, imageSrc: imgVolumen },
+  { emoji: "👑", name: "Mega Volumen", originalPrice: "$119.99", salePrice: "$107.99", isFavorite: false, isFlat: false, imageSrc: imgMega },
+  { emoji: "🌿", name: "Lash Lift", originalPrice: "$79.99", salePrice: "$71.99", isFavorite: false, isFlat: false, imageSrc: imgLashlift },
+  { emoji: "🍃", name: "Laminado de Cejas", originalPrice: undefined, salePrice: "$50.00", isFavorite: false, isFlat: true, imageSrc: imgCejas },
 ];
 
 const formatPhone = (value: string): string => {
@@ -385,9 +391,30 @@ const Step1: React.FC<{
     >
       ¿Qué servicio te interesa?
     </h2>
-    <p style={{ fontSize: "13px", color: "#555555", marginBottom: "18px", fontFamily: "Montserrat, sans-serif" }}>
-      Elige una opción para continuar
+    <p style={{ fontSize: "13px", fontWeight: 500, color: "#444444", marginBottom: "10px", fontFamily: "Montserrat, sans-serif" }}>
+      Elige el look que quieres lograr
     </p>
+    {/* Discount pill */}
+    <div style={{ marginBottom: "18px" }}>
+      <span
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "5px",
+          background: "#fff8e1",
+          border: "1.5px solid #ffe082",
+          borderRadius: "20px",
+          padding: "5px 12px",
+          fontSize: "12px",
+          fontWeight: 700,
+          color: "#7a5c00",
+          fontFamily: "Montserrat, sans-serif",
+          letterSpacing: "0.01em",
+        }}
+      >
+        🏷️ 10% de descuento ya aplicado
+      </span>
+    </div>
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
       {SERVICES.map((svc) => (
         <ServiceTile
@@ -399,6 +426,7 @@ const Step1: React.FC<{
           isFlat={svc.isFlat}
           isFavorite={svc.isFavorite}
           isSelected={selectedService === svc.name}
+          imageSrc={svc.imageSrc}
           onSelect={() => onSelect(svc.name)}
         />
       ))}
