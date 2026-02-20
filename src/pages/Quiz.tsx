@@ -355,12 +355,12 @@ const PageWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
         @media (min-width: 480px) {
           .quiz-card {
             border-radius: 20px !important;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.08) !important;
+            box-shadow: 0 8px 32px rgba(194,24,91,0.10) !important;
             min-height: auto !important;
           }
         }
       `}</style>
-      <div className="quiz-card w-full bg-white" style={{ minHeight: "100dvh" }}>
+      <div className="quiz-card w-full" style={{ minHeight: "100dvh", background: "#fffaf9" }}>
         {children}
       </div>
     </div>
@@ -385,7 +385,7 @@ const Step1: React.FC<{
     >
       ¿Qué servicio te interesa?
     </h2>
-    <p style={{ fontSize: "13px", color: "#757575", marginBottom: "18px", fontFamily: "Montserrat, sans-serif" }}>
+    <p style={{ fontSize: "13px", color: "#555555", marginBottom: "18px", fontFamily: "Montserrat, sans-serif" }}>
       Elige una opción para continuar
     </p>
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
@@ -424,15 +424,15 @@ const Step2: React.FC<{
     >
       ¿Puedes llegar a nuestro studio?
     </h2>
-    <p style={{ fontSize: "13px", color: "#757575", marginBottom: "16px", fontFamily: "Montserrat, sans-serif" }}>
+    <p style={{ fontSize: "13px", color: "#555555", marginBottom: "16px", fontFamily: "Montserrat, sans-serif" }}>
       Atendemos con cita en Thornton, CO
     </p>
 
-    {/* Address map card */}
+    {/* Address info card — no map link, info only */}
     <div
       style={{
         background: "white",
-        border: "1px solid #f0e4e8",
+        border: "1px solid #f0d0da",
         borderRadius: "12px",
         padding: "14px 16px 14px 19px",
         borderLeft: "3px solid #c2185b",
@@ -467,40 +467,26 @@ const Step2: React.FC<{
         style={{
           fontSize: "13px",
           color: "#616161",
-          margin: "0 0 10px",
+          margin: 0,
           fontFamily: "Montserrat, sans-serif",
         }}
       >
         Thornton, CO 80260
       </p>
-      <a
-        href="https://maps.google.com/?q=2121+W+84th+Ave+Thornton+CO+80260"
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          fontSize: "12px",
-          color: "#c2185b",
-          fontWeight: 600,
-          textDecoration: "none",
-          fontFamily: "Montserrat, sans-serif",
-        }}
-      >
-        Ver en Google Maps →
-      </a>
     </div>
 
-    {/* YES tile */}
+    {/* YES button — primary action, large */}
     <motion.button
       whileTap={{ scale: 0.98 }}
       onClick={onYes}
       style={{
         width: "100%",
-        height: "64px",
+        height: "60px",
         borderRadius: "10px",
         background: "#c2185b",
         color: "white",
         fontSize: "16px",
-        fontWeight: 600,
+        fontWeight: 700,
         border: "none",
         cursor: "pointer",
         marginBottom: "10px",
@@ -508,24 +494,25 @@ const Step2: React.FC<{
         alignItems: "center",
         justifyContent: "center",
         fontFamily: "Montserrat, sans-serif",
+        boxShadow: "0 4px 14px rgba(194,24,91,0.28)",
       }}
     >
-      ✅  Sí, puedo llegar
+      Sí, puedo llegar →
     </motion.button>
 
-    {/* NO tile */}
+    {/* NO button — secondary, clearly smaller + gray */}
     <motion.button
       whileTap={{ scale: 0.98 }}
       onClick={onNo}
       style={{
         width: "100%",
-        height: "56px",
+        height: "52px",
         borderRadius: "10px",
-        background: "white",
+        background: "#f5f5f5",
         border: "1px solid #e0e0e0",
-        color: "#757575",
-        fontSize: "15px",
-        fontWeight: 400,
+        color: "#616161",
+        fontSize: "14px",
+        fontWeight: 500,
         cursor: "pointer",
         display: "flex",
         alignItems: "center",
@@ -533,7 +520,7 @@ const Step2: React.FC<{
         fontFamily: "Montserrat, sans-serif",
       }}
     >
-      📍  Está un poco lejos para mí
+      No, está muy lejos
     </motion.button>
   </div>
 );
@@ -583,7 +570,7 @@ const Step3: React.FC<{
       >
         ¡Ya casi! ¿Cómo te contactamos?
       </h2>
-      <p style={{ fontSize: "13px", color: "#757575", marginBottom: "20px", fontFamily: "Montserrat, sans-serif" }}>
+      <p style={{ fontSize: "13px", color: "#555555", marginBottom: "20px", fontFamily: "Montserrat, sans-serif" }}>
         Solo necesitamos tu nombre y tu número
       </p>
 
@@ -613,14 +600,14 @@ const Step3: React.FC<{
           style={{
             width: "100%",
             height: "56px",
-            border: `1.5px solid ${nameFocused ? "#c2185b" : "#d0d0d0"}`,
+            border: `1.5px solid ${nameFocused ? "#c2185b" : "#b0b0b0"}`,
             borderRadius: "8px",
             fontSize: "16px",
             fontFamily: "Montserrat, sans-serif",
             padding: "0 14px",
             color: "#1a1a1a",
             outline: "none",
-            background: nameFocused ? "white" : "#fafafa",
+            background: nameFocused ? "white" : "#f5f5f5",
             boxSizing: "border-box",
             transition: "border-color 150ms ease, background 150ms ease",
           }}
@@ -655,14 +642,14 @@ const Step3: React.FC<{
             style={{
               width: "100%",
               height: "56px",
-              border: `1.5px solid ${phoneFocused ? "#c2185b" : "#d0d0d0"}`,
+              border: `1.5px solid ${phoneFocused ? "#c2185b" : "#b0b0b0"}`,
               borderRadius: "8px",
               fontSize: "16px",
               fontFamily: "Montserrat, sans-serif",
               padding: "0 40px 0 14px",
               color: "#1a1a1a",
               outline: "none",
-              background: phoneFocused ? "white" : "#fafafa",
+              background: phoneFocused ? "white" : "#f5f5f5",
               boxSizing: "border-box",
               transition: "border-color 150ms ease, background 150ms ease",
             }}
@@ -701,10 +688,10 @@ const Step3: React.FC<{
           { icon: "🎁", label: "10% off" },
         ].map((badge, i, arr) => (
           <React.Fragment key={badge.label}>
-            <span
+          <span
               style={{
                 fontSize: "11px",
-                color: "#9e9e9e",
+                color: "#555555",
                 fontFamily: "Montserrat, sans-serif",
                 whiteSpace: "nowrap",
               }}
@@ -759,7 +746,7 @@ const Step3: React.FC<{
           style={{
             fontSize: "12px",
             fontStyle: "italic",
-            color: "#9e9e9e",
+            color: "#555555",
             margin: 0,
             fontFamily: "Montserrat, sans-serif",
             lineHeight: 1.6,

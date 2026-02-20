@@ -1,47 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import logoSrc from "@/assets/logo.png";
 
 const Landing: React.FC = () => {
   const navigate = useNavigate();
-  const [viewerCount, setViewerCount] = useState(47);
-
-  useEffect(() => {
-    const randomize = () => {
-      const delay = Math.floor(Math.random() * 3000) + 5000; // 5–8s
-      return setTimeout(() => {
-        setViewerCount(Math.floor(Math.random() * 46) + 35);
-        timerRef.current = randomize();
-      }, delay);
-    };
-    const timerRef: { current: ReturnType<typeof setTimeout> | null } = { current: null };
-    timerRef.current = randomize();
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
-  }, []);
 
   return (
     <div
       style={{ minHeight: "100dvh" }}
       className="flex items-start justify-center sm:items-center sm:py-8"
     >
-      <div
-        className="w-full bg-white"
-        style={{ maxWidth: "480px" }}
-      >
+      <div className="w-full" style={{ maxWidth: "480px" }}>
         <style>{`
           @media (min-width: 480px) {
             .landing-card {
               border-radius: 20px !important;
-              box-shadow: 0 4px 24px rgba(0,0,0,0.08) !important;
+              box-shadow: 0 8px 32px rgba(194,24,91,0.10) !important;
+              min-height: auto !important;
             }
+          }
+          @keyframes cta-pulse {
+            0%, 100% { box-shadow: 0 4px 20px rgba(194,24,91,0.35); }
+            50% { box-shadow: 0 4px 32px rgba(194,24,91,0.60); }
           }
         `}</style>
         <div
-          className="landing-card w-full bg-white flex flex-col items-center"
-          style={{ padding: "40px 28px 36px", minHeight: "100dvh" }}
+          className="landing-card w-full flex flex-col items-center"
+          style={{
+            padding: "40px 28px 44px",
+            minHeight: "100dvh",
+            background: "#fffaf9",
+          }}
         >
           {/* Logo */}
           <img
@@ -50,31 +40,19 @@ const Landing: React.FC = () => {
             style={{ width: "180px", objectFit: "contain" }}
           />
 
-          {/* Subtext */}
-          <p
-            style={{
-              fontSize: "12px",
-              color: "#9e9e9e",
-              marginTop: "6px",
-              textAlign: "center",
-              fontFamily: "Montserrat, sans-serif",
-              fontWeight: 400,
-            }}
-          >
-            Studio de Pestañas · Thornton, CO
-          </p>
-
-          {/* Promo badge */}
+          {/* Promo badge — amber/yellow highlight */}
           <div
             style={{
-              marginTop: "16px",
-              background: "#fce4ec",
-              color: "#c2185b",
+              marginTop: "18px",
+              background: "#fff3cd",
+              color: "#92600a",
               fontSize: "12px",
-              fontWeight: 600,
+              fontWeight: 700,
               padding: "6px 16px",
               borderRadius: "999px",
               fontFamily: "Montserrat, sans-serif",
+              border: "1px solid #f5c842",
+              letterSpacing: "0.01em",
             }}
           >
             🏷️ 10% de descuento este mes
@@ -83,103 +61,101 @@ const Landing: React.FC = () => {
           {/* Headline */}
           <h1
             style={{
-              fontSize: "26px",
-              fontWeight: 700,
+              fontSize: "27px",
+              fontWeight: 800,
               color: "#1a1a1a",
               textAlign: "center",
-              marginTop: "20px",
-              lineHeight: 1.3,
+              marginTop: "22px",
+              lineHeight: 1.25,
               fontFamily: "Montserrat, sans-serif",
             }}
           >
-            Pestañas perfectas.<br />Cita en 60 segundos.
+            Pestañas que duran.<br />
+            <span style={{ color: "#c2185b" }}>Cita en minutos.</span>
           </h1>
 
           {/* Subheadline */}
           <p
             style={{
               fontSize: "15px",
-              color: "#9e9e9e",
+              color: "#555555",
               textAlign: "center",
-              marginTop: "10px",
-              lineHeight: 1.5,
+              marginTop: "12px",
+              lineHeight: 1.6,
               fontFamily: "Montserrat, sans-serif",
               fontWeight: 400,
+              maxWidth: "320px",
             }}
           >
-            Dinos qué te interesa y te contactamos hoy.
+            Elige tu servicio, déjanos tu número y te confirmamos hoy mismo.
           </p>
 
           {/* CTA Button */}
           <motion.button
-            animate={{ opacity: [1, 0.82, 1] }}
-            transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
+            animate={{ opacity: [1, 0.88, 1] }}
+            transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut" }}
             onClick={() => navigate("/quiz")}
             style={{
-              marginTop: "24px",
+              marginTop: "28px",
               width: "100%",
-              height: "56px",
+              height: "58px",
               background: "#c2185b",
               color: "white",
-              fontSize: "16px",
-              fontWeight: 700,
-              borderRadius: "10px",
+              fontSize: "17px",
+              fontWeight: 800,
+              borderRadius: "12px",
               border: "none",
               cursor: "pointer",
               fontFamily: "Montserrat, sans-serif",
               letterSpacing: "0.01em",
+              animation: "cta-pulse 2.4s ease-in-out infinite",
             }}
           >
-            Ver mis opciones →
+            ¡Quiero mi descuento! →
           </motion.button>
 
-          {/* Trust line */}
-          <p
-            style={{
-              fontSize: "12px",
-              color: "#9e9e9e",
-              textAlign: "center",
-              marginTop: "12px",
-              fontFamily: "Montserrat, sans-serif",
-              fontWeight: 400,
-            }}
-          >
-            Sin compromiso · Solo 60 segundos
-          </p>
-
-          {/* Live viewers badge */}
+          {/* Trust signals */}
           <div
             style={{
-              marginTop: "16px",
               display: "flex",
               alignItems: "center",
-              gap: "8px",
-              background: "#f5f5f5",
-              padding: "6px 12px",
-              borderRadius: "999px",
+              justifyContent: "center",
+              gap: "0",
+              marginTop: "14px",
+              flexWrap: "wrap",
+              rowGap: "6px",
             }}
           >
-            {/* Pulsing green dot */}
-            <span
-              style={{
-                display: "inline-block",
-                width: "8px",
-                height: "8px",
-                background: "#4caf50",
-                borderRadius: "50%",
-                animation: "dot-pulse 1.5s ease-in-out infinite",
-              }}
-            />
-            <span
-              style={{
-                fontSize: "12px",
-                color: "#9e9e9e",
-                fontFamily: "Montserrat, sans-serif",
-                fontWeight: 400,
-              }}
-            >
-              {viewerCount} personas viendo disponibilidad ahora
-            </span>
+            {[
+              { icon: "✅", text: "+1,000 clientas" },
+              { icon: "⭐", text: "5 estrellas" },
+              { icon: "🎁", text: "10% off hoy" },
+            ].map((badge, i, arr) => (
+              <React.Fragment key={badge.text}>
+                <span
+                  style={{
+                    fontSize: "12px",
+                    color: "#555555",
+                    fontFamily: "Montserrat, sans-serif",
+                    fontWeight: 500,
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {badge.icon} {badge.text}
+                </span>
+                {i < arr.length - 1 && (
+                  <span
+                    style={{
+                      margin: "0 8px",
+                      color: "#ccc",
+                      fontSize: "12px",
+                    }}
+                  >
+                    ·
+                  </span>
+                )}
+              </React.Fragment>
+            ))}
           </div>
         </div>
       </div>
