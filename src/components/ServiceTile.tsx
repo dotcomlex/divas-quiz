@@ -84,15 +84,15 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
           />
         )}
 
-        {/* Favorita badge */}
+        {/* Favorita badge — yellow accent */}
         {isFavorite && (
           <span
             style={{
               position: "absolute",
               top: "6px",
               left: "6px",
-              background: "#c2185b",
-              color: "white",
+              background: "#f5c842",
+              color: "#7a5c00",
               fontSize: "9px",
               fontWeight: 700,
               padding: "2px 7px",

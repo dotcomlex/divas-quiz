@@ -73,9 +73,10 @@
     @apply text-foreground;
     min-height: 100dvh;
     background:
-      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(194,24,91,0.07) 0%, transparent 70%),
-      radial-gradient(ellipse 60% 40% at 90% 100%, rgba(194,24,91,0.05) 0%, transparent 60%),
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ccircle cx='10' cy='10' r='1' fill='rgba(194%2C24%2C91%2C0.12)'/%3E%3C/svg%3E") repeat,
+      radial-gradient(ellipse 90% 60% at 50% -5%, rgba(194,24,91,0.14) 0%, transparent 65%),
+      radial-gradient(ellipse 70% 50% at 95% 105%, rgba(194,24,91,0.10) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 40% at 0% 80%, rgba(194,24,91,0.07) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ccircle cx='10' cy='10' r='1.2' fill='rgba(194%2C24%2C91%2C0.10)'/%3E%3C/svg%3E") repeat,
       #fdf6f7;
     background-attachment: fixed;
   }
