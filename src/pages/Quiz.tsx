@@ -158,50 +158,115 @@ const Quiz: React.FC = () => {
           {/* Confirmation card */}
           <div
             style={{
-              background: "#fdf6f7",
+              background: "#fff0f5",
+              border: "1px solid #f8d7e3",
               borderLeft: "3px solid #c2185b",
-              borderRadius: "8px",
-              padding: "14px 16px",
+              borderRadius: "12px",
+              padding: "16px 18px",
+              marginBottom: "16px",
             }}
           >
-            <p style={{ fontSize: "13px", fontWeight: 600, color: "#1a1a1a", margin: "0", fontFamily: "Montserrat, sans-serif" }}>
-              💅 Servicio: {selectedService}
+            <p style={{ fontSize: "13px", fontWeight: 700, color: "#1a1a1a", margin: "0 0 8px", fontFamily: "Montserrat, sans-serif" }}>
+              💅 Servicio: <span style={{ color: "#c2185b" }}>{selectedService}</span>
             </p>
-            <p style={{ fontSize: "13px", fontWeight: 600, color: "#1a1a1a", margin: "6px 0 0", fontFamily: "Montserrat, sans-serif" }}>
+            <p style={{ fontSize: "13px", fontWeight: 600, color: "#1a1a1a", margin: 0, fontFamily: "Montserrat, sans-serif" }}>
               📱 Celular: {phone}
             </p>
           </div>
 
-          {/* Map link */}
-          <p
+          {/* WhatsApp CTA */}
+          <a
+            href={`https://wa.me/17203339999?text=Hola!%20Vi%20su%20oferta%20y%20me%20gustar%C3%ADa%20agendar%20mi%20cita%20para%20${encodeURIComponent(selectedService)}.`}
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
-          fontSize: "12px",
-          color: "#757575",
-          textAlign: "center",
-          marginTop: "16px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "8px",
+              width: "100%",
+              height: "52px",
+              borderRadius: "10px",
+              background: "#25D366",
+              color: "white",
+              fontSize: "15px",
+              fontWeight: 700,
+              textDecoration: "none",
               fontFamily: "Montserrat, sans-serif",
+              marginBottom: "20px",
             }}
           >
-            📍 2121 W 84th Ave, Thornton, CO 80260
-          </p>
-          <div className="text-center" style={{ marginTop: "6px" }}>
+            💬 Escríbenos por WhatsApp
+          </a>
+
+          {/* Address map card */}
+          <div
+            style={{
+              background: "white",
+              border: "1px solid #f0e4e8",
+              borderRadius: "12px",
+              padding: "14px 16px 14px 19px",
+              borderLeft: "3px solid #c2185b",
+              marginBottom: "24px",
+            }}
+          >
+            <p
+              style={{
+                fontSize: "10px",
+                fontWeight: 600,
+                color: "#9e9e9e",
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                margin: "0 0 4px",
+                fontFamily: "Montserrat, sans-serif",
+              }}
+            >
+              📍 Nuestro Studio
+            </p>
+            <p
+              style={{
+                fontSize: "15px",
+                fontWeight: 700,
+                color: "#1a1a1a",
+                margin: "0 0 2px",
+                fontFamily: "Montserrat, sans-serif",
+              }}
+            >
+              2121 W 84th Ave
+            </p>
+            <p
+              style={{
+                fontSize: "13px",
+                color: "#616161",
+                margin: "0 0 10px",
+                fontFamily: "Montserrat, sans-serif",
+              }}
+            >
+              Thornton, CO 80260
+            </p>
             <a
               href="https://maps.google.com/?q=2121+W+84th+Ave+Thornton+CO+80260"
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                fontSize: "13px",
+                fontSize: "12px",
                 color: "#c2185b",
+                fontWeight: 600,
                 textDecoration: "none",
                 fontFamily: "Montserrat, sans-serif",
-                fontWeight: 600,
               }}
             >
               Ver en Google Maps →
             </a>
           </div>
 
-          {/* FAQ */}
+          {/* FAQ divider + section */}
+          <div
+            style={{
+              borderTop: "1.5px solid #f8d7e3",
+              marginBottom: "20px",
+            }}
+          />
           <FaqAccordion />
         </div>
       </PageWrapper>
@@ -282,7 +347,7 @@ const Quiz: React.FC = () => {
 /* ─── Page wrapper (same container logic as Landing) ─── */
 const PageWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div
-    style={{ background: "hsl(350, 60%, 98%)", minHeight: "100dvh" }}
+    style={{ minHeight: "100dvh" }}
     className="flex items-start justify-center sm:items-center sm:py-8"
   >
     <div className="w-full" style={{ maxWidth: "480px" }}>
@@ -363,20 +428,65 @@ const Step2: React.FC<{
       Atendemos con cita en Thornton, CO
     </p>
 
-    {/* Address info pill */}
+    {/* Address map card */}
     <div
       style={{
-        background: "#f5f5f5",
-        borderRadius: "8px",
-        padding: "8px 14px",
-        fontSize: "11px",
-        color: "#757575",
-        textAlign: "center",
+        background: "white",
+        border: "1px solid #f0e4e8",
+        borderRadius: "12px",
+        padding: "14px 16px 14px 19px",
+        borderLeft: "3px solid #c2185b",
         marginBottom: "20px",
-        fontFamily: "Montserrat, sans-serif",
       }}
     >
-      📍 2121 W 84th Ave, Thornton, CO 80260
+      <p
+        style={{
+          fontSize: "10px",
+          fontWeight: 600,
+          color: "#9e9e9e",
+          textTransform: "uppercase",
+          letterSpacing: "0.08em",
+          margin: "0 0 4px",
+          fontFamily: "Montserrat, sans-serif",
+        }}
+      >
+        📍 Nuestro Studio
+      </p>
+      <p
+        style={{
+          fontSize: "15px",
+          fontWeight: 700,
+          color: "#1a1a1a",
+          margin: "0 0 2px",
+          fontFamily: "Montserrat, sans-serif",
+        }}
+      >
+        2121 W 84th Ave
+      </p>
+      <p
+        style={{
+          fontSize: "13px",
+          color: "#616161",
+          margin: "0 0 10px",
+          fontFamily: "Montserrat, sans-serif",
+        }}
+      >
+        Thornton, CO 80260
+      </p>
+      <a
+        href="https://maps.google.com/?q=2121+W+84th+Ave+Thornton+CO+80260"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          fontSize: "12px",
+          color: "#c2185b",
+          fontWeight: 600,
+          textDecoration: "none",
+          fontFamily: "Montserrat, sans-serif",
+        }}
+      >
+        Ver en Google Maps →
+      </a>
     </div>
 
     {/* YES tile */}
@@ -502,17 +612,17 @@ const Step3: React.FC<{
           placeholder="Ej. María García"
           style={{
             width: "100%",
-            height: "52px",
-            border: `1px solid ${nameFocused ? "#c2185b" : "#e0e0e0"}`,
+            height: "56px",
+            border: `1.5px solid ${nameFocused ? "#c2185b" : "#d0d0d0"}`,
             borderRadius: "8px",
             fontSize: "16px",
             fontFamily: "Montserrat, sans-serif",
             padding: "0 14px",
             color: "#1a1a1a",
             outline: "none",
-            background: "white",
+            background: nameFocused ? "white" : "#fafafa",
             boxSizing: "border-box",
-            transition: "border-color 150ms ease",
+            transition: "border-color 150ms ease, background 150ms ease",
           }}
         />
       </div>
@@ -544,17 +654,17 @@ const Step3: React.FC<{
             placeholder="(720) 000-0000"
             style={{
               width: "100%",
-              height: "52px",
-              border: `1px solid ${phoneFocused ? "#c2185b" : "#e0e0e0"}`,
+              height: "56px",
+              border: `1.5px solid ${phoneFocused ? "#c2185b" : "#d0d0d0"}`,
               borderRadius: "8px",
               fontSize: "16px",
               fontFamily: "Montserrat, sans-serif",
               padding: "0 40px 0 14px",
               color: "#1a1a1a",
               outline: "none",
-              background: "white",
+              background: phoneFocused ? "white" : "#fafafa",
               boxSizing: "border-box",
-              transition: "border-color 150ms ease",
+              transition: "border-color 150ms ease, background 150ms ease",
             }}
           />
           {phoneComplete && (
@@ -575,18 +685,47 @@ const Step3: React.FC<{
         </div>
       </div>
 
-      {/* Privacy line */}
-      <p
+      {/* Trust micro-badges */}
+      <div
         style={{
-          fontSize: "11px",
-          color: "#9e9e9e",
-          textAlign: "center",
-          margin: "12px 0",
-          fontFamily: "Montserrat, sans-serif",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "0",
+          margin: "14px 0 12px",
         }}
       >
-        🔒 Privado — solo para confirmar tu cita
-      </p>
+        {[
+          { icon: "🔒", label: "Seguro" },
+          { icon: "⚡", label: "Respuesta rápida" },
+          { icon: "🎁", label: "10% off" },
+        ].map((badge, i, arr) => (
+          <React.Fragment key={badge.label}>
+            <span
+              style={{
+                fontSize: "11px",
+                color: "#9e9e9e",
+                fontFamily: "Montserrat, sans-serif",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {badge.icon} {badge.label}
+            </span>
+            {i < arr.length - 1 && (
+              <span
+                style={{
+                  margin: "0 8px",
+                  color: "#e0e0e0",
+                  fontSize: "12px",
+                  lineHeight: 1,
+                }}
+              >
+                ·
+              </span>
+            )}
+          </React.Fragment>
+        ))}
+      </div>
 
       {/* Submit button */}
       <button
@@ -608,25 +747,29 @@ const Step3: React.FC<{
           letterSpacing: "0.01em",
         }}
       >
-        Agendar Mi Cita con 10% de Descuento →
+        Agendar Mi Cita →
       </button>
 
-      {/* Testimonial */}
-      <p
-        style={{
-          fontSize: "12px",
-          fontStyle: "italic",
-          color: "#9e9e9e",
-          textAlign: "center",
-          marginTop: "14px",
-          fontFamily: "Montserrat, sans-serif",
-          lineHeight: 1.6,
-        }}
-      >
-        "¡Cristina es la mejor! Las pestañas me duran semanas."
-        <br />
-        <span style={{ fontStyle: "normal" }}>— Sandra M., Thornton</span>
-      </p>
+      {/* Testimonial with stars */}
+      <div style={{ textAlign: "center", marginTop: "16px" }}>
+        <p style={{ margin: "0 0 4px", fontSize: "13px", color: "#c2185b", lineHeight: 1 }}>
+          ★★★★★
+        </p>
+        <p
+          style={{
+            fontSize: "12px",
+            fontStyle: "italic",
+            color: "#9e9e9e",
+            margin: 0,
+            fontFamily: "Montserrat, sans-serif",
+            lineHeight: 1.6,
+          }}
+        >
+          "¡Cristina es la mejor! Las pestañas me duran semanas."
+          <br />
+          <span style={{ fontStyle: "normal" }}>— Sandra M., Thornton</span>
+        </p>
+      </div>
     </div>
   );
 };
