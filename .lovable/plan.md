@@ -1,121 +1,115 @@
 
-## UI Glow-Up Plan — 5 Focused Changes
+## Full UI Overhaul — Contrast, Landing, Address & Quiz Flow
 
-### 1. Subtle Pink Texture Background (Landing + All Quiz Pages)
+### Summary of All Issues
 
-The page background is currently a flat `hsl(350, 60%, 98%)`. We'll replace it with a layered SVG-based background that gives:
-- A soft radial gradient in the top center (rose/pink glow, very subtle — like a beauty brand editorial photo backdrop)
-- A tiny dot grid texture using an SVG `data:` URI pattern (very low opacity, ~4%) to add tactile depth
-- A second softer glow in the bottom right for balance
+From the screenshots and voice notes, there are 6 distinct problems to fix:
 
-This applies to both the outer wrapper in `Landing.tsx` and `PageWrapper` in `Quiz.tsx`, plus the `body` in `index.css`.
+1. **Background texture is not showing** — the white card covers the whole screen (`bg-white` + `minHeight: 100dvh` on the inner card div hides the body texture completely)
+2. **Landing page needs a full redesign** — remove the viewer pill, improve headline/subheadline, improve CTA and trust signals, remove the "Studio de Pestañas" subtext
+3. **Step 2 address card has a Map link that takes users off the page** — remove it entirely; show address info-only
+4. **Step 2 YES button looks "highlighted" / confusing** — the ✅ emoji + rose button looks like it's already selected. Redesign both option buttons for clearer visual hierarchy
+5. **Everything looks too white / low contrast** — the white card on a white body means zero depth. Need a warm cream/pink card background, visible input borders, and stronger color differentiation using a yellow accent for key elements
+6. **Quiz page improvements** — Step 1 tiles, Step 3 form, and the overall quiz white card all need the contrast treatment
 
-Implementation: replace `background: "hsl(350, 60%, 98%)"` with a multi-layer `background` using:
+---
+
+### Change 1: Body Background Actually Shows
+
+**Problem:** `Landing.tsx` and `Quiz.tsx` both have their inner card set to `bg-white` + `minHeight: 100dvh`. This means the white card always fills the full viewport — the pink dot-grid body background is never visible on mobile.
+
+**Fix:** The outer page wrapper gets the background, and the inner white card gets a warm `#fff8f9` (very slight warm tint, not pure white) background. On desktop (≥480px), the card sits as a rounded card on the textured background. On mobile, the card fills the screen but its background is `#fff8f9` instead of cold white.
+
+Also update `src/index.css` body background: increase the radial glow opacity from `0.07` → `0.12` and `0.05` → `0.09` so the texture is actually perceptible.
+
+---
+
+### Change 2: Landing Page Full Glow-Up
+
+**Remove:**
+- "Studio de Pestañas · Thornton, CO" subtext (line 64)
+- The entire live viewer count pill (lines 150–183)
+
+**Keep:** Logo, promo badge, headline, subheadline, CTA, trust line
+
+**Improve:**
+
+- **Promo badge:** Make it pop with a warm amber/golden yellow background instead of the pale pink — `background: #fff3cd; color: #92600a; border: 1px solid #f5c842` — this gives the "important highlight" the user asked for with yellow
+- **Headline:** Change from `"Pestañas perfectas.\nCita en 60 segundos."` → `"Pestañas que duran. Cita en minutos."` — more emotional, benefit-driven
+- **Subheadline:** Change from gray `#9e9e9e` to `#555555` (much more readable) and update copy: `"Elige tu servicio, dejanos tu número y te confirmamos hoy mismo."` — clearer call to action
+- **CTA button:** Add a subtle pulse shadow glow to make it pop even more. Update text from `"Ver mis opciones →"` → `"¡Quiero mi descuento! →"` — more conversion-focused, ties to the 10% badge
+- **Trust line below CTA:** Replace `"Sin compromiso · Solo 60 segundos"` with three icon + text badges in a flex row:
+  - `✅ +1,000 clientas` · `⭐ 5 estrellas` · `🎁 10% off hoy`
+  - Color: `#555555` (dark enough to actually read), 12px
+
+---
+
+### Change 3: Step 2 — Address Card Without Map Link + Button Redesign
+
+**Address card:**
+- Remove the `Ver en Google Maps →` anchor link entirely — keeps users on page
+- The card becomes pure information: just the label, street, and city/state
+- Give it a slightly warmer background: `#fff8f9` with `border: 1px solid #f0d0da` and the rose left accent. This makes it stand out from the now-warm-white card background
+
+**YES/NO button redesign:**
+
+Current problem: Both buttons feel similarly styled (big filled rose vs thin outlined). The ✅ emoji makes it look like it's already "checked."
+
+**New YES button:**
+- Keep rose `#c2185b` fill, white text
+- Remove the ✅ emoji — replace with a right arrow → or just the text
+- Text: `"Sí, puedo llegar →"` — cleaner, less "pre-selected" feeling
+- Height: 60px
+
+**New NO button:**
+- Background: `#f5f5f5` (light gray fill — NOT white, so it's clearly different from the card background)
+- Border: `1px solid #e0e0e0`
+- Color: `#616161` (darker than current `#757575`)
+- Text: `"No, está muy lejos"` — remove the 📍 emoji (confusing since it's also in the address)
+- Height: 52px
+
+This makes the visual hierarchy immediately clear: big rose = yes action, smaller gray = no/exit.
+
+---
+
+### Change 4: Global Contrast Boost with Yellow Accent
+
+The user specifically asked for yellow on "important stuff." Apply this to:
+
+- **Promo badge** (Landing): amber/yellow as described above
+- **"Favorita" badge** on the Set Híbrido tile: change from `#c2185b` rose to `#f5c842` yellow with dark text `#7a5c00` — makes it feel like a "star pick" highlight
+- **Trust badges / micro-badges** in Step 3: darken the color from `#9e9e9e` to `#555555`
+- **Testimonial text** in Step 3: darken from `#9e9e9e` to `#555555`
+- **Hint text** under all step headings: `#757575` → `#555555`
+- **Form input borders**: change unfocused from `#d0d0d0` to `#b0b0b0` (noticeably darker — the user says inputs aren't visible)
+- **Form input background**: change from `#fafafa` to `#f5f5f5` (warm gray, creates visible contrast against the card)
+
+---
+
+### Change 5: Quiz Card Background (The Core Contrast Fix)
+
+**The root cause of "everything looks white":**
+
+The `.quiz-card` div and the landing card both use `bg-white`. Since the body texture is behind them, and the cards are full-bleed on mobile, you see nothing but white.
+
+**Fix:** Change the inner card background from `bg-white` / `background: white` to a very warm cream: `#fffaf9`. This is 1–2% warmer than white and creates visible separation from pure white elements (inputs, address cards, service tiles).
+
+Then, explicitly give the address card, service tiles, and form inputs a `background: white` so they stand out from the `#fffaf9` card body. This creates a 3-layer contrast system:
+
+```text
+Body background: textured pink/cream (#fdf6f7 + dot texture + glow)
+  └── Quiz card: warm cream (#fffaf9)
+        └── Inputs, tiles, address cards: pure white (#ffffff)
+              └── Selected tile tint: rose (#fff0f5)
 ```
-background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(194,24,91,0.07) 0%, transparent 70%),
-            radial-gradient(ellipse 60% 40% at 90% 100%, rgba(194,24,91,0.05) 0%, transparent 60%),
-            url("data:image/svg+xml,...dot-pattern...") repeat,
-            #fdf6f7
-```
-The dot pattern SVG is a single 20x20 tile with a centered circle of 1px radius in rgba(194,24,91,0.12) — barely visible, just enough texture.
-
----
-
-### 2. Service Tiles — Image-Ready Redesign
-
-Currently tiles show a large emoji at top, then name, then price — all vertically centered. The user wants to add real photos per service later. The redesign:
-
-**Now (emoji-only mode):**
-- Top 60% of tile: a soft rose-tinted rectangle placeholder zone (will become the image slot) with the emoji centered inside it at 28px — rounded top corners, flat bottom
-- Bottom 40%: white background, service name in 13px 600, then pricing
-
-**Design details of the new tile:**
-- Remove the old `flex-column align-center justify-center` centered layout
-- New layout: `flex-column, align-stretch` — image zone fills the top
-- Image zone: `background: linear-gradient(135deg, #fce4ec 0%, #fdf6f7 100%)`, height 88px, border-radius `10px 10px 0 0`, display flex + center the emoji at 30px
-- Info zone: padding `10px 10px 10px`, white bg, border-radius `0 0 10px 10px`
-- Service name: 12px, 700, `#1a1a1a`, left-aligned (not centered), margin-bottom 2px
-- Sale price: 14px, 700, `#c2185b`, left-aligned
-- Strikethrough: 11px, `#9e9e9e`, left-aligned, above the sale price
-
-This prepares the `image` prop: `ServiceTile` gets an optional `imageSrc?: string`. When provided, render `<img>` filling the zone. When absent, render the emoji placeholder. For now all are absent so it shows the emoji placeholder.
-
-Selected state: border 2px `#c2185b`, the image zone gets a rose tint overlay.
-
-The "Favorita" badge stays at top-left of the image zone, absolutely positioned.
-
----
-
-### 3. Address Section (Step 2) — Map Card Upgrade
-
-**Problem:** It looks like a plain pill of text. The user says it's "confusing."
-
-**Solution — replace the gray pill with a proper map card:**
-- A white card with a soft border (`1px solid #f0e4e8`), `border-radius: 12px`, `padding: 14px 16px`
-- Inside: a thin rose line on the left (`border-left: 3px solid #c2185b`)
-- Top line: `📍 Nuestro Studio` — 11px uppercase label in `#9e9e9e`
-- Main line: `2121 W 84th Ave` — 15px, 700, `#1a1a1a`
-- Sub line: `Thornton, CO 80260` — 13px, `#616161`
-- Below: a small rose tap-to-map link: `Ver en Google Maps →` — 12px, `#c2185b`, opens maps in new tab
-
-This makes the address look intentional and trustworthy. It's a pattern used widely in booking flows (e.g. Fresha, StyleSeat) — the map link de-risks the location concern for the user.
-
-The "confusing" pill is removed entirely.
-
----
-
-### 4. Step 3 Contact Form — Input Visibility + CTA Text
-
-**Problems seen in the screenshot:**
-- Inputs blend into the white background — barely visible border
-- CTA button text is too long
-- Overall the form feels clinical
-
-**Fixes:**
-
-**Input borders:** change from `1px solid #e0e0e0` to `1.5px solid #d0d0d0` — a bit darker so they're clearly visible against white. Add a light background tint on the inputs: `background: #fafafa` (unfocused) → `background: white` + `border: 1.5px solid #c2185b` on focus.
-
-**Labels:** already at `#616161` — keep, but increase font-size from 11px to 12px for legibility.
-
-**Input height:** bump from 52px to 56px — more breathing room, easier to tap on mobile.
-
-**CTA button text:** change from `"Agendar Mi Cita con 10% de Descuento →"` to `"Agendar Mi Cita →"` — cleaner, faster to read. The 10% discount context is already visible in the form headline area.
-
-**Add a small trust bar above the button:** three micro-badges in a row:
-- `🔒 Seguro` · `⚡ Respuesta rápida` · `🎁 10% off`
-- 11px, `#9e9e9e`, flexbox with dividers — replaces the current single privacy line
-
-**Testimonial:** strengthen it — add a star row above the quote:
-- `★★★★★` in `#c2185b` 12px, then the italic quote below
-
----
-
-### 5. Success Screen — Better Contrast + Content
-
-**Problems:** fields aren't visible (same white-on-white issue), content feels thin.
-
-**Fixes:**
-
-**Confirmation card:** currently `background: #fdf6f7`. Change to `background: #fff0f5` (slightly more rose tint) with `border: 1px solid #f8d7e3` — makes the card pop visually.
-
-**Add a WhatsApp CTA button** below the confirmation card:
-- Full width, 52px, `border-radius: 10px`
-- `background: #25D366` (WhatsApp green), white text, 700
-- Text: `💬 Escríbenos por WhatsApp`
-- Opens `https://wa.me/17203339999?text=Hola!%20Vi%20su%20oferta%20y%20me%20gustar%C3%ADa%20agendar%20mi%20cita.` in new tab (placeholder number — user can update)
-
-**Map section:** merge the address + Google Maps link into a single tap-to-map row (same card style as Step 2) for consistency.
-
-**FAQ section header:** add a thin rose divider line above "Preguntas frecuentes" to visually separate the FAQ from the confirmation content.
 
 ---
 
 ### Files to Modify
 
-| File | Change |
-|------|--------|
-| `src/index.css` | Add dot-texture + glow to body background |
-| `src/pages/Landing.tsx` | Update outer wrapper background to match texture |
-| `src/pages/Quiz.tsx` | Update PageWrapper bg, Step 2 address card, Step 3 inputs/trust bar/CTA text, Success card/WhatsApp btn |
-| `src/components/ServiceTile.tsx` | New image-ready tile layout with top image zone |
-
+| File | Changes |
+|---|---|
+| `src/index.css` | Increase glow intensity on body radial gradients |
+| `src/pages/Landing.tsx` | Remove subtext + viewer pill, restyle badge to yellow, new headline/subheadline/CTA/trust signals |
+| `src/pages/Quiz.tsx` | Card bg → `#fffaf9`, Step 2 address card remove map link + redesign YES/NO buttons, Step 3 darken all secondary text + input borders |
+| `src/components/ServiceTile.tsx` | "Favorita" badge → yellow, tile background → white (to contrast against card) |
