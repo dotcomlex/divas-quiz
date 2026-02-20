@@ -1,73 +1,113 @@
 
-## Step 2 Redesign — "¿Puedes llegar?" Page
+## Services Page Glow-Up — Subheadline, Engagement & AI-Generated Photos
 
-### Root Cause of the "Pre-Selected" Problem
+### What's Changing
 
-The current layout uses two full-width stacked buttons: a filled rose (#c2185b) YES button and a light gray NO button. Because rose is the brand's selection/active color (used on the progress bar and selected tiles), the brain reads the filled YES button as **"already chosen."** This is a classic UX anti-pattern for binary yes/no questions.
+**3 focused improvements to Step 1 (the services selection screen):**
 
-### The Fix — Change the Button Pattern Entirely
-
-Instead of two stacked full-width buttons (one filled, one ghost), switch to a **side-by-side two-card layout** — both options are the same visual weight, clearly selectable, and neither looks pre-chosen.
-
-**New layout:**
-
-```text
-┌──────────────────────────────────────┐
-│  Address info card (just address,    │
-│  no map link, info only)             │
-└──────────────────────────────────────┘
-
-┌─────────────┐   ┌─────────────┐
-│     ✅       │   │     ❌      │
-│  big emoji  │   │  big emoji  │
-│             │   │             │
-│  Sí, puedo  │   │  Muy lejos  │
-│   llegar    │   │  para mí    │
-└─────────────┘   └─────────────┘
-```
-
-Each card:
-- Equal width (roughly 47% each in a flex row with a gap)
-- Rounded `border-radius: 14px`
-- Same size — 120px tall
-- White background with a `1.5px solid #e0e0e0` border
-- On the YES card: a green checkmark emoji `✅` (32px), then text below
-- On the NO card: a map/distance emoji `🚗` or `😔` (32px), then text below
-- Text: 14px, 700, `#1a1a1a`, centered
-- When tapped (whileTap): scale 0.96
-
-This way **neither button looks pre-selected** — they're visually equal until tapped.
-
-**On tap (onYes / onNo):** keep the instant navigation behavior, no visual selected state needed.
+1. Subheadline copy that makes the 10% discount obvious
+2. Layout and visual hierarchy improvements to the grid
+3. AI-generated photos for each of the 6 service cards
 
 ---
 
-### Address Card — Simplify Further
+### 1. Subheadline — "10% Off Already Applied"
 
-The current address card has a rose left border + tiny uppercase "NUESTRO STUDIO" label. The label and left accent are creating visual noise. Replace with:
+Currently the subheadline reads: `"Elige una opción para continuar"` — no mention of the discount.
 
-- A clean white card, `border: 1.5px solid #f0d0da`, `border-radius: 12px`
-- A single line: `📍 2121 W 84th Ave, Thornton CO 80260`
-- 14px, `#444444`, font-weight 500
-- Centered text, `padding: 14px 16px`
-- No left accent border, no uppercase label, no map link
+**New subheadline:**
+- Line 1 (dark, 13px, 500): `"Elige el look que quieres lograr"`
+- Line 2 (amber/yellow pill, inline): `"🏷️ 10% de descuento ya aplicado"`
 
-This is clean, scannable, and clearly just context — not an interactive element.
+The yellow pill matches the Landing page badge style — instantly recognizable as the discount signal. It's placed directly below the question, before the grid, so the user sees the savings context before they see prices.
 
 ---
 
-### Question & Subtext Polish
+### 2. Services Grid — Engagement & Hierarchy Improvements
 
-- Headline: `"¿Puedes llegar a nuestro studio?"` — keep as-is, it's clear
-- Subtext: Change from `"Atendemos con cita en Thornton, CO"` to `"Estamos en Thornton, CO — solo con cita previa"` — slightly more specific and trustworthy
-- Subtext color: keep `#555555`
+**Current issues:**
+- Subheadline is generic ("Elige una opción para continuar") — no emotional hook
+- The tiles are functional but with emoji placeholders they feel basic
+- Prices appear with no context about why they're discounted
+
+**New tile info zone improvements:**
+- Service name: bump from 12px → 13px, stays 700 weight
+- Sale price: stays 14px rose — but now shows a small `"(-10%)"` tag in amber/yellow next to it for non-flat services, e.g. `$134.99 · -10%`
+- This small `-10%` label reinforces the discount at the point of price visibility
+- For the "Laminado de Cejas" flat-rate tile, no discount tag (it already says the flat price)
+
+**Image zone height:** bump from 88px → 100px now that we have real photos — gives more visual real estate per service
 
 ---
 
-### Files to Change
+### 3. AI-Generated Images — One Per Service Card
+
+Six images will be generated using the AI image model. Each will be a **close-up beauty/lash photo** styled to match Divas Beauty Studio's pink/rose aesthetic.
+
+| Card | Prompt concept |
+|---|---|
+| Set Híbrido | Close-up of hybrid lash extensions — mix of classic and volume, soft brown tones, studio lighting |
+| Set Clásico | Close-up of classic lash extensions — natural, one-to-one, clean look, soft focus |
+| Set de Volumen | Dramatic volume lash fan extensions, bold, full look, professional studio lighting |
+| Mega Volumen | Ultra-dramatic mega volume lashes, extremely full, glamorous |
+| Lash Lift | Before/after style — natural lashes lifted and curled, no extensions, fresh look |
+| Laminado de Cejas | Close-up eyebrow lamination — perfectly groomed, brushed-up brows |
+
+All images will be:
+- Square or slightly landscape crop (consistent aspect ratio)
+- Warm pink/rose toned lighting to match the brand palette
+- `objectFit: cover` in the 100px image zone — so they fill perfectly regardless of exact dimensions
+- Saved to `src/assets/services/` as `hybrid.jpg`, `clasico.jpg`, etc.
+
+---
+
+### 4. Technical Implementation
+
+**Files to modify:**
 
 | File | Change |
-|------|--------|
-| `src/pages/Quiz.tsx` | Replace Step2 component: new side-by-side card layout for YES/NO, simplified address card |
+|---|---|
+| `src/pages/Quiz.tsx` | Update Step1 subheadline, add discount pill, pass `imageSrc` to each ServiceTile, bump image zone reference |
+| `src/components/ServiceTile.tsx` | Bump image zone height 88→100px, add small `-10%` amber tag next to sale price |
+| `src/assets/services/` (new folder) | 6 AI-generated JPG images, one per service |
 
-Only one file needs to change. No new dependencies required.
+**Image generation approach:**
+- Generate all 6 images via the Gemini image model in one pass
+- Each saved as a base64 → file in `src/assets/services/`
+- Referenced via static import in `SERVICES` array in `Quiz.tsx`
+
+**No new dependencies required.** The `imageSrc` prop already exists on `ServiceTile`.
+
+---
+
+### Visual Result (Step 1 wireframe)
+
+```text
+¿Qué servicio te interesa?
+Elige el look que quieres lograr
+[🏷️ 10% de descuento ya aplicado]
+
+┌──────────────┐  ┌──────────────┐
+│  [lash photo]│  │  [lash photo]│
+│──────────────│  │──────────────│
+│ Set Híbrido  │  │ Set Clásico  │
+│ ~~$149~~ $134│  │ ~~$99~~ $89  │
+│         -10% │  │        -10%  │
+└──────────────┘  └──────────────┘
+
+┌──────────────┐  ┌──────────────┐
+│  [lash photo]│  │  [lash photo]│
+│──────────────│  │──────────────│
+│ Set Volumen  │  │ Mega Volumen │
+│ ~~$179~~ $161│  │ ~~$119~~ $107│
+│         -10% │  │        -10%  │
+└──────────────┘  └──────────────┘
+
+┌──────────────┐  ┌──────────────┐
+│  [lash photo]│  │  [brow photo]│
+│──────────────│  │──────────────│
+│ Lash Lift    │  │ Lam. Cejas   │
+│ ~~$79~~ $71  │  │       $50.00 │
+│         -10% │  │              │
+└──────────────┘  └──────────────┘
+```
