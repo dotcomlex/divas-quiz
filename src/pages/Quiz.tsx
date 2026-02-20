@@ -453,16 +453,16 @@ const Step2: React.FC<{
       ¿Puedes llegar a nuestro studio?
     </h2>
     <p style={{ fontSize: "13px", color: "#555555", marginBottom: "18px", fontFamily: "Montserrat, sans-serif" }}>
-      Estamos en Thornton, CO — solo con cita previa
+      Para agendar tu cita, ¿podrás llegar sin problema a esta dirección?
     </p>
 
-    {/* Address info card — clean, info-only, no left accent, no map link */}
+    {/* Address info card — yellow highlight to draw the eye before answering */}
     <div
       style={{
-        background: "white",
-        border: "1.5px solid #f0d0da",
+        background: "#fffde7",
+        border: "1.5px solid #ffe082",
         borderRadius: "12px",
-        padding: "14px 16px",
+        padding: "16px 18px",
         marginBottom: "24px",
         textAlign: "center",
       }}
@@ -470,7 +470,7 @@ const Step2: React.FC<{
       <p
         style={{
           fontSize: "14px",
-          fontWeight: 500,
+          fontWeight: 600,
           color: "#444444",
           margin: 0,
           fontFamily: "Montserrat, sans-serif",
@@ -583,7 +583,7 @@ const Step3: React.FC<{
         ¡Ya casi! ¿Cómo te contactamos?
       </h2>
       <p style={{ fontSize: "13px", color: "#555555", marginBottom: "20px", fontFamily: "Montserrat, sans-serif" }}>
-        Solo necesitamos tu nombre y tu número
+        Solo necesitamos tu nombre y número para contactarte y agendar tu cita. ¡Nosotros te escribimos!
       </p>
 
       {/* Name field */}
