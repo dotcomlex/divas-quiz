@@ -111,7 +111,7 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
             <span
               style={{
                 fontSize: "11px",
-                color: "#bdbdbd",
+                color: "#9e9e9e",
                 textDecoration: "line-through",
                 fontFamily: "Montserrat, sans-serif",
               }}

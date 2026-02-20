@@ -175,10 +175,10 @@ const Quiz: React.FC = () => {
           {/* Map link */}
           <p
             style={{
-              fontSize: "12px",
-              color: "#9e9e9e",
-              textAlign: "center",
-              marginTop: "16px",
+          fontSize: "12px",
+          color: "#757575",
+          textAlign: "center",
+          marginTop: "16px",
               fontFamily: "Montserrat, sans-serif",
             }}
           >
@@ -214,11 +214,6 @@ const Quiz: React.FC = () => {
       {/* Progress bar — top edge */}
       <div style={{ padding: "0 16px", paddingTop: "16px" }}>
         <ProgressBar step={step} />
-      </div>
-
-      {/* Logo small header */}
-      <div className="flex justify-center" style={{ padding: "12px 0 0" }}>
-        <img src={logoSrc} alt="Divas Beauty Studio" style={{ height: "36px", objectFit: "contain" }} />
       </div>
 
       {/* Animated step content */}
@@ -267,7 +262,7 @@ const Quiz: React.FC = () => {
             onClick={goBack}
             style={{
               fontSize: "13px",
-              color: "#9e9e9e",
+              color: "#757575",
               background: "none",
               border: "none",
               cursor: "pointer",
@@ -325,7 +320,7 @@ const Step1: React.FC<{
     >
       ¿Qué servicio te interesa?
     </h2>
-    <p style={{ fontSize: "13px", color: "#9e9e9e", marginBottom: "18px", fontFamily: "Montserrat, sans-serif" }}>
+    <p style={{ fontSize: "13px", color: "#757575", marginBottom: "18px", fontFamily: "Montserrat, sans-serif" }}>
       Elige una opción para continuar
     </p>
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
@@ -364,7 +359,7 @@ const Step2: React.FC<{
     >
       ¿Puedes llegar a nuestro studio?
     </h2>
-    <p style={{ fontSize: "13px", color: "#9e9e9e", marginBottom: "16px", fontFamily: "Montserrat, sans-serif" }}>
+    <p style={{ fontSize: "13px", color: "#757575", marginBottom: "16px", fontFamily: "Montserrat, sans-serif" }}>
       Atendemos con cita en Thornton, CO
     </p>
 
@@ -375,7 +370,7 @@ const Step2: React.FC<{
         borderRadius: "8px",
         padding: "8px 14px",
         fontSize: "11px",
-        color: "#9e9e9e",
+        color: "#757575",
         textAlign: "center",
         marginBottom: "20px",
         fontFamily: "Montserrat, sans-serif",
@@ -478,7 +473,7 @@ const Step3: React.FC<{
       >
         ¡Ya casi! ¿Cómo te contactamos?
       </h2>
-      <p style={{ fontSize: "13px", color: "#9e9e9e", marginBottom: "20px", fontFamily: "Montserrat, sans-serif" }}>
+      <p style={{ fontSize: "13px", color: "#757575", marginBottom: "20px", fontFamily: "Montserrat, sans-serif" }}>
         Solo necesitamos tu nombre y tu número
       </p>
 
@@ -489,7 +484,7 @@ const Step3: React.FC<{
             display: "block",
             fontSize: "11px",
             fontWeight: 600,
-            color: "#9e9e9e",
+            color: "#616161",
             letterSpacing: "0.06em",
             textTransform: "uppercase",
             marginBottom: "6px",
@@ -529,7 +524,7 @@ const Step3: React.FC<{
             display: "block",
             fontSize: "11px",
             fontWeight: 600,
-            color: "#9e9e9e",
+            color: "#616161",
             letterSpacing: "0.06em",
             textTransform: "uppercase",
             marginBottom: "6px",
@@ -584,7 +579,7 @@ const Step3: React.FC<{
       <p
         style={{
           fontSize: "11px",
-          color: "#bdbdbd",
+          color: "#9e9e9e",
           textAlign: "center",
           margin: "12px 0",
           fontFamily: "Montserrat, sans-serif",
@@ -621,7 +616,7 @@ const Step3: React.FC<{
         style={{
           fontSize: "12px",
           fontStyle: "italic",
-          color: "#bdbdbd",
+          color: "#9e9e9e",
           textAlign: "center",
           marginTop: "14px",
           fontFamily: "Montserrat, sans-serif",
