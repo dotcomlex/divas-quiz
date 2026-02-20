@@ -1,0 +1,639 @@
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import ProgressBar from "@/components/ProgressBar";
+import ServiceTile from "@/components/ServiceTile";
+import FaqAccordion from "@/components/FaqAccordion";
+import logoSrc from "@/assets/logo.png";
+
+type Screen = "quiz" | "disqualified" | "success";
+
+const SERVICES = [
+  { emoji: "✨", name: "Set Híbrido", originalPrice: "$149.99", salePrice: "$134.99", isFavorite: true, isFlat: false },
+  { emoji: "🌸", name: "Set Clásico", originalPrice: "$99.99", salePrice: "$89.99", isFavorite: false, isFlat: false },
+  { emoji: "💎", name: "Set de Volumen", originalPrice: "$179.99", salePrice: "$161.99", isFavorite: false, isFlat: false },
+  { emoji: "👑", name: "Mega Volumen", originalPrice: "$119.99", salePrice: "$107.99", isFavorite: false, isFlat: false },
+  { emoji: "🌿", name: "Lash Lift", originalPrice: "$79.99", salePrice: "$71.99", isFavorite: false, isFlat: false },
+  { emoji: "🍃", name: "Laminado de Cejas", originalPrice: undefined, salePrice: "$50.00", isFavorite: false, isFlat: true },
+];
+
+const formatPhone = (value: string): string => {
+  const digits = value.replace(/\D/g, "").slice(0, 10);
+  if (digits.length <= 3) return digits.length ? `(${digits}` : "";
+  if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+};
+
+const slideVariants = {
+  enter: { x: 60, opacity: 0 },
+  center: { x: 0, opacity: 1 },
+  exit: { x: -60, opacity: 0 },
+};
+
+const Quiz: React.FC = () => {
+  const [step, setStep] = useState(1);
+  const [screen, setScreen] = useState<Screen>("quiz");
+  const [selectedService, setSelectedService] = useState<string>("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [nameFocused, setNameFocused] = useState(false);
+  const [phoneFocused, setPhoneFocused] = useState(false);
+
+  const phoneDigits = phone.replace(/\D/g, "");
+  const isFormValid = name.trim().length >= 2 && phoneDigits.length === 10;
+  const firstName = name.trim().split(" ")[0];
+
+  const handleServiceSelect = (serviceName: string) => {
+    setSelectedService(serviceName);
+    setTimeout(() => setStep(2), 300);
+  };
+
+  const handleSubmit = () => {
+    if (!isFormValid) return;
+    if (typeof window !== "undefined" && (window as any).fbq) {
+      (window as any).fbq("track", "Lead");
+    }
+    setScreen("success");
+  };
+
+  const goBack = () => {
+    if (step === 2) setStep(1);
+    else if (step === 3) setStep(2);
+  };
+
+  if (screen === "disqualified") {
+    return (
+      <PageWrapper>
+        <div
+          className="flex flex-col items-center justify-center text-center"
+          style={{ padding: "60px 28px", minHeight: "calc(100dvh - 6px)" }}
+        >
+          <span style={{ fontSize: "48px", display: "block", marginBottom: "16px" }}>🙏</span>
+          <h2
+            style={{
+              fontSize: "22px",
+              fontWeight: 700,
+              color: "#1a1a1a",
+              fontFamily: "Montserrat, sans-serif",
+              marginBottom: "12px",
+            }}
+          >
+            ¡Gracias por tu interés!
+          </h2>
+          <p
+            style={{
+              fontSize: "15px",
+              color: "#757575",
+              fontFamily: "Montserrat, sans-serif",
+              maxWidth: "280px",
+              lineHeight: 1.6,
+              margin: "0 auto",
+            }}
+          >
+            Por ahora solo atendemos en Thornton. Si en algún momento puedes llegar, aquí estaremos con gusto. 🤍
+          </p>
+        </div>
+      </PageWrapper>
+    );
+  }
+
+  if (screen === "success") {
+    return (
+      <PageWrapper>
+        <div style={{ padding: "40px 24px 48px" }}>
+          {/* Animated checkmark */}
+          <div className="flex justify-center" style={{ marginBottom: "20px" }}>
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 260, damping: 20 }}
+              style={{
+                width: "64px",
+                height: "64px",
+                borderRadius: "50%",
+                background: "#c2185b",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                style={{ color: "white", fontSize: "30px", fontWeight: 700, lineHeight: 1 }}
+              >
+                ✓
+              </motion.span>
+            </motion.div>
+          </div>
+
+          {/* Headline */}
+          <h2
+            style={{
+              fontSize: "26px",
+              fontWeight: 700,
+              color: "#1a1a1a",
+              textAlign: "center",
+              fontFamily: "Montserrat, sans-serif",
+              marginBottom: "8px",
+            }}
+          >
+            ¡Listo, {firstName}! 🎉
+          </h2>
+
+          {/* Body */}
+          <p
+            style={{
+              fontSize: "15px",
+              color: "#757575",
+              textAlign: "center",
+              fontFamily: "Montserrat, sans-serif",
+              lineHeight: 1.6,
+              marginBottom: "20px",
+            }}
+          >
+            Recibimos tu solicitud. Te contactamos pronto para confirmar. 🤍
+          </p>
+
+          {/* Confirmation card */}
+          <div
+            style={{
+              background: "#fdf6f7",
+              borderLeft: "3px solid #c2185b",
+              borderRadius: "8px",
+              padding: "14px 16px",
+            }}
+          >
+            <p style={{ fontSize: "13px", fontWeight: 600, color: "#1a1a1a", margin: "0", fontFamily: "Montserrat, sans-serif" }}>
+              💅 Servicio: {selectedService}
+            </p>
+            <p style={{ fontSize: "13px", fontWeight: 600, color: "#1a1a1a", margin: "6px 0 0", fontFamily: "Montserrat, sans-serif" }}>
+              📱 Celular: {phone}
+            </p>
+          </div>
+
+          {/* Map link */}
+          <p
+            style={{
+              fontSize: "12px",
+              color: "#9e9e9e",
+              textAlign: "center",
+              marginTop: "16px",
+              fontFamily: "Montserrat, sans-serif",
+            }}
+          >
+            📍 2121 W 84th Ave, Thornton, CO 80260
+          </p>
+          <div className="text-center" style={{ marginTop: "6px" }}>
+            <a
+              href="https://maps.google.com/?q=2121+W+84th+Ave+Thornton+CO+80260"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontSize: "13px",
+                color: "#c2185b",
+                textDecoration: "none",
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: 600,
+              }}
+            >
+              Ver en Google Maps →
+            </a>
+          </div>
+
+          {/* FAQ */}
+          <FaqAccordion />
+        </div>
+      </PageWrapper>
+    );
+  }
+
+  // Quiz steps
+  return (
+    <PageWrapper>
+      {/* Progress bar — top edge */}
+      <div style={{ padding: "0 16px", paddingTop: "16px" }}>
+        <ProgressBar step={step} />
+      </div>
+
+      {/* Logo small header */}
+      <div className="flex justify-center" style={{ padding: "12px 0 0" }}>
+        <img src={logoSrc} alt="Divas Beauty Studio" style={{ height: "36px", objectFit: "contain" }} />
+      </div>
+
+      {/* Animated step content */}
+      <div style={{ overflow: "hidden", position: "relative" }}>
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={step}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.22, ease: "easeInOut" }}
+            style={{ padding: "24px 24px 0" }}
+          >
+            {step === 1 && <Step1 selectedService={selectedService} onSelect={handleServiceSelect} />}
+            {step === 2 && (
+              <Step2
+                onYes={() => setStep(3)}
+                onNo={() => setScreen("disqualified")}
+              />
+            )}
+            {step === 3 && (
+              <Step3
+                name={name}
+                phone={phone}
+                isFormValid={isFormValid}
+                nameFocused={nameFocused}
+                phoneFocused={phoneFocused}
+                onNameChange={(v) => setName(v)}
+                onPhoneChange={(v) => setPhone(formatPhone(v))}
+                onNameFocus={() => setNameFocused(true)}
+                onNameBlur={() => setNameFocused(false)}
+                onPhoneFocus={() => setPhoneFocused(true)}
+                onPhoneBlur={() => setPhoneFocused(false)}
+                onSubmit={handleSubmit}
+              />
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Back link */}
+      {step > 1 && (
+        <div className="text-center" style={{ padding: "20px 0 28px" }}>
+          <button
+            onClick={goBack}
+            style={{
+              fontSize: "13px",
+              color: "#9e9e9e",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              fontFamily: "Montserrat, sans-serif",
+              fontWeight: 400,
+            }}
+          >
+            ← Regresar
+          </button>
+        </div>
+      )}
+      {step === 1 && <div style={{ height: "28px" }} />}
+    </PageWrapper>
+  );
+};
+
+/* ─── Page wrapper (same container logic as Landing) ─── */
+const PageWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <div
+    style={{ background: "hsl(350, 60%, 98%)", minHeight: "100dvh" }}
+    className="flex items-start justify-center sm:items-center sm:py-8"
+  >
+    <div className="w-full" style={{ maxWidth: "480px" }}>
+      <style>{`
+        @media (min-width: 480px) {
+          .quiz-card {
+            border-radius: 20px !important;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08) !important;
+            min-height: auto !important;
+          }
+        }
+      `}</style>
+      <div className="quiz-card w-full bg-white" style={{ minHeight: "100dvh" }}>
+        {children}
+      </div>
+    </div>
+  </div>
+);
+
+/* ─── Step 1: Service Selection ─── */
+const Step1: React.FC<{
+  selectedService: string;
+  onSelect: (name: string) => void;
+}> = ({ selectedService, onSelect }) => (
+  <div>
+    <h2
+      style={{
+        fontSize: "22px",
+        fontWeight: 700,
+        color: "#1a1a1a",
+        marginBottom: "6px",
+        fontFamily: "Montserrat, sans-serif",
+        lineHeight: 1.3,
+      }}
+    >
+      ¿Qué servicio te interesa?
+    </h2>
+    <p style={{ fontSize: "13px", color: "#9e9e9e", marginBottom: "18px", fontFamily: "Montserrat, sans-serif" }}>
+      Elige una opción para continuar
+    </p>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+      {SERVICES.map((svc) => (
+        <ServiceTile
+          key={svc.name}
+          emoji={svc.emoji}
+          name={svc.name}
+          originalPrice={svc.originalPrice}
+          salePrice={svc.salePrice}
+          isFlat={svc.isFlat}
+          isFavorite={svc.isFavorite}
+          isSelected={selectedService === svc.name}
+          onSelect={() => onSelect(svc.name)}
+        />
+      ))}
+    </div>
+  </div>
+);
+
+/* ─── Step 2: Location Check ─── */
+const Step2: React.FC<{
+  onYes: () => void;
+  onNo: () => void;
+}> = ({ onYes, onNo }) => (
+  <div>
+    <h2
+      style={{
+        fontSize: "22px",
+        fontWeight: 700,
+        color: "#1a1a1a",
+        marginBottom: "6px",
+        fontFamily: "Montserrat, sans-serif",
+        lineHeight: 1.3,
+      }}
+    >
+      ¿Puedes llegar a nuestro studio?
+    </h2>
+    <p style={{ fontSize: "13px", color: "#9e9e9e", marginBottom: "16px", fontFamily: "Montserrat, sans-serif" }}>
+      Atendemos con cita en Thornton, CO
+    </p>
+
+    {/* Address info pill */}
+    <div
+      style={{
+        background: "#f5f5f5",
+        borderRadius: "8px",
+        padding: "8px 14px",
+        fontSize: "11px",
+        color: "#9e9e9e",
+        textAlign: "center",
+        marginBottom: "20px",
+        fontFamily: "Montserrat, sans-serif",
+      }}
+    >
+      📍 2121 W 84th Ave, Thornton, CO 80260
+    </div>
+
+    {/* YES tile */}
+    <motion.button
+      whileTap={{ scale: 0.98 }}
+      onClick={onYes}
+      style={{
+        width: "100%",
+        height: "64px",
+        borderRadius: "10px",
+        background: "#c2185b",
+        color: "white",
+        fontSize: "16px",
+        fontWeight: 600,
+        border: "none",
+        cursor: "pointer",
+        marginBottom: "10px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontFamily: "Montserrat, sans-serif",
+      }}
+    >
+      ✅  Sí, puedo llegar
+    </motion.button>
+
+    {/* NO tile */}
+    <motion.button
+      whileTap={{ scale: 0.98 }}
+      onClick={onNo}
+      style={{
+        width: "100%",
+        height: "56px",
+        borderRadius: "10px",
+        background: "white",
+        border: "1px solid #e0e0e0",
+        color: "#757575",
+        fontSize: "15px",
+        fontWeight: 400,
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontFamily: "Montserrat, sans-serif",
+      }}
+    >
+      📍  Está un poco lejos para mí
+    </motion.button>
+  </div>
+);
+
+/* ─── Step 3: Contact Form ─── */
+const Step3: React.FC<{
+  name: string;
+  phone: string;
+  isFormValid: boolean;
+  nameFocused: boolean;
+  phoneFocused: boolean;
+  onNameChange: (v: string) => void;
+  onPhoneChange: (v: string) => void;
+  onNameFocus: () => void;
+  onNameBlur: () => void;
+  onPhoneFocus: () => void;
+  onPhoneBlur: () => void;
+  onSubmit: () => void;
+}> = ({
+  name,
+  phone,
+  isFormValid,
+  nameFocused,
+  phoneFocused,
+  onNameChange,
+  onPhoneChange,
+  onNameFocus,
+  onNameBlur,
+  onPhoneFocus,
+  onPhoneBlur,
+  onSubmit,
+}) => {
+  const phoneDigits = phone.replace(/\D/g, "");
+  const phoneComplete = phoneDigits.length === 10;
+
+  return (
+    <div>
+      <h2
+        style={{
+          fontSize: "22px",
+          fontWeight: 700,
+          color: "#1a1a1a",
+          marginBottom: "6px",
+          fontFamily: "Montserrat, sans-serif",
+          lineHeight: 1.3,
+        }}
+      >
+        ¡Ya casi! ¿Cómo te contactamos?
+      </h2>
+      <p style={{ fontSize: "13px", color: "#9e9e9e", marginBottom: "20px", fontFamily: "Montserrat, sans-serif" }}>
+        Solo necesitamos tu nombre y tu número
+      </p>
+
+      {/* Name field */}
+      <div style={{ marginBottom: "14px" }}>
+        <label
+          style={{
+            display: "block",
+            fontSize: "11px",
+            fontWeight: 600,
+            color: "#9e9e9e",
+            letterSpacing: "0.06em",
+            textTransform: "uppercase",
+            marginBottom: "6px",
+            fontFamily: "Montserrat, sans-serif",
+          }}
+        >
+          TU NOMBRE
+        </label>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => onNameChange(e.target.value)}
+          onFocus={onNameFocus}
+          onBlur={onNameBlur}
+          placeholder="Ej. María García"
+          style={{
+            width: "100%",
+            height: "52px",
+            border: `1px solid ${nameFocused ? "#c2185b" : "#e0e0e0"}`,
+            borderRadius: "8px",
+            fontSize: "16px",
+            fontFamily: "Montserrat, sans-serif",
+            padding: "0 14px",
+            color: "#1a1a1a",
+            outline: "none",
+            background: "white",
+            boxSizing: "border-box",
+            transition: "border-color 150ms ease",
+          }}
+        />
+      </div>
+
+      {/* Phone field */}
+      <div style={{ marginBottom: "6px" }}>
+        <label
+          style={{
+            display: "block",
+            fontSize: "11px",
+            fontWeight: 600,
+            color: "#9e9e9e",
+            letterSpacing: "0.06em",
+            textTransform: "uppercase",
+            marginBottom: "6px",
+            fontFamily: "Montserrat, sans-serif",
+          }}
+        >
+          TU CELULAR
+        </label>
+        <div style={{ position: "relative" }}>
+          <input
+            type="tel"
+            inputMode="tel"
+            value={phone}
+            onChange={(e) => onPhoneChange(e.target.value)}
+            onFocus={onPhoneFocus}
+            onBlur={onPhoneBlur}
+            placeholder="(720) 000-0000"
+            style={{
+              width: "100%",
+              height: "52px",
+              border: `1px solid ${phoneFocused ? "#c2185b" : "#e0e0e0"}`,
+              borderRadius: "8px",
+              fontSize: "16px",
+              fontFamily: "Montserrat, sans-serif",
+              padding: "0 40px 0 14px",
+              color: "#1a1a1a",
+              outline: "none",
+              background: "white",
+              boxSizing: "border-box",
+              transition: "border-color 150ms ease",
+            }}
+          />
+          {phoneComplete && (
+            <span
+              style={{
+                position: "absolute",
+                right: "14px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                color: "#4caf50",
+                fontSize: "16px",
+                fontWeight: 700,
+              }}
+            >
+              ✓
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Privacy line */}
+      <p
+        style={{
+          fontSize: "11px",
+          color: "#bdbdbd",
+          textAlign: "center",
+          margin: "12px 0",
+          fontFamily: "Montserrat, sans-serif",
+        }}
+      >
+        🔒 Privado — solo para confirmar tu cita
+      </p>
+
+      {/* Submit button */}
+      <button
+        onClick={onSubmit}
+        disabled={!isFormValid}
+        style={{
+          width: "100%",
+          height: "56px",
+          borderRadius: "10px",
+          background: isFormValid ? "#c2185b" : "rgba(194,24,91,0.35)",
+          color: "white",
+          fontSize: "15px",
+          fontWeight: 700,
+          border: "none",
+          cursor: isFormValid ? "pointer" : "not-allowed",
+          fontFamily: "Montserrat, sans-serif",
+          boxShadow: isFormValid ? "0 4px 14px rgba(194,24,91,0.28)" : "none",
+          transition: "background 200ms ease, box-shadow 200ms ease",
+          letterSpacing: "0.01em",
+        }}
+      >
+        Agendar Mi Cita con 10% de Descuento →
+      </button>
+
+      {/* Testimonial */}
+      <p
+        style={{
+          fontSize: "12px",
+          fontStyle: "italic",
+          color: "#bdbdbd",
+          textAlign: "center",
+          marginTop: "14px",
+          fontFamily: "Montserrat, sans-serif",
+          lineHeight: 1.6,
+        }}
+      >
+        "¡Cristina es la mejor! Las pestañas me duran semanas."
+        <br />
+        <span style={{ fontStyle: "normal" }}>— Sandra M., Thornton</span>
+      </p>
+    </div>
+  );
+};
+
+export default Quiz;
