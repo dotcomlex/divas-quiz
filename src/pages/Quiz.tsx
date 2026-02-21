@@ -64,6 +64,7 @@ const Quiz: React.FC = () => {
   const goBack = () => {
     if (step === 2) setStep(1);
     else if (step === 3) setStep(2);
+    else if (step === 4) setStep(3);
   };
 
   if (screen === "disqualified") {
@@ -307,7 +308,13 @@ const Quiz: React.FC = () => {
               />
             )}
             {step === 3 && (
-              <Step3
+              <Step3Confirm
+                selectedService={selectedService}
+                onContinue={() => setStep(4)}
+              />
+            )}
+            {step === 4 && (
+              <Step4Contact
                 name={name}
                 phone={phone}
                 isFormValid={isFormValid}
@@ -381,40 +388,19 @@ const Step1: React.FC<{
   <div>
     <h2
       style={{
-        fontSize: "22px",
-        fontWeight: 700,
+        fontSize: "24px",
+        fontWeight: 800,
         color: "#1a1a1a",
         marginBottom: "6px",
         fontFamily: "Montserrat, sans-serif",
         lineHeight: 1.3,
       }}
     >
-      ¿Qué servicio te interesa?
+      Elige tu Servicio con <span style={{ color: "#c2185b" }}>10% OFF</span>
     </h2>
-    <p style={{ fontSize: "13px", fontWeight: 500, color: "#444444", marginBottom: "10px", fontFamily: "Montserrat, sans-serif" }}>
-      Elige el look que quieres lograr
+    <p style={{ fontSize: "14px", fontWeight: 500, color: "#444444", marginBottom: "18px", fontFamily: "Montserrat, sans-serif" }}>
+      Oferta válida solo este mes — precios con descuento ya aplicado
     </p>
-    {/* Discount pill */}
-    <div style={{ marginBottom: "18px" }}>
-      <span
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "5px",
-          background: "#fff8e1",
-          border: "1.5px solid #ffe082",
-          borderRadius: "20px",
-          padding: "5px 12px",
-          fontSize: "12px",
-          fontWeight: 700,
-          color: "#7a5c00",
-          fontFamily: "Montserrat, sans-serif",
-          letterSpacing: "0.01em",
-        }}
-      >
-        🏷️ 10% de descuento ya aplicado
-      </span>
-    </div>
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
       {SERVICES.map((svc) => (
         <ServiceTile
@@ -537,8 +523,173 @@ const Step2: React.FC<{
   </div>
 );
 
-/* ─── Step 3: Contact Form ─── */
-const Step3: React.FC<{
+/* ─── Step 3: Commitment Confirmation ─── */
+const Step3Confirm: React.FC<{
+  selectedService: string;
+  onContinue: () => void;
+}> = ({ selectedService, onContinue }) => {
+  const service = SERVICES.find((s) => s.name === selectedService);
+  return (
+    <div>
+      <h2
+        style={{
+          fontSize: "22px",
+          fontWeight: 700,
+          color: "#1a1a1a",
+          marginBottom: "6px",
+          fontFamily: "Montserrat, sans-serif",
+          lineHeight: 1.3,
+        }}
+      >
+        Tu cita seleccionada
+      </h2>
+      <p style={{ fontSize: "14px", color: "#555555", marginBottom: "20px", fontFamily: "Montserrat, sans-serif" }}>
+        Confirma tu servicio antes de agendar
+      </p>
+
+      {/* Service summary card */}
+      {service && (
+        <div
+          style={{
+            display: "flex",
+            border: "1.5px solid #edd5df",
+            borderRadius: "14px",
+            overflow: "hidden",
+            background: "white",
+            boxShadow: "0 2px 10px rgba(194,24,91,0.08)",
+            marginBottom: "24px",
+          }}
+        >
+          {/* Image */}
+          <div style={{ width: "110px", flexShrink: 0 }}>
+            {service.imageSrc ? (
+              <img
+                src={service.imageSrc}
+                alt={service.name}
+                style={{ width: "100%", height: "100%", objectFit: "cover", minHeight: "120px" }}
+              />
+            ) : (
+              <div
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  minHeight: "120px",
+                  background: "linear-gradient(135deg, #fce4ec 0%, #fdf6f7 100%)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "30px",
+                }}
+              >
+                {service.emoji}
+              </div>
+            )}
+          </div>
+          {/* Info */}
+          <div style={{ padding: "14px 16px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <p
+              style={{
+                fontSize: "16px",
+                fontWeight: 700,
+                color: "#1a1a1a",
+                margin: "0 0 6px",
+                fontFamily: "Montserrat, sans-serif",
+              }}
+            >
+              {service.name}
+            </p>
+            {!service.isFlat && service.originalPrice && (
+              <p
+                style={{
+                  fontSize: "13px",
+                  color: "#888",
+                  textDecoration: "line-through",
+                  margin: "0 0 2px",
+                  fontFamily: "Montserrat, sans-serif",
+                }}
+              >
+                {service.originalPrice}
+              </p>
+            )}
+            <p
+              style={{
+                fontSize: "18px",
+                fontWeight: 700,
+                color: "#c2185b",
+                margin: "0 0 4px",
+                fontFamily: "Montserrat, sans-serif",
+              }}
+            >
+              {service.salePrice}
+            </p>
+            {!service.isFlat && (
+              <p
+                style={{
+                  fontSize: "12px",
+                  fontWeight: 700,
+                  color: "#2e7d32",
+                  margin: 0,
+                  fontFamily: "Montserrat, sans-serif",
+                }}
+              >
+                Ahorras 10%
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Trust bullets */}
+      <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "28px" }}>
+        {[
+          { icon: "✅", text: "Satisfacción garantizada" },
+          { icon: "💳", text: "Pagas después del servicio" },
+          { icon: "📲", text: "Te contactamos hoy mismo" },
+        ].map((item) => (
+          <div
+            key={item.text}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+              fontSize: "14px",
+              fontWeight: 500,
+              color: "#333",
+              fontFamily: "Montserrat, sans-serif",
+            }}
+          >
+            <span style={{ fontSize: "16px" }}>{item.icon}</span>
+            {item.text}
+          </div>
+        ))}
+      </div>
+
+      {/* CTA */}
+      <button
+        onClick={onContinue}
+        style={{
+          width: "100%",
+          height: "56px",
+          borderRadius: "10px",
+          background: "#c2185b",
+          color: "white",
+          fontSize: "16px",
+          fontWeight: 700,
+          border: "none",
+          cursor: "pointer",
+          fontFamily: "Montserrat, sans-serif",
+          boxShadow: "0 4px 14px rgba(194,24,91,0.28)",
+          letterSpacing: "0.01em",
+        }}
+      >
+        Continuar y Agendar →
+      </button>
+    </div>
+  );
+};
+
+/* ─── Step 4: Contact Form ─── */
+const Step4Contact: React.FC<{
   name: string;
   phone: string;
   isFormValid: boolean;

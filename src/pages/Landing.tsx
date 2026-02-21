@@ -30,7 +30,18 @@ const Landing: React.FC = () => {
           style={{
             padding: "40px 28px 44px",
             minHeight: "100dvh",
-            background: "#fffaf9",
+            background: `
+              radial-gradient(ellipse 60% 50% at 10% 10%, rgba(194,24,91,0.06) 0%, transparent 60%),
+              radial-gradient(ellipse 50% 40% at 90% 90%, rgba(194,24,91,0.05) 0%, transparent 50%),
+              repeating-linear-gradient(
+                135deg,
+                transparent,
+                transparent 18px,
+                rgba(194,24,91,0.03) 18px,
+                rgba(194,24,91,0.03) 19px
+              ),
+              #fffaf9
+            `,
           }}
         >
           {/* Logo */}
@@ -70,8 +81,8 @@ const Landing: React.FC = () => {
               fontFamily: "Montserrat, sans-serif",
             }}
           >
-            Pestañas que duran.<br />
-            <span style={{ color: "#c2185b" }}>Cita en minutos.</span>
+            Pestañas perfectas,<br />
+            <span style={{ color: "#c2185b" }}>10% OFF solo este mes.</span>
           </h1>
 
           {/* Subheadline */}
@@ -84,10 +95,10 @@ const Landing: React.FC = () => {
               lineHeight: 1.6,
               fontFamily: "Montserrat, sans-serif",
               fontWeight: 400,
-              maxWidth: "320px",
+              maxWidth: "340px",
             }}
           >
-            Elige tu servicio, déjanos tu número y te confirmamos hoy mismo.
+            Elige tu servicio, déjanos tu número y te confirmamos tu cita hoy mismo. Rápido y sin compromiso.
           </p>
 
           {/* CTA Button */}
@@ -111,7 +122,7 @@ const Landing: React.FC = () => {
               animation: "cta-pulse 2.4s ease-in-out infinite",
             }}
           >
-            ¡Quiero mi descuento! →
+            Ver Servicios y Precios →
           </motion.button>
 
           {/* Trust signals */}

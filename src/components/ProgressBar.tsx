@@ -1,13 +1,13 @@
 import React from "react";
 
 interface ProgressBarProps {
-  step: number; // 1, 2, or 3
+  step: number; // 1, 2, 3, or 4
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = ({ step }) => {
   return (
     <div className="flex w-full gap-1" style={{ height: "6px" }}>
-      {[1, 2, 3].map((seg) => (
+      {[1, 2, 3, 4].map((seg) => (
         <div
           key={seg}
           className="flex-1 rounded-full transition-all"
