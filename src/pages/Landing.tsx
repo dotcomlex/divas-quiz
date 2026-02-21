@@ -51,7 +51,7 @@ const Landing: React.FC = () => {
             style={{ width: "180px", objectFit: "contain" }}
           />
 
-          {/* Promo badge — amber/yellow highlight */}
+          {/* Promo badge */}
           <div
             style={{
               marginTop: "18px",
@@ -66,7 +66,7 @@ const Landing: React.FC = () => {
               letterSpacing: "0.01em",
             }}
           >
-            🏷️ 10% de descuento este mes
+            🏷️ Ahorra el 10% este mes
           </div>
 
           {/* Headline */}
@@ -82,7 +82,7 @@ const Landing: React.FC = () => {
             }}
           >
             Pestañas perfectas,<br />
-            <span style={{ color: "#c2185b" }}>10% OFF solo este mes.</span>
+            <span style={{ color: "#c2185b" }}>Ahorra el 10% solo este mes.</span>
           </h1>
 
           {/* Subheadline */}
@@ -98,7 +98,7 @@ const Landing: React.FC = () => {
               maxWidth: "340px",
             }}
           >
-            Elige tu servicio, déjanos tu número y te confirmamos tu cita hoy mismo. Rápido y sin compromiso.
+            Ahorra el 10% en cualquier servicio de pestañas. Solo por este mes. Oprime el botón para agendar tu cita.
           </p>
 
           {/* CTA Button */}
@@ -125,47 +125,42 @@ const Landing: React.FC = () => {
             Ver Servicios y Precios →
           </motion.button>
 
-          {/* Trust signals */}
+          {/* Trust signals — pill badges */}
           <div
             style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: "0",
-              marginTop: "14px",
+              gap: "8px",
+              marginTop: "16px",
               flexWrap: "wrap",
-              rowGap: "6px",
+              rowGap: "8px",
             }}
           >
             {[
-              { icon: "✅", text: "+1,000 clientas" },
-              { icon: "⭐", text: "5 estrellas" },
-              { icon: "🎁", text: "10% off hoy" },
-            ].map((badge, i, arr) => (
-              <React.Fragment key={badge.text}>
-                <span
-                  style={{
-                    fontSize: "12px",
-                    color: "#555555",
-                    fontFamily: "Montserrat, sans-serif",
-                    fontWeight: 500,
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {badge.icon} {badge.text}
-                </span>
-                {i < arr.length - 1 && (
-                  <span
-                    style={{
-                      margin: "0 8px",
-                      color: "#ccc",
-                      fontSize: "12px",
-                    }}
-                  >
-                    ·
-                  </span>
-                )}
-              </React.Fragment>
+              { icon: "🔒", text: "+1,000 clientas", bg: "#f5f5f5", border: "#e0e0e0" },
+              { icon: "⭐", text: "5 estrellas", bg: "#fff8e1", border: "#ffe082" },
+              { icon: "✅", text: "Garantizada", bg: "#e8f5e9", border: "#a5d6a7" },
+            ].map((badge) => (
+              <span
+                key={badge.text}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "4px",
+                  fontSize: "11px",
+                  fontWeight: 600,
+                  color: "#444",
+                  fontFamily: "Montserrat, sans-serif",
+                  whiteSpace: "nowrap",
+                  background: badge.bg,
+                  border: `1px solid ${badge.border}`,
+                  borderRadius: "20px",
+                  padding: "5px 12px",
+                }}
+              >
+                {badge.icon} {badge.text}
+              </span>
             ))}
           </div>
         </div>

@@ -159,7 +159,7 @@ const Quiz: React.FC = () => {
               marginBottom: "20px",
             }}
           >
-            Recibimos tu solicitud. Te contactamos pronto para confirmar. 🤍
+            Recibimos tu solicitud. Te contactamos pronto para confirmar tu cita. Si tienes alguna pregunta, estamos para ayudarte. 🤍
           </p>
 
           {/* Confirmation card */}
@@ -267,13 +267,7 @@ const Quiz: React.FC = () => {
             </a>
           </div>
 
-          {/* FAQ divider + section */}
-          <div
-            style={{
-              borderTop: "1.5px solid #f8d7e3",
-              marginBottom: "20px",
-            }}
-          />
+          {/* FAQ section */}
           <FaqAccordion />
         </div>
       </PageWrapper>
@@ -373,7 +367,7 @@ const PageWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
           }
         }
       `}</style>
-      <div className="quiz-card w-full" style={{ minHeight: "100dvh", background: "#fffaf9" }}>
+      <div className="quiz-card w-full" style={{ minHeight: "100dvh", background: `radial-gradient(ellipse 60% 50% at 10% 10%, rgba(194,24,91,0.06) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at 90% 90%, rgba(194,24,91,0.05) 0%, transparent 50%), repeating-linear-gradient(135deg, transparent, transparent 18px, rgba(194,24,91,0.03) 18px, rgba(194,24,91,0.03) 19px), #fffaf9` }}>
         {children}
       </div>
     </div>
@@ -396,7 +390,7 @@ const Step1: React.FC<{
         lineHeight: 1.3,
       }}
     >
-      Elige tu Servicio con <span style={{ color: "#c2185b" }}>10% OFF</span>
+      Elige tu Servicio con <span style={{ color: "#c2185b" }}>Ahorra el 10%</span>
     </h2>
     <p style={{ fontSize: "14px", fontWeight: 500, color: "#444444", marginBottom: "18px", fontFamily: "Montserrat, sans-serif" }}>
       Oferta válida solo este mes — precios con descuento ya aplicado
@@ -645,6 +639,7 @@ const Step3Confirm: React.FC<{
           { icon: "✅", text: "Satisfacción garantizada" },
           { icon: "💳", text: "Pagas después del servicio" },
           { icon: "📲", text: "Te contactamos hoy mismo" },
+          { icon: "💬", text: "Cualquier pregunta, estamos para ayudarte" },
         ].map((item) => (
           <div
             key={item.text}
@@ -848,7 +843,7 @@ const Step4Contact: React.FC<{
         {[
           { icon: "🔒", label: "Seguro" },
           { icon: "⚡", label: "Respuesta rápida" },
-          { icon: "🎁", label: "10% off" },
+          { icon: "🎁", label: "Ahorra 10%" },
         ].map((badge, i, arr) => (
           <React.Fragment key={badge.label}>
           <span
@@ -915,7 +910,7 @@ const Step4Contact: React.FC<{
             lineHeight: 1.6,
           }}
         >
-          "¡Cristina es la mejor! Las pestañas me duran semanas."
+          "¡Divas Beauty es increíble! Las pestañas me duran semanas."
           <br />
           <span style={{ fontStyle: "normal" }}>— Sandra M., Thornton</span>
         </p>
