@@ -390,7 +390,7 @@ const Step1: React.FC<{
         lineHeight: 1.3,
       }}
     >
-      Elige tu Servicio con <span style={{ color: "#c2185b" }}>Ahorra el 10%</span>
+      Elige tu Servicio — <span style={{ color: "#c2185b" }}>Ahorra el 10%</span>
     </h2>
     <p style={{ fontSize: "14px", fontWeight: 500, color: "#444444", marginBottom: "18px", fontFamily: "Montserrat, sans-serif" }}>
       Oferta válida solo este mes — precios con descuento ya aplicado
