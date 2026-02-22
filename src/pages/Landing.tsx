@@ -175,7 +175,7 @@ const Landing: React.FC = () => {
           {/* Reviews title */}
           <p
             style={{
-              marginTop: "16px",
+              marginTop: "28px",
               fontSize: "15px",
               fontWeight: 700,
               color: "#1a1a1a",
