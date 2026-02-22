@@ -10,6 +10,7 @@ interface ServiceTileProps {
   isFavorite?: boolean;
   isSelected: boolean;
   imageSrc?: string;
+  imagePosition?: string;
   onSelect: () => void;
 }
 
@@ -22,6 +23,7 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
   isFavorite = false,
   isSelected,
   imageSrc,
+  imagePosition = "center center",
   onSelect,
 }) => {
   return (
@@ -44,7 +46,7 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
       <div
         style={{
           position: "relative",
-          height: "100px",
+          height: "120px",
           borderRadius: "10px 10px 0 0",
           overflow: "hidden",
           flexShrink: 0,
@@ -54,7 +56,7 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
           <img
             src={imageSrc}
             alt={name}
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: imagePosition }}
           />
         ) : (
           <div

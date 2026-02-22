@@ -14,11 +14,11 @@ import imgCejas from "@/assets/services/cejas.jpg";
 type Screen = "quiz" | "disqualified" | "success";
 
 const SERVICES = [
-  { emoji: "✨", name: "Set Híbrido", originalPrice: "$149.99", salePrice: "$134.99", isFavorite: true, isFlat: false, imageSrc: imgHybrid },
-  { emoji: "🌸", name: "Set Clásico", originalPrice: "$99.99", salePrice: "$89.99", isFavorite: false, isFlat: false, imageSrc: imgClasico },
-  { emoji: "💎", name: "Set de Volumen", originalPrice: "$179.99", salePrice: "$161.99", isFavorite: false, isFlat: false, imageSrc: imgVolumen },
-  { emoji: "👑", name: "Mega Volumen", originalPrice: "$119.99", salePrice: "$107.99", isFavorite: false, isFlat: false, imageSrc: imgMega },
-  { emoji: "🌿", name: "Lash Lift", originalPrice: "$79.99", salePrice: "$71.99", isFavorite: false, isFlat: false, imageSrc: imgLashlift },
+  { emoji: "✨", name: "Set Híbrido", originalPrice: "$149.99", salePrice: "$134.99", isFavorite: true, isFlat: false, imageSrc: imgHybrid, imagePosition: "center 40%" },
+  { emoji: "🌸", name: "Set Clásico", originalPrice: "$99.99", salePrice: "$89.99", isFavorite: false, isFlat: false, imageSrc: imgClasico, imagePosition: "center 40%" },
+  { emoji: "💎", name: "Set de Volumen", originalPrice: "$179.99", salePrice: "$161.99", isFavorite: false, isFlat: false, imageSrc: imgVolumen, imagePosition: "center 40%" },
+  { emoji: "👑", name: "Mega Volumen", originalPrice: "$119.99", salePrice: "$107.99", isFavorite: false, isFlat: false, imageSrc: imgMega, imagePosition: "center 40%" },
+  { emoji: "🌿", name: "Lash Lift", originalPrice: "$79.99", salePrice: "$71.99", isFavorite: false, isFlat: false, imageSrc: imgLashlift, imagePosition: "center 30%" },
   { emoji: "🍃", name: "Laminado de Cejas", originalPrice: undefined, salePrice: "$50.00", isFavorite: false, isFlat: true, imageSrc: imgCejas },
 ];
 
@@ -407,6 +407,7 @@ const Step1: React.FC<{
           isFavorite={svc.isFavorite}
           isSelected={selectedService === svc.name}
           imageSrc={svc.imageSrc}
+          imagePosition={svc.imagePosition}
           onSelect={() => onSelect(svc.name)}
         />
       ))}
