@@ -218,20 +218,7 @@ const PageWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
     className="flex items-start justify-center sm:items-center sm:py-8"
   >
     <div className="w-full" style={{ maxWidth: "480px", height: "100dvh" }}>
-      <style>{`
-        @media (min-width: 480px) {
-          .quiz-card {
-            border-radius: 20px !important;
-            box-shadow: 0 8px 32px rgba(194,24,91,0.10) !important;
-            height: auto !important;
-            max-height: 90dvh !important;
-          }
-          .quiz-outer {
-            height: auto !important;
-          }
-        }
-      `}</style>
-      <div className="quiz-card w-full" style={{ height: "100dvh", display: "flex", flexDirection: "column", background: `radial-gradient(ellipse 60% 50% at 10% 10%, rgba(194,24,91,0.06) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at 90% 90%, rgba(194,24,91,0.05) 0%, transparent 50%), repeating-linear-gradient(135deg, transparent, transparent 18px, rgba(194,24,91,0.03) 18px, rgba(194,24,91,0.03) 19px), #fffaf9` }}>
+      <div className="quiz-card w-full" style={{ height: "100dvh", display: "flex", flexDirection: "column", background: "#fffaf9" }}>
         {children}
       </div>
     </div>
@@ -507,7 +494,7 @@ const Step3Confirm: React.FC<{
                   fontFamily: "Montserrat, sans-serif",
                 }}
               >
-                ✅ 10% de descuento este mes
+                ✅ Incluye 10% de descuento
               </p>
             )}
           </div>
@@ -630,7 +617,7 @@ const Step4Contact: React.FC<{
       </div>
 
       {/* Phone field */}
-      <div style={{ marginBottom: "6px" }}>
+      <div style={{ marginBottom: "14px" }}>
         <label
           style={{
             display: "block",
@@ -687,20 +674,7 @@ const Step4Contact: React.FC<{
             </span>
           )}
         </div>
-        {/* Phone microcopy */}
-        <p
-          style={{
-            fontSize: "12px",
-            color: "#888",
-            margin: "6px 0 0",
-            fontFamily: "Montserrat, sans-serif",
-            lineHeight: 1.4,
-          }}
-        >
-          📱 Te escribimos por mensaje para confirmar tu cita. No spam, prometido.
-        </p>
       </div>
-
 
       {/* Submit button */}
       <button
@@ -728,7 +702,7 @@ const Step4Contact: React.FC<{
 
 
       {/* Testimonial with avatar */}
-      <div style={{ textAlign: "center", marginTop: "20px" }}>
+      <div style={{ textAlign: "center", marginTop: "14px" }}>
         <div style={{ display: "flex", justifyContent: "center", marginBottom: "8px" }}>
           <img
             src={avatarSandra}
@@ -828,7 +802,7 @@ const SuccessScreen: React.FC<{ firstName: string; selectedService: string }> = 
             marginBottom: "16px",
           }}
         >
-          {service.name} — {service.salePrice} (10% de descuento este mes)
+          {service.name} — {service.salePrice} (incluye 10% de descuento)
         </span>
       )}
 
