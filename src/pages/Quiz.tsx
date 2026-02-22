@@ -53,7 +53,7 @@ const Quiz: React.FC = () => {
     if (typeof window !== "undefined" && (window as any).fbq) {
       (window as any).fbq("trackCustom", "CustomizeProduct", { content_name: serviceName });
     }
-    setTimeout(() => setStep(2), 400);
+    setTimeout(() => setStep(2), 250);
   };
 
   const handleSubmit = () => {
@@ -139,8 +139,8 @@ const Quiz: React.FC = () => {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            style={{ padding: "24px 24px 0" }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            style={{ padding: "24px 24px 0", willChange: "transform" }}
           >
             {step === 1 && <Step1 selectedService={selectedService} onSelect={handleServiceSelect} />}
             {step === 2 && (
@@ -257,7 +257,7 @@ const Step1: React.FC<{
       Elige tu Servicio
     </h2>
     <p style={{ fontSize: "15px", fontWeight: 400, color: "#555", marginBottom: "18px", fontFamily: "Montserrat, sans-serif" }}>
-      Todos los precios ya incluyen tu 10% de descuento de clienta nueva 👇
+      Todos los precios ya incluyen tu 10% de descuento solo por este mes 👇
     </p>
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
       {SERVICES.map((svc, i) => (
@@ -310,8 +310,8 @@ const Step2: React.FC<{
     {/* Address box — soft rose */}
     <div
       style={{
-        background: "#FFF0F5",
-        border: "1px solid #F0C0D4",
+        background: "#FFFDE7",
+        border: "1px solid #F5C842",
         borderRadius: "12px",
         padding: "16px 18px",
         marginBottom: "24px",
@@ -330,16 +330,6 @@ const Step2: React.FC<{
             }}
           >
             2121 W 84th Ave, Thornton CO 80260
-          </p>
-          <p
-            style={{
-              fontSize: "13px",
-              color: "#888",
-              margin: 0,
-              fontFamily: "Montserrat, sans-serif",
-            }}
-          >
-            Cerca del área de Westminster / Thornton
           </p>
         </div>
       </div>
@@ -405,6 +395,10 @@ const Step2: React.FC<{
         </div>
       </motion.button>
     </div>
+
+    <p style={{ fontSize: "13px", color: "#999", fontStyle: "italic", textAlign: "center", marginTop: "16px", fontFamily: "Montserrat, sans-serif", lineHeight: 1.5 }}>
+      Para respetar tu tiempo y el nuestro, asegúrate de que puedes llegar a nuestro local antes de continuar.
+    </p>
   </div>
 ));
 
@@ -513,7 +507,7 @@ const Step3Confirm: React.FC<{
                   fontFamily: "Montserrat, sans-serif",
                 }}
               >
-                ✅ 10% de descuento ya aplicado
+                ✅ 10% de descuento este mes
               </p>
             )}
           </div>
@@ -834,7 +828,7 @@ const SuccessScreen: React.FC<{ firstName: string; selectedService: string }> = 
             marginBottom: "16px",
           }}
         >
-          {service.name} — {service.salePrice} (10% de descuento)
+          {service.name} — {service.salePrice} (10% de descuento este mes)
         </span>
       )}
 
