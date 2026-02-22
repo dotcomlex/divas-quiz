@@ -1,25 +1,26 @@
 
 
-## Clean Up Trust Badges & Update Promo Text
+## Fix Trust Badges — One Line, No Wrapping
 
-### Changes to `src/pages/Landing.tsx`
+### Problem
+The three trust badges wrap to two lines because the text is too long for a 390px screen.
 
-#### 1. Make all trust badges one solid color
-Right now each badge has a different background and text color (rose, green, blue) which looks busy. Change all three to use the same subtle rose theme so they feel cohesive:
-- Background: `#FFF0F3` (light rose) for all three
-- Text color: `#C2185B` (brand rose) for all three
-- Keep the emoji icons as visual differentiators
+### Solution
+Shorten the text on each badge so all three fit on a single row:
 
-#### 2. Update promo badge text
-Change from:
-> "Clientas nuevas — 10% de descuento este mes"
+- "💖 +1,000 clientas felices" → "💖 +1,000 clientas"
+- "✅ Satisfacción garantizada" → "✅ Garantizado"
+- "⭐ Atención personalizada" → "⭐ Personalizado"
 
-To:
-> "10% de descuento este mes"
+Also reduce font size from 13px to 11px and padding from 6px 14px to 5px 10px, and add `flexWrap: "nowrap"` to the container so they never wrap.
 
-Remove the "Clientas nuevas" / "for new clients" qualifier as requested.
+### Technical Details
 
-### No changes to
-- Headline, subheadline, CTA button text
-- Reviews section, routing, images, colors, fonts
+**File: `src/pages/Landing.tsx`**
+
+1. Update the badge text array to shorter labels
+2. Change container `flexWrap` from `"wrap"` to `"nowrap"`
+3. Reduce badge font size to 11px and padding to 5px 10px
+
+No changes to copy, routing, images, colors, or any other section.
 
