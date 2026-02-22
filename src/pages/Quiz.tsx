@@ -260,7 +260,7 @@ const Step1: React.FC<{
       Todos los precios ya incluyen tu 10% de descuento de clienta nueva 👇
     </p>
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
-      {SERVICES.map((svc) => (
+      {SERVICES.map((svc, i) => (
         <ServiceTile
           key={svc.name}
           emoji={svc.emoji}
@@ -276,6 +276,8 @@ const Step1: React.FC<{
           badgeText={svc.badgeText}
           badgeType={svc.badgeType}
           highlightBorder={(svc as any).highlightBorder}
+          loading={i < 2 ? "eager" : "lazy"}
+          fetchPriority={i < 2 ? "high" : "auto"}
           onSelect={() => onSelect(svc.name)}
         />
       ))}
