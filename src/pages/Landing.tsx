@@ -148,9 +148,9 @@ const Landing: React.FC = () => {
             }}
           >
             {[
-              { text: "💖 +1,000 clientas felices", bg: "#FFF0F3", color: "#C2185B" },
-              { text: "✅ Satisfacción garantizada", bg: "#FFF0F3", color: "#C2185B" },
-              { text: "⭐ Atención personalizada", bg: "#FFF0F3", color: "#C2185B" },
+              { text: "💖 +1,000 clientas felices", bg: "#F5F5F5", color: "#555555" },
+              { text: "✅ Satisfacción garantizada", bg: "#F5F5F5", color: "#555555" },
+              { text: "⭐ Atención personalizada", bg: "#F5F5F5", color: "#555555" },
             ].map((b, i) => (
               <span
                 key={i}
