@@ -1,29 +1,30 @@
 
 
-## Replace Service Tile Images
+## Replace All 5 Service Images
 
-You uploaded 4 new lash photos. I'll copy them into the project, replacing the existing service images:
+You uploaded 5 official lash photos. Here's the mapping:
 
-| Image | Service | Replaces |
+| Image | Service | File path |
 |---|---|---|
-| Image 1 (natural lashes) | Set Clasico | `src/assets/services/clasico.jpg` |
-| Image 2 (fuller lashes) | Set Hibrido | `src/assets/services/hybrid.jpg` |
-| Image 3 (dramatic lashes) | Set de Volumen | `src/assets/services/volumen.jpg` |
-| Image 4 (mega dramatic, both eyes) | Mega Volumen | `src/assets/services/mega.jpg` |
+| Image 1 (natural classic lashes) | Set Clasico | `src/assets/services/clasico.webp` |
+| Image 2 (fuller hybrid lashes) | Set Hibrido | `src/assets/services/hybrid.webp` |
+| Image 3 (dramatic volume lashes) | Set de Volumen | `src/assets/services/volumen.webp` |
+| Image 4 (mega volume lashes) | Mega Volumen | `src/assets/services/mega.webp` |
+| Image 5 (lifted natural lashes) | Lash Lift | `src/assets/services/lashlift.webp` |
 
 ### Technical Details
 
-- Copy each uploaded image to the corresponding path in `src/assets/services/`, overwriting the existing files
-- The file extensions will change from `.jpg` to `.png`, so the import statements in `Quiz.tsx` (lines 7-10) need to be updated accordingly
-- No other code changes needed -- the imports already wire these into the SERVICES array
+- Copy each uploaded image to `src/assets/services/` as `.webp` files
+- Update all 5 import statements in `Quiz.tsx` to use the new `.webp` extensions (currently 4 are `.png` and 1 is `.jpg`)
 
 ### Files Changed
 
 | File | What |
 |---|---|
-| `src/assets/services/clasico.png` | New image (replaces .jpg) |
-| `src/assets/services/hybrid.png` | New image (replaces .jpg) |
-| `src/assets/services/volumen.png` | New image (replaces .jpg) |
-| `src/assets/services/mega.png` | New image (replaces .jpg) |
-| `src/pages/Quiz.tsx` | Update 4 import paths from `.jpg` to `.png` |
+| `src/assets/services/clasico.webp` | New image |
+| `src/assets/services/hybrid.webp` | New image |
+| `src/assets/services/volumen.webp` | New image |
+| `src/assets/services/mega.webp` | New image |
+| `src/assets/services/lashlift.webp` | New image |
+| `src/pages/Quiz.tsx` | Update 5 import paths to `.webp` |
 
