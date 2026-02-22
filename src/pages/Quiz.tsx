@@ -704,42 +704,6 @@ const Step4Contact: React.FC<{
         </p>
       </div>
 
-      {/* Trust pill badges */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "8px",
-          margin: "14px 0 12px",
-          flexWrap: "wrap",
-        }}
-      >
-        {[
-          { icon: "🔒", label: "Seguro", bg: "#F5F5F5" },
-          { icon: "⚡", label: "Respuesta rápida", bg: "#FFF8E1" },
-          { icon: "💅", label: "10% de descuento incluido", bg: "#FFF0F5" },
-        ].map((badge) => (
-          <span
-            key={badge.label}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "3px",
-              fontSize: "12px",
-              fontWeight: 600,
-              color: "#555",
-              fontFamily: "Montserrat, sans-serif",
-              whiteSpace: "nowrap",
-              background: badge.bg,
-              borderRadius: "99px",
-              padding: "5px 10px",
-            }}
-          >
-            {badge.icon} {badge.label}
-          </span>
-        ))}
-      </div>
 
       {/* Submit button */}
       <button
@@ -765,40 +729,19 @@ const Step4Contact: React.FC<{
         Enviar mi info →
       </button>
 
-      {/* SMS consent */}
-      <p
-        style={{
-          fontSize: "11px",
-          color: "#aaa",
-          textAlign: "center",
-          marginTop: "10px",
-          fontFamily: "Montserrat, sans-serif",
-          lineHeight: 1.5,
-        }}
-      >
-        Al enviar, aceptas recibir mensajes de texto de Divas Beauty Studio sobre tu cita. Puedes cancelar en cualquier momento.
-      </p>
 
       {/* Testimonial with avatar */}
       <div style={{ textAlign: "center", marginTop: "20px" }}>
         <div style={{ display: "flex", justifyContent: "center", marginBottom: "8px" }}>
-          <div
+          <img
+            src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sandra"
+            alt="Sandra M."
             style={{
               width: "40px",
               height: "40px",
               borderRadius: "50%",
-              background: "#F0E0E8",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "14px",
-              fontWeight: 700,
-              color: "#c2185b",
-              fontFamily: "Montserrat, sans-serif",
             }}
-          >
-            SM
-          </div>
+          />
         </div>
         <p style={{ margin: "0 0 4px", fontSize: "13px", color: "#f5a623", lineHeight: 1 }}>
           ⭐⭐⭐⭐⭐
