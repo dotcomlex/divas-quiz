@@ -15,16 +15,20 @@ const Landing: React.FC = () => {
 
   return (
     <div
-      style={{ minHeight: "100dvh" }}
+      style={{ height: "100dvh", overflow: "hidden" }}
       className="flex items-start justify-center sm:items-center sm:py-8"
     >
-      <div className="w-full" style={{ maxWidth: "480px" }}>
+      <div className="w-full" style={{ maxWidth: "480px", height: "100dvh" }}>
         <style>{`
           @media (min-width: 480px) {
             .landing-card {
               border-radius: 20px !important;
               box-shadow: 0 8px 32px rgba(194,24,91,0.10) !important;
-              min-height: auto !important;
+              height: auto !important;
+              max-height: 90dvh !important;
+            }
+            .landing-outer {
+              height: auto !important;
             }
           }
         `}</style>
@@ -32,7 +36,9 @@ const Landing: React.FC = () => {
           className="landing-card w-full flex flex-col items-center"
           style={{
             padding: "40px 28px 44px",
-            minHeight: "100dvh",
+            height: "100dvh",
+            overflowY: "auto",
+            WebkitOverflowScrolling: "touch",
             background: `
               radial-gradient(ellipse 60% 50% at 10% 10%, rgba(194,24,91,0.06) 0%, transparent 60%),
               radial-gradient(ellipse 50% 40% at 90% 90%, rgba(194,24,91,0.05) 0%, transparent 50%),

@@ -77,12 +77,12 @@ const Quiz: React.FC = () => {
   if (screen === "disqualified") {
     return (
       <PageWrapper>
-        <div style={{ padding: "0 16px", paddingTop: "16px" }}>
+        <div style={{ padding: "0 16px", paddingTop: "16px", flexShrink: 0 }}>
           <ProgressBar step={2} />
         </div>
         <div
           className="flex flex-col items-center justify-center text-center"
-          style={{ padding: "60px 28px", minHeight: "calc(100dvh - 40px)" }}
+          style={{ flex: 1, padding: "60px 28px", overflowY: "auto", WebkitOverflowScrolling: "touch" }}
         >
           <span style={{ fontSize: "40px", display: "block", marginBottom: "16px" }}>💛</span>
           <h2
@@ -124,13 +124,13 @@ const Quiz: React.FC = () => {
   // Quiz steps
   return (
     <PageWrapper>
-      {/* Progress bar */}
-      <div style={{ padding: "0 16px", paddingTop: "16px" }}>
+      {/* Progress bar — fixed top */}
+      <div style={{ padding: "0 16px", paddingTop: "16px", flexShrink: 0 }}>
         <ProgressBar step={step} />
       </div>
 
-      {/* Animated step content */}
-      <div style={{ overflow: "hidden", position: "relative" }}>
+      {/* Scrollable content area */}
+      <div style={{ flex: 1, overflowY: "auto", WebkitOverflowScrolling: "touch", position: "relative" }}>
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={step}
@@ -184,26 +184,28 @@ const Quiz: React.FC = () => {
         </AnimatePresence>
       </div>
 
-      {/* Back link */}
-      {step > 1 && (
-        <div className="text-center" style={{ padding: "20px 0 28px" }}>
-          <button
-            onClick={goBack}
-            style={{
-              fontSize: "13px",
-              color: "#757575",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              fontFamily: "Montserrat, sans-serif",
-              fontWeight: 400,
-            }}
-          >
-            ← Regresar
-          </button>
-        </div>
-      )}
-      {step === 1 && <div style={{ height: "28px" }} />}
+      {/* Back button — fixed bottom */}
+      <div style={{ flexShrink: 0 }}>
+        {step > 1 && (
+          <div className="text-center" style={{ padding: "20px 0 28px" }}>
+            <button
+              onClick={goBack}
+              style={{
+                fontSize: "13px",
+                color: "#757575",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: 400,
+              }}
+            >
+              ← Regresar
+            </button>
+          </div>
+        )}
+        {step === 1 && <div style={{ height: "28px" }} />}
+      </div>
     </PageWrapper>
   );
 };
@@ -211,20 +213,24 @@ const Quiz: React.FC = () => {
 /* ─── Page wrapper ─── */
 const PageWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div
-    style={{ minHeight: "100dvh" }}
+    style={{ height: "100dvh", overflow: "hidden" }}
     className="flex items-start justify-center sm:items-center sm:py-8"
   >
-    <div className="w-full" style={{ maxWidth: "480px" }}>
+    <div className="w-full" style={{ maxWidth: "480px", height: "100dvh" }}>
       <style>{`
         @media (min-width: 480px) {
           .quiz-card {
             border-radius: 20px !important;
             box-shadow: 0 8px 32px rgba(194,24,91,0.10) !important;
-            min-height: auto !important;
+            height: auto !important;
+            max-height: 90dvh !important;
+          }
+          .quiz-outer {
+            height: auto !important;
           }
         }
       `}</style>
-      <div className="quiz-card w-full" style={{ minHeight: "100dvh", background: `radial-gradient(ellipse 60% 50% at 10% 10%, rgba(194,24,91,0.06) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at 90% 90%, rgba(194,24,91,0.05) 0%, transparent 50%), repeating-linear-gradient(135deg, transparent, transparent 18px, rgba(194,24,91,0.03) 18px, rgba(194,24,91,0.03) 19px), #fffaf9` }}>
+      <div className="quiz-card w-full" style={{ height: "100dvh", display: "flex", flexDirection: "column", background: `radial-gradient(ellipse 60% 50% at 10% 10%, rgba(194,24,91,0.06) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at 90% 90%, rgba(194,24,91,0.05) 0%, transparent 50%), repeating-linear-gradient(135deg, transparent, transparent 18px, rgba(194,24,91,0.03) 18px, rgba(194,24,91,0.03) 19px), #fffaf9` }}>
         {children}
       </div>
     </div>
@@ -839,7 +845,7 @@ const SuccessScreen: React.FC<{ firstName: string; selectedService: string }> = 
   return (
     <div
       className="flex flex-col items-center justify-center text-center"
-      style={{ padding: "60px 28px", minHeight: "100dvh" }}
+      style={{ flex: 1, padding: "60px 28px", overflowY: "auto", WebkitOverflowScrolling: "touch" }}
     >
       <span style={{ fontSize: "48px", display: "block", marginBottom: "16px" }}>🎉</span>
       <h2
