@@ -51,6 +51,10 @@ const Landing: React.FC = () => {
           <img
             src={logoSrc}
             alt="Divas Beauty Studio"
+            fetchPriority="high"
+            decoding="async"
+            width={180}
+            height={60}
             style={{ width: "180px", objectFit: "contain" }}
           />
 

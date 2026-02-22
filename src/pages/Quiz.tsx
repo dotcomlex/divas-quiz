@@ -235,7 +235,7 @@ const PageWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 const Step1: React.FC<{
   selectedService: string;
   onSelect: (name: string) => void;
-}> = ({ selectedService, onSelect }) => (
+}> = React.memo(({ selectedService, onSelect }) => (
   <div>
     <h2
       style={{
@@ -274,13 +274,13 @@ const Step1: React.FC<{
       ))}
     </div>
   </div>
-);
+));
 
 /* ─── Step 2: Location Check ─── */
 const Step2: React.FC<{
   onYes: () => void;
   onNo: () => void;
-}> = ({ onYes, onNo }) => (
+}> = React.memo(({ onYes, onNo }) => (
   <div>
     <h2
       style={{
@@ -397,13 +397,13 @@ const Step2: React.FC<{
       </motion.button>
     </div>
   </div>
-);
+));
 
 /* ─── Step 3: Service Summary ─── */
 const Step3Confirm: React.FC<{
   selectedService: string;
   onContinue: () => void;
-}> = ({ selectedService, onContinue }) => {
+}> = React.memo(({ selectedService, onContinue }) => {
   const service = SERVICES.find((s) => s.name === selectedService);
   return (
     <div>
@@ -533,7 +533,7 @@ const Step3Confirm: React.FC<{
       </button>
     </div>
   );
-};
+});
 
 /* ─── Step 4: Contact Form ─── */
 const Step4Contact: React.FC<{
@@ -549,7 +549,7 @@ const Step4Contact: React.FC<{
   onPhoneFocus: () => void;
   onPhoneBlur: () => void;
   onSubmit: () => void;
-}> = ({
+}> = React.memo(({
   name,
   phone,
   isFormValid,
@@ -824,10 +824,10 @@ const Step4Contact: React.FC<{
       </div>
     </div>
   );
-};
+});
 
 /* ─── Success / Confirmation Screen ─── */
-const SuccessScreen: React.FC<{ firstName: string; selectedService: string }> = ({ firstName, selectedService }) => {
+const SuccessScreen: React.FC<{ firstName: string; selectedService: string }> = React.memo(({ firstName, selectedService }) => {
   const service = SERVICES.find((s) => s.name === selectedService);
 
   useEffect(() => {
@@ -899,6 +899,6 @@ const SuccessScreen: React.FC<{ firstName: string; selectedService: string }> = 
       </p>
     </div>
   );
-};
+});
 
 export default Quiz;

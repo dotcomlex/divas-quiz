@@ -72,6 +72,7 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
             src={imageSrc}
             alt={name}
             decoding="async"
+            fetchPriority="high"
             width={175}
             height={120}
             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: imagePosition }}
