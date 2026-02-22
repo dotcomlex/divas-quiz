@@ -9,7 +9,7 @@ import imgClasico from "@/assets/services/clasico.webp";
 import imgVolumen from "@/assets/services/volumen.webp";
 import imgMega from "@/assets/services/mega.webp";
 import imgLashlift from "@/assets/services/lashlift.webp";
-import imgCejas from "@/assets/services/cejas.jpg";
+import imgCejas from "@/assets/services/cejas.webp";
 
 type Screen = "quiz" | "disqualified" | "success";
 
@@ -18,8 +18,8 @@ const SERVICES = [
   { emoji: "🌸", name: "Set Clásico", originalPrice: "$99.99", salePrice: "$89.99", isFavorite: false, isFlat: false, imageSrc: imgClasico, imagePosition: "center 40%" },
   { emoji: "💎", name: "Set de Volumen", originalPrice: "$179.99", salePrice: "$161.99", isFavorite: false, isFlat: false, imageSrc: imgVolumen, imagePosition: "center 40%" },
   { emoji: "👑", name: "Mega Volumen", originalPrice: "$119.99", salePrice: "$107.99", isFavorite: false, isFlat: false, imageSrc: imgMega, imagePosition: "center 40%" },
-  { emoji: "🌿", name: "Lash Lift", originalPrice: "$79.99", salePrice: "$71.99", isFavorite: false, isFlat: false, imageSrc: imgLashlift, imagePosition: "center 30%" },
-  { emoji: "🍃", name: "Laminado de Cejas", originalPrice: undefined, salePrice: "$50.00", isFavorite: false, isFlat: true, imageSrc: imgCejas },
+  { emoji: "🌿", name: "Lash Lift", originalPrice: "$79.99", salePrice: "$71.99", isFavorite: false, isFlat: false, imageSrc: imgLashlift, imagePosition: "center 60%" },
+  { emoji: "🍃", name: "Laminado de Cejas", originalPrice: undefined, salePrice: "$50.00", isFavorite: false, isFlat: true, imageSrc: imgCejas, imagePosition: "center 25%" },
 ];
 
 const formatPhone = (value: string): string => {
