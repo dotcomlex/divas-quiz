@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ProgressBar from "@/components/ProgressBar";
 import ServiceTile from "@/components/ServiceTile";
-import FaqAccordion from "@/components/FaqAccordion";
 import logoSrc from "@/assets/logo.png";
 import imgHybrid from "@/assets/services/hybrid.webp";
 import imgClasico from "@/assets/services/clasico.webp";
@@ -14,12 +13,12 @@ import imgCejas from "@/assets/services/cejas.webp";
 type Screen = "quiz" | "disqualified" | "success";
 
 const SERVICES = [
-  { emoji: "✨", name: "Set Híbrido", originalPrice: "$149.99", salePrice: "$134.99", isFavorite: true, isFlat: false, imageSrc: imgHybrid, imagePosition: "center 40%" },
-  { emoji: "🌸", name: "Set Clásico", originalPrice: "$99.99", salePrice: "$89.99", isFavorite: false, isFlat: false, imageSrc: imgClasico, imagePosition: "center 40%" },
-  { emoji: "💎", name: "Set de Volumen", originalPrice: "$179.99", salePrice: "$161.99", isFavorite: false, isFlat: false, imageSrc: imgVolumen, imagePosition: "center 40%" },
-  { emoji: "👑", name: "Mega Volumen", originalPrice: "$119.99", salePrice: "$107.99", isFavorite: false, isFlat: false, imageSrc: imgMega, imagePosition: "center 40%" },
-  { emoji: "🌿", name: "Lash Lift", originalPrice: "$79.99", salePrice: "$71.99", isFavorite: false, isFlat: false, imageSrc: imgLashlift, imagePosition: "center 60%" },
-  { emoji: "🍃", name: "Laminado de Cejas", originalPrice: undefined, salePrice: "$50.00", isFavorite: false, isFlat: true, imageSrc: imgCejas, imagePosition: "center 25%" },
+  { emoji: "🌸", name: "Set Clásico", originalPrice: "$99.99", salePrice: "$89.99", isFavorite: false, isFlat: false, imageSrc: imgClasico, imagePosition: "center 40%", description: "Natural y bonito. Un pelo a la vez.", badgeText: "Precio Especial", badgeType: "discount" as const },
+  { emoji: "✨", name: "Set Híbrido", originalPrice: "$149.99", salePrice: "$134.99", isFavorite: true, isFlat: false, imageSrc: imgHybrid, imagePosition: "center 40%", description: "Natural con más volumen. El favorito de nuestras clientas.", highlightBorder: true },
+  { emoji: "💎", name: "Set de Volumen", originalPrice: "$179.99", salePrice: "$161.99", isFavorite: false, isFlat: false, imageSrc: imgVolumen, imagePosition: "center 40%", description: "Más lleno y dramático. Ojos grandes y hermosos.", badgeText: "Precio Especial", badgeType: "discount" as const },
+  { emoji: "👑", name: "Mega Volumen", originalPrice: "$119.99", salePrice: "$107.99", isFavorite: false, isFlat: false, imageSrc: imgMega, imagePosition: "center 40%", description: "El look más llamativo. Para las que quieren brillar.", badgeText: "Precio Especial", badgeType: "discount" as const },
+  { emoji: "🌿", name: "Lash Lift", originalPrice: "$79.99", salePrice: "$71.99", isFavorite: false, isFlat: false, imageSrc: imgLashlift, imagePosition: "center 60%", description: "Riza tus pestañas naturales. Sin extensiones.", badgeText: "Precio Especial", badgeType: "discount" as const },
+  { emoji: "🍃", name: "Laminado de Cejas", originalPrice: undefined, salePrice: "$49.99", isFavorite: false, isFlat: true, imageSrc: imgCejas, imagePosition: "center 25%", description: "Cejas peinadas y definidas. Sin maquillaje.", badgeText: "Precio Fijo", badgeType: "flat" as const },
 ];
 
 const formatPhone = (value: string): string => {
@@ -30,9 +29,9 @@ const formatPhone = (value: string): string => {
 };
 
 const slideVariants = {
-  enter: { x: 60, opacity: 0 },
-  center: { x: 0, opacity: 1 },
-  exit: { x: -60, opacity: 0 },
+  enter: { y: 16, opacity: 0 },
+  center: { y: 0, opacity: 1 },
+  exit: { y: -16, opacity: 0 },
 };
 
 const Quiz: React.FC = () => {
@@ -50,13 +49,21 @@ const Quiz: React.FC = () => {
 
   const handleServiceSelect = (serviceName: string) => {
     setSelectedService(serviceName);
-    setTimeout(() => setStep(2), 300);
+    if (typeof window !== "undefined" && (window as any).fbq) {
+      (window as any).fbq("trackCustom", "CustomizeProduct", { content_name: serviceName });
+    }
+    setTimeout(() => setStep(2), 400);
   };
 
   const handleSubmit = () => {
     if (!isFormValid) return;
+    const service = SERVICES.find((s) => s.name === selectedService);
     if (typeof window !== "undefined" && (window as any).fbq) {
-      (window as any).fbq("track", "Lead");
+      (window as any).fbq("track", "Lead", {
+        content_name: selectedService,
+        value: service ? parseFloat(service.salePrice.replace("$", "")) : 0,
+        currency: "USD",
+      });
     }
     setScreen("success");
   };
@@ -70,15 +77,18 @@ const Quiz: React.FC = () => {
   if (screen === "disqualified") {
     return (
       <PageWrapper>
+        <div style={{ padding: "0 16px", paddingTop: "16px" }}>
+          <ProgressBar step={2} />
+        </div>
         <div
           className="flex flex-col items-center justify-center text-center"
-          style={{ padding: "60px 28px", minHeight: "calc(100dvh - 6px)" }}
+          style={{ padding: "60px 28px", minHeight: "calc(100dvh - 40px)" }}
         >
-          <span style={{ fontSize: "48px", display: "block", marginBottom: "16px" }}>🙏</span>
+          <span style={{ fontSize: "40px", display: "block", marginBottom: "16px" }}>💛</span>
           <h2
             style={{
               fontSize: "22px",
-              fontWeight: 700,
+              fontWeight: 800,
               color: "#1a1a1a",
               fontFamily: "Montserrat, sans-serif",
               marginBottom: "12px",
@@ -89,14 +99,14 @@ const Quiz: React.FC = () => {
           <p
             style={{
               fontSize: "15px",
-              color: "#757575",
+              color: "#555",
               fontFamily: "Montserrat, sans-serif",
               maxWidth: "280px",
               lineHeight: 1.6,
               margin: "0 auto",
             }}
           >
-            Por ahora solo atendemos en Thornton. Si en algún momento puedes llegar, aquí estaremos con gusto. 🤍
+            Nuestro estudio está en Thornton. Por el momento solo atendemos ahí. ¡Esperamos verte pronto!
           </p>
         </div>
       </PageWrapper>
@@ -106,170 +116,7 @@ const Quiz: React.FC = () => {
   if (screen === "success") {
     return (
       <PageWrapper>
-        <div style={{ padding: "40px 24px 48px" }}>
-          {/* Animated checkmark */}
-          <div className="flex justify-center" style={{ marginBottom: "20px" }}>
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: "spring", stiffness: 260, damping: 20 }}
-              style={{
-                width: "64px",
-                height: "64px",
-                borderRadius: "50%",
-                background: "#c2185b",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                style={{ color: "white", fontSize: "30px", fontWeight: 700, lineHeight: 1 }}
-              >
-                ✓
-              </motion.span>
-            </motion.div>
-          </div>
-
-          {/* Headline */}
-          <h2
-            style={{
-              fontSize: "26px",
-              fontWeight: 700,
-              color: "#1a1a1a",
-              textAlign: "center",
-              fontFamily: "Montserrat, sans-serif",
-              marginBottom: "8px",
-            }}
-          >
-            ¡Listo, {firstName}! 🎉
-          </h2>
-
-          {/* Body */}
-          <p
-            style={{
-              fontSize: "15px",
-              color: "#757575",
-              textAlign: "center",
-              fontFamily: "Montserrat, sans-serif",
-              lineHeight: 1.6,
-              marginBottom: "20px",
-            }}
-          >
-            Recibimos tu solicitud. Te contactamos pronto para confirmar tu cita. Si tienes alguna pregunta, estamos para ayudarte. 🤍
-          </p>
-
-          {/* Confirmation card */}
-          <div
-            style={{
-              background: "#fff0f5",
-              border: "1px solid #f8d7e3",
-              borderLeft: "3px solid #c2185b",
-              borderRadius: "12px",
-              padding: "16px 18px",
-              marginBottom: "16px",
-            }}
-          >
-            <p style={{ fontSize: "13px", fontWeight: 700, color: "#1a1a1a", margin: "0 0 8px", fontFamily: "Montserrat, sans-serif" }}>
-              💅 Servicio: <span style={{ color: "#c2185b" }}>{selectedService}</span>
-            </p>
-            <p style={{ fontSize: "13px", fontWeight: 600, color: "#1a1a1a", margin: 0, fontFamily: "Montserrat, sans-serif" }}>
-              📱 Celular: {phone}
-            </p>
-          </div>
-
-          {/* WhatsApp CTA */}
-          <a
-            href={`https://wa.me/17203339999?text=Hola!%20Vi%20su%20oferta%20y%20me%20gustar%C3%ADa%20agendar%20mi%20cita%20para%20${encodeURIComponent(selectedService)}.`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "8px",
-              width: "100%",
-              height: "52px",
-              borderRadius: "10px",
-              background: "#25D366",
-              color: "white",
-              fontSize: "15px",
-              fontWeight: 700,
-              textDecoration: "none",
-              fontFamily: "Montserrat, sans-serif",
-              marginBottom: "20px",
-            }}
-          >
-            💬 Escríbenos por WhatsApp
-          </a>
-
-          {/* Address map card */}
-          <div
-            style={{
-              background: "white",
-              border: "1px solid #f0e4e8",
-              borderRadius: "12px",
-              padding: "14px 16px 14px 19px",
-              borderLeft: "3px solid #c2185b",
-              marginBottom: "24px",
-            }}
-          >
-            <p
-              style={{
-                fontSize: "10px",
-                fontWeight: 600,
-                color: "#9e9e9e",
-                textTransform: "uppercase",
-                letterSpacing: "0.08em",
-                margin: "0 0 4px",
-                fontFamily: "Montserrat, sans-serif",
-              }}
-            >
-              📍 Nuestro Studio
-            </p>
-            <p
-              style={{
-                fontSize: "15px",
-                fontWeight: 700,
-                color: "#1a1a1a",
-                margin: "0 0 2px",
-                fontFamily: "Montserrat, sans-serif",
-              }}
-            >
-              2121 W 84th Ave
-            </p>
-            <p
-              style={{
-                fontSize: "13px",
-                color: "#616161",
-                margin: "0 0 10px",
-                fontFamily: "Montserrat, sans-serif",
-              }}
-            >
-              Thornton, CO 80260
-            </p>
-            <a
-              href="https://maps.google.com/?q=2121+W+84th+Ave+Thornton+CO+80260"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                fontSize: "12px",
-                color: "#c2185b",
-                fontWeight: 600,
-                textDecoration: "none",
-                fontFamily: "Montserrat, sans-serif",
-              }}
-            >
-              Ver en Google Maps →
-            </a>
-          </div>
-
-          {/* FAQ section */}
-          <FaqAccordion />
-        </div>
+        <SuccessScreen firstName={firstName} selectedService={selectedService} />
       </PageWrapper>
     );
   }
@@ -277,7 +124,7 @@ const Quiz: React.FC = () => {
   // Quiz steps
   return (
     <PageWrapper>
-      {/* Progress bar — top edge */}
+      {/* Progress bar */}
       <div style={{ padding: "0 16px", paddingTop: "16px" }}>
         <ProgressBar step={step} />
       </div>
@@ -291,14 +138,24 @@ const Quiz: React.FC = () => {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.22, ease: "easeInOut" }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
             style={{ padding: "24px 24px 0" }}
           >
             {step === 1 && <Step1 selectedService={selectedService} onSelect={handleServiceSelect} />}
             {step === 2 && (
               <Step2
-                onYes={() => setStep(3)}
-                onNo={() => setScreen("disqualified")}
+                onYes={() => {
+                  if (typeof window !== "undefined" && (window as any).fbq) {
+                    (window as any).fbq("trackCustom", "fb_quiz_qualified");
+                  }
+                  setStep(3);
+                }}
+                onNo={() => {
+                  if (typeof window !== "undefined" && (window as any).fbq) {
+                    (window as any).fbq("trackCustom", "fb_quiz_disqualified");
+                  }
+                  setScreen("disqualified");
+                }}
               />
             )}
             {step === 3 && (
@@ -351,7 +208,7 @@ const Quiz: React.FC = () => {
   );
 };
 
-/* ─── Page wrapper (same container logic as Landing) ─── */
+/* ─── Page wrapper ─── */
 const PageWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div
     style={{ minHeight: "100dvh" }}
@@ -382,7 +239,7 @@ const Step1: React.FC<{
   <div>
     <h2
       style={{
-        fontSize: "24px",
+        fontSize: "26px",
         fontWeight: 800,
         color: "#1a1a1a",
         marginBottom: "6px",
@@ -390,10 +247,10 @@ const Step1: React.FC<{
         lineHeight: 1.3,
       }}
     >
-      Elige tu Servicio — <span style={{ color: "#c2185b" }}>Ahorra el 10%</span>
+      ¿Qué pestañas quieres?
     </h2>
-    <p style={{ fontSize: "14px", fontWeight: 500, color: "#444444", marginBottom: "18px", fontFamily: "Montserrat, sans-serif" }}>
-      Oferta válida solo este mes — precios con descuento ya aplicado
+    <p style={{ fontSize: "15px", fontWeight: 400, color: "#555", marginBottom: "18px", fontFamily: "Montserrat, sans-serif" }}>
+      Precio especial de clienta nueva ya incluido 👇
     </p>
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
       {SERVICES.map((svc) => (
@@ -408,6 +265,10 @@ const Step1: React.FC<{
           isSelected={selectedService === svc.name}
           imageSrc={svc.imageSrc}
           imagePosition={svc.imagePosition}
+          description={svc.description}
+          badgeText={svc.badgeText}
+          badgeType={svc.badgeType}
+          highlightBorder={(svc as any).highlightBorder}
           onSelect={() => onSelect(svc.name)}
         />
       ))}
@@ -423,102 +284,122 @@ const Step2: React.FC<{
   <div>
     <h2
       style={{
-        fontSize: "22px",
-        fontWeight: 700,
+        fontSize: "28px",
+        fontWeight: 800,
         color: "#1a1a1a",
         marginBottom: "6px",
         fontFamily: "Montserrat, sans-serif",
         lineHeight: 1.3,
       }}
     >
-      ¿Puedes llegar a nuestro studio?
+      ¡Casi lista! 🎉
     </h2>
-    <p style={{ fontSize: "13px", color: "#555555", marginBottom: "18px", fontFamily: "Montserrat, sans-serif" }}>
-      Para agendar tu cita, ¿podrás llegar sin problema a esta dirección?
+    <p style={{ fontSize: "15px", color: "#555", marginBottom: "18px", fontFamily: "Montserrat, sans-serif" }}>
+      Para agendar tu cita, necesitas poder visitarnos.
     </p>
 
-    {/* Address info card — yellow highlight to draw the eye before answering */}
+    {/* Address box — soft rose */}
     <div
       style={{
-        background: "#fffde7",
-        border: "1.5px solid #ffe082",
+        background: "#FFF0F5",
+        border: "1px solid #F0C0D4",
         borderRadius: "12px",
         padding: "16px 18px",
         marginBottom: "24px",
-        textAlign: "center",
       }}
     >
-      <p
-        style={{
-          fontSize: "14px",
-          fontWeight: 600,
-          color: "#444444",
-          margin: 0,
-          fontFamily: "Montserrat, sans-serif",
-        }}
-      >
-        📍 2121 W 84th Ave, Thornton CO 80260
-      </p>
+      <div style={{ display: "flex", alignItems: "flex-start", gap: "8px" }}>
+        <span style={{ fontSize: "18px", lineHeight: 1 }}>📍</span>
+        <div>
+          <p
+            style={{
+              fontSize: "15px",
+              fontWeight: 600,
+              color: "#333",
+              margin: "0 0 4px",
+              fontFamily: "Montserrat, sans-serif",
+            }}
+          >
+            2121 W 84th Ave, Thornton CO 80260
+          </p>
+          <p
+            style={{
+              fontSize: "13px",
+              color: "#888",
+              margin: 0,
+              fontFamily: "Montserrat, sans-serif",
+            }}
+          >
+            Cerca del área de Westminster / Thornton
+          </p>
+        </div>
+      </div>
     </div>
 
-    {/* Side-by-side option cards — equal visual weight, neither looks pre-selected */}
-    <div style={{ display: "flex", gap: "12px" }}>
-      {/* YES card */}
+    {/* Stacked vertical buttons */}
+    <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+      {/* YES */}
       <motion.button
-        whileTap={{ scale: 0.96 }}
+        whileTap={{ scale: 0.98 }}
         onClick={onYes}
         style={{
-          flex: 1,
-          height: "120px",
+          width: "100%",
           borderRadius: "14px",
           background: "white",
-          border: "1.5px solid #e0e0e0",
+          border: "2px solid #E0E0E0",
           cursor: "pointer",
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
-          gap: "10px",
+          gap: "14px",
           fontFamily: "Montserrat, sans-serif",
-          padding: "16px 8px",
+          padding: "18px",
+          textAlign: "left",
         }}
       >
-        <span style={{ fontSize: "32px", lineHeight: 1 }}>✅</span>
-        <span style={{ fontSize: "14px", fontWeight: 700, color: "#1a1a1a", lineHeight: 1.3, textAlign: "center" }}>
-          Sí, puedo<br />llegar
-        </span>
+        <span style={{ fontSize: "28px", lineHeight: 1 }}>✅</span>
+        <div>
+          <span style={{ fontSize: "15px", fontWeight: 700, color: "#1a1a1a", display: "block" }}>
+            Sí, puedo ir
+          </span>
+          <span style={{ fontSize: "13px", fontWeight: 400, color: "#888", display: "block", marginTop: "2px" }}>
+            Tengo cómo llegar
+          </span>
+        </div>
       </motion.button>
 
-      {/* NO card */}
+      {/* NO */}
       <motion.button
-        whileTap={{ scale: 0.96 }}
+        whileTap={{ scale: 0.98 }}
         onClick={onNo}
         style={{
-          flex: 1,
-          height: "120px",
+          width: "100%",
           borderRadius: "14px",
           background: "white",
-          border: "1.5px solid #e0e0e0",
+          border: "2px solid #E0E0E0",
           cursor: "pointer",
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
-          gap: "10px",
+          gap: "14px",
           fontFamily: "Montserrat, sans-serif",
-          padding: "16px 8px",
+          padding: "18px",
+          textAlign: "left",
         }}
       >
-        <span style={{ fontSize: "32px", lineHeight: 1 }}>🚗</span>
-        <span style={{ fontSize: "14px", fontWeight: 700, color: "#1a1a1a", lineHeight: 1.3, textAlign: "center" }}>
-          Muy lejos<br />para mí
-        </span>
+        <span style={{ fontSize: "28px", lineHeight: 1 }}>🚗</span>
+        <div>
+          <span style={{ fontSize: "15px", fontWeight: 700, color: "#1a1a1a", display: "block" }}>
+            Me queda muy lejos
+          </span>
+          <span style={{ fontSize: "13px", fontWeight: 400, color: "#888", display: "block", marginTop: "2px" }}>
+            No podría llegar
+          </span>
+        </div>
       </motion.button>
     </div>
   </div>
 );
 
-/* ─── Step 3: Commitment Confirmation ─── */
+/* ─── Step 3: Service Summary ─── */
 const Step3Confirm: React.FC<{
   selectedService: string;
   onContinue: () => void;
@@ -528,47 +409,43 @@ const Step3Confirm: React.FC<{
     <div>
       <h2
         style={{
-          fontSize: "22px",
-          fontWeight: 700,
+          fontSize: "24px",
+          fontWeight: 800,
           color: "#1a1a1a",
-          marginBottom: "6px",
+          marginBottom: "20px",
           fontFamily: "Montserrat, sans-serif",
           lineHeight: 1.3,
         }}
       >
-        Tu cita seleccionada
+        Esto es lo que escogiste:
       </h2>
-      <p style={{ fontSize: "14px", color: "#555555", marginBottom: "20px", fontFamily: "Montserrat, sans-serif" }}>
-        Confirma tu servicio antes de agendar
-      </p>
 
       {/* Service summary card */}
       {service && (
         <div
           style={{
             display: "flex",
-            border: "1.5px solid #edd5df",
+            border: "1.5px solid #F0E0E8",
             borderRadius: "14px",
             overflow: "hidden",
             background: "white",
-            boxShadow: "0 2px 10px rgba(194,24,91,0.08)",
-            marginBottom: "24px",
+            boxShadow: "0 2px 12px rgba(0,0,0,0.07)",
+            marginBottom: "16px",
           }}
         >
-          {/* Image */}
-          <div style={{ width: "110px", flexShrink: 0 }}>
+          {/* Thumbnail */}
+          <div style={{ width: "80px", height: "80px", flexShrink: 0 }}>
             {service.imageSrc ? (
               <img
                 src={service.imageSrc}
                 alt={service.name}
-                style={{ width: "100%", height: "100%", objectFit: "cover", minHeight: "120px" }}
+                style={{ width: "80px", height: "80px", objectFit: "cover", borderRadius: "10px 0 0 10px" }}
               />
             ) : (
               <div
                 style={{
-                  width: "100%",
-                  height: "100%",
-                  minHeight: "120px",
+                  width: "80px",
+                  height: "80px",
                   background: "linear-gradient(135deg, #fce4ec 0%, #fdf6f7 100%)",
                   display: "flex",
                   alignItems: "center",
@@ -581,13 +458,13 @@ const Step3Confirm: React.FC<{
             )}
           </div>
           {/* Info */}
-          <div style={{ padding: "14px 16px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+          <div style={{ padding: "10px 14px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
             <p
               style={{
-                fontSize: "16px",
-                fontWeight: 700,
+                fontSize: "18px",
+                fontWeight: 800,
                 color: "#1a1a1a",
-                margin: "0 0 6px",
+                margin: "0 0 2px",
                 fontFamily: "Montserrat, sans-serif",
               }}
             >
@@ -596,8 +473,8 @@ const Step3Confirm: React.FC<{
             {!service.isFlat && service.originalPrice && (
               <p
                 style={{
-                  fontSize: "13px",
-                  color: "#888",
+                  fontSize: "14px",
+                  color: "#999",
                   textDecoration: "line-through",
                   margin: "0 0 2px",
                   fontFamily: "Montserrat, sans-serif",
@@ -608,10 +485,10 @@ const Step3Confirm: React.FC<{
             )}
             <p
               style={{
-                fontSize: "18px",
+                fontSize: "22px",
                 fontWeight: 700,
                 color: "#c2185b",
-                margin: "0 0 4px",
+                margin: "0 0 2px",
                 fontFamily: "Montserrat, sans-serif",
               }}
             >
@@ -620,44 +497,87 @@ const Step3Confirm: React.FC<{
             {!service.isFlat && (
               <p
                 style={{
-                  fontSize: "12px",
-                  fontWeight: 700,
+                  fontSize: "13px",
+                  fontWeight: 600,
                   color: "#2e7d32",
                   margin: 0,
                   fontFamily: "Montserrat, sans-serif",
                 }}
               >
-                Ahorras 10%
+                ✅ Ahorras 10%
               </p>
             )}
           </div>
         </div>
       )}
 
+      {/* Location reminder */}
+      <p
+        style={{
+          fontSize: "14px",
+          fontWeight: 500,
+          color: "#555",
+          fontFamily: "Montserrat, sans-serif",
+          marginBottom: "20px",
+        }}
+      >
+        📍 Thornton, CO — 2121 W 84th Ave
+      </p>
+
       {/* Trust bullets */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "28px" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "20px" }}>
         {[
-          { icon: "✅", text: "Satisfacción garantizada" },
-          { icon: "💳", text: "Pagas después del servicio" },
-          { icon: "📲", text: "Te contactamos hoy mismo" },
-          { icon: "💬", text: "Cualquier pregunta, estamos para ayudarte" },
-        ].map((item) => (
+          "Satisfacción garantizada",
+          "Pagas al terminar el servicio",
+          "Te contactamos hoy mismo",
+          "Cualquier pregunta, estamos aquí",
+        ].map((text) => (
           <div
-            key={item.text}
+            key={text}
             style={{
               display: "flex",
               alignItems: "center",
               gap: "10px",
-              fontSize: "14px",
+              fontSize: "15px",
               fontWeight: 500,
               color: "#333",
               fontFamily: "Montserrat, sans-serif",
             }}
           >
-            <span style={{ fontSize: "16px" }}>{item.icon}</span>
-            {item.text}
+            <span style={{ color: "#2e7d32" }}>✅</span>
+            {text}
           </div>
         ))}
+      </div>
+
+      {/* Testimonial */}
+      <div style={{ textAlign: "center", marginBottom: "24px" }}>
+        <p style={{ margin: "0 0 6px", fontSize: "18px", color: "#f5a623", lineHeight: 1 }}>
+          ⭐⭐⭐⭐⭐
+        </p>
+        <p
+          style={{
+            fontSize: "14px",
+            fontStyle: "italic",
+            color: "#555",
+            margin: "0 0 4px",
+            fontFamily: "Montserrat, sans-serif",
+            lineHeight: 1.5,
+          }}
+        >
+          "No puedo creer lo bonitas que quedaron. Ya no uso ni rímel."
+        </p>
+        <p
+          style={{
+            fontSize: "13px",
+            fontWeight: 600,
+            color: "#888",
+            margin: 0,
+            fontFamily: "Montserrat, sans-serif",
+          }}
+        >
+          — Karla T., Denver
+        </p>
       </div>
 
       {/* CTA */}
@@ -666,7 +586,7 @@ const Step3Confirm: React.FC<{
         style={{
           width: "100%",
           height: "56px",
-          borderRadius: "10px",
+          borderRadius: "14px",
           background: "#c2185b",
           color: "white",
           fontSize: "16px",
@@ -674,11 +594,11 @@ const Step3Confirm: React.FC<{
           border: "none",
           cursor: "pointer",
           fontFamily: "Montserrat, sans-serif",
-          boxShadow: "0 4px 14px rgba(194,24,91,0.28)",
+          boxShadow: "0 4px 16px rgba(194,24,91,0.25)",
           letterSpacing: "0.01em",
         }}
       >
-        Continuar y Agendar →
+        Recibir mi oferta →
       </button>
     </div>
   );
@@ -719,18 +639,18 @@ const Step4Contact: React.FC<{
     <div>
       <h2
         style={{
-          fontSize: "22px",
-          fontWeight: 700,
+          fontSize: "24px",
+          fontWeight: 800,
           color: "#1a1a1a",
           marginBottom: "6px",
           fontFamily: "Montserrat, sans-serif",
           lineHeight: 1.3,
         }}
       >
-        ¡Ya casi! ¿Cómo te contactamos?
+        ¿A dónde te mandamos tu descuento? 🎁
       </h2>
-      <p style={{ fontSize: "13px", color: "#555555", marginBottom: "20px", fontFamily: "Montserrat, sans-serif" }}>
-        Solo necesitamos tu nombre y número para contactarte y agendar tu cita. ¡Nosotros te escribimos!
+      <p style={{ fontSize: "15px", color: "#555", marginBottom: "20px", fontFamily: "Montserrat, sans-serif", lineHeight: 1.5 }}>
+        Solo necesitamos tu nombre y celular. ¡Nosotras te escribimos!
       </p>
 
       {/* Name field */}
@@ -739,9 +659,9 @@ const Step4Contact: React.FC<{
           style={{
             display: "block",
             fontSize: "11px",
-            fontWeight: 600,
-            color: "#616161",
-            letterSpacing: "0.06em",
+            fontWeight: 700,
+            color: "#888",
+            letterSpacing: "0.08em",
             textTransform: "uppercase",
             marginBottom: "6px",
             fontFamily: "Montserrat, sans-serif",
@@ -751,6 +671,7 @@ const Step4Contact: React.FC<{
         </label>
         <input
           type="text"
+          autoComplete="given-name"
           value={name}
           onChange={(e) => onNameChange(e.target.value)}
           onFocus={onNameFocus}
@@ -758,17 +679,18 @@ const Step4Contact: React.FC<{
           placeholder="Ej. María García"
           style={{
             width: "100%",
-            height: "56px",
-            border: `1.5px solid ${nameFocused ? "#c2185b" : "#b0b0b0"}`,
-            borderRadius: "8px",
+            height: "52px",
+            border: nameFocused ? "2px solid #c2185b" : "1px solid #E0E0E0",
+            borderRadius: "12px",
             fontSize: "16px",
             fontFamily: "Montserrat, sans-serif",
+            fontWeight: 500,
             padding: "0 14px",
             color: "#1a1a1a",
             outline: "none",
-            background: nameFocused ? "white" : "#f5f5f5",
+            background: "white",
             boxSizing: "border-box",
-            transition: "border-color 150ms ease, background 150ms ease",
+            transition: "border-color 150ms ease",
           }}
         />
       </div>
@@ -779,9 +701,9 @@ const Step4Contact: React.FC<{
           style={{
             display: "block",
             fontSize: "11px",
-            fontWeight: 600,
-            color: "#616161",
-            letterSpacing: "0.06em",
+            fontWeight: 700,
+            color: "#888",
+            letterSpacing: "0.08em",
             textTransform: "uppercase",
             marginBottom: "6px",
             fontFamily: "Montserrat, sans-serif",
@@ -793,6 +715,7 @@ const Step4Contact: React.FC<{
           <input
             type="tel"
             inputMode="tel"
+            autoComplete="tel"
             value={phone}
             onChange={(e) => onPhoneChange(e.target.value)}
             onFocus={onPhoneFocus}
@@ -800,17 +723,18 @@ const Step4Contact: React.FC<{
             placeholder="(720) 000-0000"
             style={{
               width: "100%",
-              height: "56px",
-              border: `1.5px solid ${phoneFocused ? "#c2185b" : "#b0b0b0"}`,
-              borderRadius: "8px",
+              height: "52px",
+              border: phoneFocused ? "2px solid #c2185b" : "1px solid #E0E0E0",
+              borderRadius: "12px",
               fontSize: "16px",
               fontFamily: "Montserrat, sans-serif",
+              fontWeight: 500,
               padding: "0 40px 0 14px",
               color: "#1a1a1a",
               outline: "none",
-              background: phoneFocused ? "white" : "#f5f5f5",
+              background: "white",
               boxSizing: "border-box",
-              transition: "border-color 150ms ease, background 150ms ease",
+              transition: "border-color 150ms ease",
             }}
           />
           {phoneComplete && (
@@ -829,47 +753,54 @@ const Step4Contact: React.FC<{
             </span>
           )}
         </div>
+        {/* Phone microcopy */}
+        <p
+          style={{
+            fontSize: "12px",
+            color: "#888",
+            margin: "6px 0 0",
+            fontFamily: "Montserrat, sans-serif",
+            lineHeight: 1.4,
+          }}
+        >
+          📱 Te mandamos tu descuento por mensaje. No spam, prometido.
+        </p>
       </div>
 
-      {/* Trust micro-badges */}
+      {/* Trust pill badges */}
       <div
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          gap: "0",
+          gap: "8px",
           margin: "14px 0 12px",
+          flexWrap: "wrap",
         }}
       >
         {[
-          { icon: "🔒", label: "Seguro" },
-          { icon: "⚡", label: "Respuesta rápida" },
-          { icon: "🎁", label: "Ahorra 10%" },
-        ].map((badge, i, arr) => (
-          <React.Fragment key={badge.label}>
+          { icon: "🔒", label: "Seguro", bg: "#F5F5F5" },
+          { icon: "⚡", label: "Respuesta rápida", bg: "#FFF8E1" },
+          { icon: "🎁", label: "10% de descuento", bg: "#FFF0F5" },
+        ].map((badge) => (
           <span
-              style={{
-                fontSize: "11px",
-                color: "#555555",
-                fontFamily: "Montserrat, sans-serif",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {badge.icon} {badge.label}
-            </span>
-            {i < arr.length - 1 && (
-              <span
-                style={{
-                  margin: "0 8px",
-                  color: "#e0e0e0",
-                  fontSize: "12px",
-                  lineHeight: 1,
-                }}
-              >
-                ·
-              </span>
-            )}
-          </React.Fragment>
+            key={badge.label}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "3px",
+              fontSize: "12px",
+              fontWeight: 600,
+              color: "#555",
+              fontFamily: "Montserrat, sans-serif",
+              whiteSpace: "nowrap",
+              background: badge.bg,
+              borderRadius: "99px",
+              padding: "5px 10px",
+            }}
+          >
+            {badge.icon} {badge.label}
+          </span>
         ))}
       </div>
 
@@ -880,42 +811,161 @@ const Step4Contact: React.FC<{
         style={{
           width: "100%",
           height: "56px",
-          borderRadius: "10px",
-          background: isFormValid ? "#c2185b" : "rgba(194,24,91,0.35)",
+          borderRadius: "14px",
+          background: "#c2185b",
           color: "white",
-          fontSize: "15px",
+          fontSize: "16px",
           fontWeight: 700,
           border: "none",
           cursor: isFormValid ? "pointer" : "not-allowed",
           fontFamily: "Montserrat, sans-serif",
-          boxShadow: isFormValid ? "0 4px 14px rgba(194,24,91,0.28)" : "none",
-          transition: "background 200ms ease, box-shadow 200ms ease",
+          boxShadow: isFormValid ? "0 4px 16px rgba(194,24,91,0.25)" : "none",
+          opacity: isFormValid ? 1 : 0.6,
+          transition: "opacity 200ms ease, box-shadow 200ms ease",
           letterSpacing: "0.01em",
         }}
       >
-        Agendar Mi Cita →
+        ¡Quiero mi descuento! 🎉
       </button>
 
-      {/* Testimonial with stars */}
-      <div style={{ textAlign: "center", marginTop: "16px" }}>
-        <p style={{ margin: "0 0 4px", fontSize: "13px", color: "#c2185b", lineHeight: 1 }}>
-          ★★★★★
+      {/* SMS consent */}
+      <p
+        style={{
+          fontSize: "11px",
+          color: "#aaa",
+          textAlign: "center",
+          marginTop: "10px",
+          fontFamily: "Montserrat, sans-serif",
+          lineHeight: 1.5,
+        }}
+      >
+        Al enviar, aceptas recibir mensajes de texto de Divas Beauty Studio sobre tu cita. Puedes cancelar en cualquier momento.
+      </p>
+
+      {/* Testimonial with avatar */}
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "8px" }}>
+          <div
+            style={{
+              width: "40px",
+              height: "40px",
+              borderRadius: "50%",
+              background: "#F0E0E8",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "14px",
+              fontWeight: 700,
+              color: "#c2185b",
+              fontFamily: "Montserrat, sans-serif",
+            }}
+          >
+            SM
+          </div>
+        </div>
+        <p style={{ margin: "0 0 4px", fontSize: "13px", color: "#f5a623", lineHeight: 1 }}>
+          ⭐⭐⭐⭐⭐
         </p>
         <p
           style={{
             fontSize: "12px",
             fontStyle: "italic",
-            color: "#555555",
-            margin: 0,
+            color: "#555",
+            margin: "0 0 4px",
             fontFamily: "Montserrat, sans-serif",
             lineHeight: 1.6,
           }}
         >
           "¡Divas Beauty es increíble! Las pestañas me duran semanas."
-          <br />
-          <span style={{ fontStyle: "normal" }}>— Sandra M., Thornton</span>
+        </p>
+        <p
+          style={{
+            fontSize: "13px",
+            fontWeight: 600,
+            color: "#888",
+            margin: 0,
+            fontFamily: "Montserrat, sans-serif",
+            fontStyle: "normal",
+          }}
+        >
+          — Sandra M., Thornton
         </p>
       </div>
+    </div>
+  );
+};
+
+/* ─── Success / Confirmation Screen ─── */
+const SuccessScreen: React.FC<{ firstName: string; selectedService: string }> = ({ firstName, selectedService }) => {
+  const service = SERVICES.find((s) => s.name === selectedService);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && (window as any).fbq) {
+      (window as any).fbq("track", "CompleteRegistration");
+    }
+  }, []);
+
+  return (
+    <div
+      className="flex flex-col items-center justify-center text-center"
+      style={{ padding: "60px 28px", minHeight: "100dvh" }}
+    >
+      <span style={{ fontSize: "48px", display: "block", marginBottom: "16px" }}>🎉</span>
+      <h2
+        style={{
+          fontSize: "26px",
+          fontWeight: 800,
+          color: "#1a1a1a",
+          fontFamily: "Montserrat, sans-serif",
+          marginBottom: "12px",
+        }}
+      >
+        ¡Listo, {firstName}!
+      </h2>
+      <p
+        style={{
+          fontSize: "16px",
+          color: "#555",
+          fontFamily: "Montserrat, sans-serif",
+          lineHeight: 1.6,
+          marginBottom: "16px",
+          maxWidth: "320px",
+        }}
+      >
+        Te vamos a escribir muy pronto con tu oferta especial 💛 Revisa tus mensajes.
+      </p>
+
+      {/* Service pill badge */}
+      {service && (
+        <span
+          style={{
+            display: "inline-block",
+            background: "#FFF0F5",
+            border: "1px solid #F0C0D4",
+            borderRadius: "99px",
+            padding: "8px 18px",
+            fontSize: "14px",
+            fontWeight: 600,
+            color: "#c2185b",
+            fontFamily: "Montserrat, sans-serif",
+            marginBottom: "16px",
+          }}
+        >
+          {service.name} — {service.salePrice} (10% OFF)
+        </span>
+      )}
+
+      {/* Location */}
+      <p
+        style={{
+          fontSize: "14px",
+          fontWeight: 500,
+          color: "#888",
+          fontFamily: "Montserrat, sans-serif",
+        }}
+      >
+        📍 Thornton, CO — 2121 W 84th Ave
+      </p>
     </div>
   );
 };

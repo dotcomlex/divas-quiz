@@ -6,6 +6,13 @@ import logoSrc from "@/assets/logo.png";
 const Landing: React.FC = () => {
   const navigate = useNavigate();
 
+  const handleCTA = () => {
+    if (typeof window !== "undefined" && (window as any).fbq) {
+      (window as any).fbq("track", "InitiateCheckout");
+    }
+    navigate("/quiz");
+  };
+
   return (
     <div
       style={{ minHeight: "100dvh" }}
@@ -19,10 +26,6 @@ const Landing: React.FC = () => {
               box-shadow: 0 8px 32px rgba(194,24,91,0.10) !important;
               min-height: auto !important;
             }
-          }
-          @keyframes cta-pulse {
-            0%, 100% { box-shadow: 0 4px 20px rgba(194,24,91,0.35); }
-            50% { box-shadow: 0 4px 32px rgba(194,24,91,0.60); }
           }
         `}</style>
         <div
@@ -56,23 +59,23 @@ const Landing: React.FC = () => {
             style={{
               marginTop: "18px",
               background: "#fff3cd",
-              color: "#92600a",
-              fontSize: "12px",
-              fontWeight: 700,
-              padding: "6px 16px",
+              color: "#7a5c00",
+              fontSize: "13px",
+              fontWeight: 600,
+              padding: "8px 16px",
               borderRadius: "999px",
               fontFamily: "Montserrat, sans-serif",
               border: "1px solid #f5c842",
               letterSpacing: "0.01em",
             }}
           >
-            🏷️ Ahorra el 10% este mes
+            🎟️ Clientas nuevas — 10% de descuento este mes
           </div>
 
           {/* Headline */}
           <h1
             style={{
-              fontSize: "27px",
+              fontSize: "30px",
               fontWeight: 800,
               color: "#1a1a1a",
               textAlign: "center",
@@ -81,48 +84,47 @@ const Landing: React.FC = () => {
               fontFamily: "Montserrat, sans-serif",
             }}
           >
-            Pestañas perfectas,<br />
-            <span style={{ color: "#c2185b" }}>Ahorra el 10% solo este mes.</span>
+            Despierta lista.<br />
+            <span style={{ color: "#c2185b" }}>Sin rímel. Sin enchinador.</span>
           </h1>
 
           {/* Subheadline */}
           <p
             style={{
-              fontSize: "15px",
+              fontSize: "16px",
               color: "#555555",
               textAlign: "center",
               marginTop: "12px",
               lineHeight: 1.6,
               fontFamily: "Montserrat, sans-serif",
               fontWeight: 400,
-              maxWidth: "340px",
+              maxWidth: "320px",
             }}
           >
-            Ahorra el 10% en cualquier servicio de pestañas. Solo por este mes. Oprime el botón para agendar tu cita.
+            Más de 1,000 mujeres en Thornton ya tienen las pestañas de sus sueños. Tú también puedes.
           </p>
 
           {/* CTA Button */}
           <motion.button
-            animate={{ opacity: [1, 0.88, 1] }}
-            transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut" }}
-            onClick={() => navigate("/quiz")}
+            whileTap={{ scale: 0.98 }}
+            onClick={handleCTA}
             style={{
               marginTop: "28px",
               width: "100%",
-              height: "58px",
+              height: "56px",
               background: "#c2185b",
               color: "white",
               fontSize: "17px",
-              fontWeight: 800,
-              borderRadius: "12px",
+              fontWeight: 700,
+              borderRadius: "14px",
               border: "none",
               cursor: "pointer",
               fontFamily: "Montserrat, sans-serif",
               letterSpacing: "0.01em",
-              animation: "cta-pulse 2.4s ease-in-out infinite",
+              boxShadow: "0 4px 16px rgba(194,24,91,0.30)",
             }}
           >
-            Ver Servicios y Precios →
+            Quiero mi 10% de descuento →
           </motion.button>
 
           {/* Trust signals — pill badges */}
@@ -138,9 +140,9 @@ const Landing: React.FC = () => {
             }}
           >
             {[
-              { icon: "🔒", text: "+1,000 clientas", bg: "#f5f5f5", border: "#e0e0e0" },
-              { icon: "⭐", text: "5 estrellas", bg: "#fff8e1", border: "#ffe082" },
-              { icon: "✅", text: "Garantizada", bg: "#e8f5e9", border: "#a5d6a7" },
+              { icon: "🔒", text: "+1,000 clientas", bg: "#f5f5f5", border: "#e0e0e0", color: "#444" },
+              { icon: "⭐", text: "5 estrellas Google", bg: "#fff8e1", border: "#ffe082", color: "#7a5c00" },
+              { icon: "✅", text: "Satisfacción garantizada", bg: "#f0fff4", border: "#a5d6a7", color: "#2e7d32" },
             ].map((badge) => (
               <span
                 key={badge.text}
@@ -148,20 +150,50 @@ const Landing: React.FC = () => {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "4px",
-                  fontSize: "11px",
+                  fontSize: "13px",
                   fontWeight: 600,
-                  color: "#444",
+                  color: badge.color,
                   fontFamily: "Montserrat, sans-serif",
                   whiteSpace: "nowrap",
                   background: badge.bg,
                   border: `1px solid ${badge.border}`,
-                  borderRadius: "20px",
-                  padding: "5px 12px",
+                  borderRadius: "99px",
+                  padding: "8px 14px",
                 }}
               >
                 {badge.icon} {badge.text}
               </span>
             ))}
+          </div>
+
+          {/* Testimonial */}
+          <div style={{ textAlign: "center", marginTop: "20px", maxWidth: "300px" }}>
+            <p style={{ margin: "0 0 6px", fontSize: "18px", color: "#f5a623", lineHeight: 1 }}>
+              ⭐⭐⭐⭐⭐
+            </p>
+            <p
+              style={{
+                fontSize: "14px",
+                fontStyle: "italic",
+                color: "#555",
+                margin: "0 0 4px",
+                fontFamily: "Montserrat, sans-serif",
+                lineHeight: 1.5,
+              }}
+            >
+              "¡Me encantaron mis pestañas! María es una artista. 100% recomendado."
+            </p>
+            <p
+              style={{
+                fontSize: "13px",
+                fontWeight: 600,
+                color: "#888",
+                margin: 0,
+                fontFamily: "Montserrat, sans-serif",
+              }}
+            >
+              — Sandra M., Thornton, CO
+            </p>
           </div>
         </div>
       </div>
