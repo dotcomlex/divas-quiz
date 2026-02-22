@@ -142,15 +142,15 @@ const Landing: React.FC = () => {
             style={{
               marginTop: "12px",
               display: "flex",
-              flexWrap: "wrap",
+              flexWrap: "nowrap",
               justifyContent: "center",
               gap: "8px",
             }}
           >
             {[
-              { text: "💖 +1,000 clientas felices", bg: "#F5F5F5", color: "#555555" },
-              { text: "✅ Satisfacción garantizada", bg: "#F5F5F5", color: "#555555" },
-              { text: "⭐ Atención personalizada", bg: "#F5F5F5", color: "#555555" },
+              { text: "💖 +1,000 clientas", bg: "#F5F5F5", color: "#555555" },
+              { text: "✅ Garantizado", bg: "#F5F5F5", color: "#555555" },
+              { text: "⭐ Personalizado", bg: "#F5F5F5", color: "#555555" },
             ].map((b, i) => (
               <span
                 key={i}
@@ -159,7 +159,7 @@ const Landing: React.FC = () => {
                   color: b.color,
                   fontSize: "11px",
                   fontWeight: 600,
-                  padding: "5px 12px",
+                  padding: "5px 10px",
                   borderRadius: "999px",
                   fontFamily: "Montserrat, sans-serif",
                 }}
