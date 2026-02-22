@@ -361,7 +361,7 @@ const Step2: React.FC<{
             Sí, puedo ir
           </span>
           <span style={{ fontSize: "13px", fontWeight: 400, color: "#888", display: "block", marginTop: "2px" }}>
-            Tengo cómo llegar
+            Yo puedo llegar a este local sin problema
           </span>
         </div>
       </motion.button>
@@ -390,15 +390,17 @@ const Step2: React.FC<{
             Me queda muy lejos
           </span>
           <span style={{ fontSize: "13px", fontWeight: 400, color: "#888", display: "block", marginTop: "2px" }}>
-            No podría llegar
+            Está muy lejos para mí y no podré llegar a la cita
           </span>
         </div>
       </motion.button>
     </div>
 
-    <p style={{ fontSize: "13px", color: "#999", fontStyle: "italic", textAlign: "center", marginTop: "16px", fontFamily: "Montserrat, sans-serif", lineHeight: 1.5 }}>
-      Para respetar tu tiempo y el nuestro, asegúrate de que puedes llegar a nuestro local antes de continuar.
-    </p>
+    <div style={{ marginTop: "16px", padding: "14px 16px", background: "#FFF3E0", borderLeft: "4px solid #FF9800", borderRadius: "8px", fontFamily: "Montserrat, sans-serif" }}>
+      <p style={{ fontSize: "14px", fontWeight: 600, color: "#BF360C", lineHeight: 1.5, margin: 0 }}>
+        ⚠️ Por favor, solo continúa si de verdad puedes llegar. Queremos respetar tu tiempo y el nuestro, y evitar citas perdidas.
+      </p>
+    </div>
   </div>
 ));
 
@@ -513,6 +515,10 @@ const Step3Confirm: React.FC<{
           </div>
         </div>
       )}
+
+      <p style={{ fontSize: "13px", color: "#666", fontFamily: "Montserrat, sans-serif", lineHeight: 1.5, textAlign: "center", margin: "0 0 16px 0" }}>
+        Confirma que este es el servicio que quieres para contactarte y agendar. No pagas nada ahora — el pago es después de tu servicio.
+      </p>
 
       {/* CTA */}
       <button
