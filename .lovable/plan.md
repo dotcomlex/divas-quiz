@@ -1,37 +1,22 @@
 
 
-## Optimize Service Tile Images for Instant Style Recognition
+## Fix Lash Lift + Replace Brow Lamination Image
 
-The 5 new images are loading correctly. To ensure customers immediately see each lash style, I'll make two improvements:
+Three changes:
 
-### 1. Increase image height
-The current 100px height crops the lash photos too aggressively. Bumping to **120px** gives more room to show the lash style while keeping tiles compact on mobile.
+### 1. Fix Lash Lift alignment
+Change `imagePosition` from `"center 30%"` to `"center 60%"` so the eye/lashes are centered in the crop.
 
-### 2. Add per-service focal point positioning
-Each photo has the lashes in a slightly different position. Using `objectPosition` per image ensures the lash style is always centered in the crop:
+### 2. Replace Laminado de Cejas image
+Copy the new before/after brow lamination photo (uploaded image) to `src/assets/services/cejas.webp`, replacing the current one.
 
-| Service | Focus | objectPosition |
-|---|---|---|
-| Set Hibrido | Eye/lashes center | `center 40%` |
-| Set Clasico | Eye/lashes center | `center 40%` |
-| Set de Volumen | Eye/lashes center | `center 40%` |
-| Mega Volumen | Eye/lashes center | `center 40%` |
-| Lash Lift | Natural lifted lashes | `center 30%` |
-| Laminado de Cejas | Brows | `center center` (default) |
-
-### Technical Details
-
-**ServiceTile.tsx**
-- Add optional `imagePosition` prop (string, defaults to `"center center"`)
-- Apply it as `objectPosition` on the `<img>` tag
-- Change image container height from `100px` to `120px`
-
-**Quiz.tsx (SERVICES array)**
-- Add `imagePosition` field to each service entry with the appropriate focal point value
+### 3. Adjust Cejas positioning for the split image
+Since this is a vertical before/after split (top half + bottom half), set `imagePosition: "center 25%"` to focus on the top brow result, ensuring the groomed brow is clearly visible in the 120px crop. The tile is roughly 175x120px so we want to show the best portion of the split.
 
 ### Files Changed
 
 | File | What |
 |---|---|
-| `src/components/ServiceTile.tsx` | Add `imagePosition` prop, increase image height to 120px |
-| `src/pages/Quiz.tsx` | Add `imagePosition` values to SERVICES array |
+| `src/assets/services/cejas.webp` | Replace with new before/after brow image |
+| `src/pages/Quiz.tsx` | Fix Lash Lift to `"center 60%"`, add `imagePosition: "center 25%"` to Cejas |
+
