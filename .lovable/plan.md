@@ -1,68 +1,68 @@
 
 
-## Make Every Screen Fit the Viewport — No Page Scroll, Native Feel
+## Fix Landing Page — Fit Everything on Screen
 
-The root cause is that every screen uses `minHeight: 100dvh`, which lets content grow beyond the viewport and triggers page-level scrolling. On mobile, this feels like a web page, not an app.
-
-The fix: lock the outer shell to exactly `100dvh` on mobile, and if any step has more content than fits (like the 6-card service grid), scroll only the content area internally — not the whole page.
+The screenshot shows the logo is way too large, pushing everything down so the user has to scroll. The promo badge is also oversized and wrapping. The CTA button needs to be bigger, and the trust pills below it are too chunky. Here's the fix:
 
 ---
 
-### Changes
+### Changes to `src/pages/Landing.tsx`
 
-#### 1. `src/pages/Quiz.tsx` — PageWrapper
+#### 1. Shrink the Logo
+- Reduce from `180px` width to `120px` — still visible but no longer dominating the screen
+- Reduce top padding from `40px` to `20px` to move everything up
 
-Change the outer wrapper from `minHeight: 100dvh` to `height: 100dvh` with `overflow: hidden`. Restructure the quiz layout into a fixed 3-row layout:
+#### 2. Fix Promo Badge
+- Reduce font size from `13px` to `11px`
+- Reduce padding from `8px 16px` to `5px 12px`
+- Reduce margin-top from `18px` to `10px`
+- Keep centered alignment
 
-- **Top**: Progress bar (fixed height)
-- **Middle**: Step content (flex-grow, `overflow-y: auto` so it scrolls internally if needed)
-- **Bottom**: Back button (fixed height)
+#### 3. Tighten Headline
+- Reduce side padding of the card from `28px` to `20px` so text wraps less
+- Reduce font size from `30px` to `26px`
+- Reduce margin-top from `22px` to `14px`
 
-This keeps the shell locked to the screen and only scrolls the content area if it overflows.
+#### 4. Update Subheadline
+- New copy: **"Mas de 1,000 mujeres en Denver ya lucen pestanas increibles. Toca el boton y agenda tu cita hoy."**
+- Mentions Denver, mentions tapping the button
+- Reduce margin-top from `12px` to `8px`
+- Reduce font size from `16px` to `14px`
 
-```
-PageWrapper (height: 100dvh, overflow: hidden)
-  |-- quiz-card (height: 100%, display: flex, flex-direction: column)
-        |-- Progress bar area (flex-shrink: 0)
-        |-- Content area (flex: 1, overflow-y: auto, -webkit-overflow-scrolling: touch)
-        |-- Back button area (flex-shrink: 0)
-```
+#### 5. Restore Big CTA Button
+- Keep height at `56px` (this is good)
+- Reduce margin-top from `28px` to `16px`
+- Keep full width, keep box-shadow
 
-On desktop (min-width 480px), keep the current card behavior with `max-height` and border-radius.
+#### 6. Redesign Trust Pills — Smaller, Inline
+- Change from chunky pill badges to a single line of small text with separators
+- Format: `+1,000 clientas · 5 estrellas Google · Garantizado`
+- Font size `11px`, color `#888`, no backgrounds or borders — clean and minimal
+- Reduce margin-top from `16px` to `10px`
 
-#### 2. `src/pages/Quiz.tsx` — Disqualification and Success screens
-
-Same treatment: wrap in the fixed-height shell so they don't scroll the page. Content is centered within the available space.
-
-#### 3. `src/pages/Landing.tsx` — Lock to viewport
-
-Change `minHeight: 100dvh` to `height: 100dvh` on the outer container and `landing-card`. Add `overflow-y: auto` on the card so if content is slightly taller on very small screens, it scrolls internally, not the page.
-
-#### 4. `src/index.css` — Prevent body scroll
-
-Add `overflow: hidden` to `html, body, #root` so the page itself never scrolls. All scrolling happens inside the app shell.
+#### 7. Tighten Testimonial
+- Reduce margin-top from `20px` to `12px`
+- Reduce star size from `18px` to `14px`
+- Reduce quote font from `14px` to `12px`
+- Reduce attribution font from `13px` to `11px`
+- Reduce bottom padding from `44px` to `20px`
 
 ---
 
-### Technical Details
+### Technical Summary
 
-**`src/index.css`** — Add `overflow: hidden; height: 100dvh;` to `html, body, #root`
-
-**`src/pages/Landing.tsx`**:
-- Outer div: `height: 100dvh` (not `minHeight`)
-- Inner `.landing-card`: `height: 100dvh` (not `minHeight`), add `overflow-y: auto`, add `-webkit-overflow-scrolling: touch`
-- On desktop media query: keep `min-height: auto`
-
-**`src/pages/Quiz.tsx`**:
-- `PageWrapper` outer div: `height: 100dvh` (not `minHeight`), `overflow: hidden`
-- `.quiz-card` inner div: `height: 100dvh` (not `minHeight`), `display: flex`, `flex-direction: column`
-- Move the quiz rendering so that:
-  - Progress bar div gets `flexShrink: 0`
-  - Content area (AnimatePresence wrapper) gets `flex: 1`, `overflow-y: auto`, `-webkit-overflow-scrolling: touch`
-  - Back button div gets `flexShrink: 0`
-- Disqualified screen: same flex layout, content centered with `flex: 1` and `justify-content: center`
-- Success screen: same flex layout, content centered
+| Element | Before | After |
+|---|---|---|
+| Card padding | `40px 28px 44px` | `20px 20px 20px` |
+| Logo width | `180px` | `120px` |
+| Promo badge font | `13px` | `11px` |
+| Headline font | `30px` | `26px` |
+| Subheadline | Generic copy | Mentions Denver + "toca el boton" |
+| Subheadline font | `16px` | `14px` |
+| CTA height | `56px` | `56px` (unchanged) |
+| Trust pills | 3 chunky pill badges | Single line of text with dots |
+| Testimonial | Large spacing | Tighter spacing, smaller fonts |
 
 ### No Changes To
-- Copy, colors, images, routing, Pixel events, ServiceTile, ProgressBar
+- Quiz pages, routing, Pixel events, images, colors, CTA text
 
