@@ -1,69 +1,45 @@
 
 
-## Multi-Part Update: Reviews, Discount Copy, Address Box, and Performance
+## Speed, Copy, and Contact Section Cleanup
 
-### 1. Landing Page Reviews -- Fix Copy and Add Avatars
+### 1. Performance: Faster Service Page Load
 
-**Problem:** Reviews mention "Maria" (not a real person at the salon) and are too short. No avatars make them look generic.
+The main bottleneck is the complex CSS background on the quiz card container (line 234) -- it stacks 3 gradients plus a repeating-linear-gradient pattern, which forces expensive paint operations on every frame. This gets recalculated during AnimatePresence transitions.
 
-**Changes to `src/pages/Landing.tsx` (lines 205-247):**
+**Fix:**
+- Simplify the quiz-card background from 4 layered gradients to a single simple solid color (`#fffaf9`) or at most one subtle gradient
+- This eliminates heavy paint cost on mobile devices, especially during step transitions
+- The subtle diamond pattern (`repeating-linear-gradient`) is invisible to most users but costs GPU cycles
 
-- Rewrite all 3 reviews to reference "Divas Beauty" naturally, make them longer and more authentic
-- Add avatar images using `ui-avatars.com` or `i.pravatar.cc` placeholder service for realistic circular photos of young women (20-25 age range)
-- Each review card gets a small 28px circle avatar next to the name
+Additionally:
+- Remove the `<style>` tag that gets re-rendered inside PageWrapper on every render -- move it to a static CSS approach or use a `useMemo`
 
-New reviews:
-1. "Llevo 3 meses yendo a Divas Beauty y mis pestanas siempre quedan perfectas. El equipo es super profesional y te hacen sentir como en casa. Ya no uso rimel para nada." -- Jessica L.
-2. "Mi amiga me recomendo Divas Beauty y desde la primera vez quede encantada. Las pestanas duran semanas y se ven super naturales. 100% recomendado." -- Lucia R.
-3. "El mejor lugar de pestanas en Denver. En Divas Beauty siempre me atienden rapido y el resultado es increible. Todas mis amigas ya van ahi." -- Ana G.
+### 2. Discount Copy Clarity (Step 3 Confirmation)
 
-For avatars: Use free placeholder images from `https://i.pravatar.cc/56?img=X` (generates realistic face photos). These are lightweight (< 3KB each at 56px) and look like real people.
+**Line 510:** Change `"10% de descuento este mes"` to `"Incluye 10% de descuento"` -- clearer that the discount is already applied to the shown price, not an additional discount.
 
----
+**Line 831 (Success screen):** Change `"10% de descuento este mes"` to `"incluye 10% de descuento"` -- same clarity fix.
 
-### 2. Fix Discount Copy -- "Este Mes" Not "Clienta Nueva"
+### 3. Remove "No Spam" Message (Step 4)
 
-**Problem:** Step 1 says "descuento de clienta nueva" but the promo is 10% off THIS MONTH, not for new clients only.
+**Lines 690-701:** Delete the entire phone microcopy paragraph that says "Te escribimos por mensaje para confirmar tu cita. No spam, prometido."
 
-**Changes to `src/pages/Quiz.tsx`:**
+### 4. Tighten Contact Section Layout (Step 4)
 
-- **Line 260:** Change `"Todos los precios ya incluyen tu 10% de descuento de clienta nueva"` to `"Todos los precios ya incluyen tu 10% de descuento solo por este mes"`
-- **Line 516:** Change `"10% de descuento ya aplicado"` to `"10% de descuento este mes"` (Step 3 confirm)
-- **Line 837:** Change `"10% de descuento"` to `"10% de descuento este mes"` (success screen)
-
-Also scan service badge texts -- lines 17-22 currently say "Incluye 10% desc." which is fine (no "new client" mention).
-
----
-
-### 3. Step 2 Address Box -- Yellow Background and Extra Copy
-
-**Problem:** Address box is pink (#FFF0F5), user wants it yellowish and more prominent. "Cerca del area de Westminster / Thornton" subtext should be removed. Needs helper text under buttons.
-
-**Changes to `src/pages/Quiz.tsx` (lines 310-407):**
-
-- Change address box background from `#FFF0F5` to `#FFFDE7` (warm yellow)
-- Change border from `#F0C0D4` to `#F5C842` (gold border)
-- Remove "Cerca del area de Westminster / Thornton" subtext (lines 334-343)
-- Add a small helper paragraph below the two buttons: "Para respetar tu tiempo y el nuestro, asegurate de que puedes llegar a nuestro local antes de continuar." (13px, #999, italic)
-
----
-
-### 4. Performance -- Faster Quiz Page Load
-
-**Changes:**
-- Add `will-change: transform` to the motion container to hint GPU compositing
-- Preload the first 2 service images (hybrid and clasico) using `<link rel="preload">` in `index.html` -- actually these are imported assets so they're already bundled. Instead:
-  - Add `loading="eager"` and `decoding="sync"` to the first 2 service tile images (already partially done with `fetchPriority="high"`)
-  - Reduce the AnimatePresence transition duration from 0.3s to 0.2s for snappier step transitions
-  - The `setTimeout(() => setStep(2), 400)` delay on service select (line 56) -- reduce from 400ms to 250ms for snappier feel
-
----
+- Reduce `marginTop` on the testimonial section (line 731) from `20px` to `14px`
+- Reduce phone field `marginBottom` from `6px` to `14px` (already tight) 
+- Remove the empty line gaps (lines 703-704, 728-729) to tighten vertical spacing
+- This keeps everything visible on screen without scrolling
 
 ### Technical Summary
 
-**Files modified:**
-1. `src/pages/Landing.tsx` -- Review cards (copy + avatars)
-2. `src/pages/Quiz.tsx` -- Discount copy (3 locations), address box styling, subtext removal, helper text, performance tweaks
+**File modified:** `src/pages/Quiz.tsx`
 
-**No structural changes.** No routing changes. No new dependencies. All copy in Mexican Spanish with "tu" form.
+Changes:
+- Simplify background gradient on quiz-card (line 234)
+- Fix discount wording on lines 510 and 831
+- Delete "no spam" microcopy (lines 690-701)
+- Tighten spacing in Step 4 contact section
+
+No structural changes. No new dependencies.
 
