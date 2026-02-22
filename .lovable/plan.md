@@ -1,26 +1,28 @@
 
 
-## Fix Trust Badges — One Line, No Wrapping
+## Update Trust Badge Text
 
-### Problem
-The three trust badges wrap to two lines because the text is too long for a 390px screen.
+### Changes to `src/pages/Landing.tsx`
 
-### Solution
-Shorten the text on each badge so all three fit on a single row:
+Update the three trust badge texts to the user's chosen copy:
 
-- "💖 +1,000 clientas felices" → "💖 +1,000 clientas"
-- "✅ Satisfacción garantizada" → "✅ Garantizado"
-- "⭐ Atención personalizada" → "⭐ Personalizado"
+- "💖 +1,000 clientas" → "💖 +1,000"
+- "✅ Garantizado" → "✅ Satisfacción garantizada" 
+- "⭐ Personalizado" → "⭐ Las mejores en Denver"
 
-Also reduce font size from 13px to 11px and padding from 6px 14px to 5px 10px, and add `flexWrap: "nowrap"` to the container so they never wrap.
+Since "Satisfacción garantizada" and "Las mejores en Denver" are longer, reduce font size to 10px to keep all three on one line at 390px width.
 
 ### Technical Details
 
-**File: `src/pages/Landing.tsx`**
+**File: `src/pages/Landing.tsx`** (lines 151-153)
 
-1. Update the badge text array to shorter labels
-2. Change container `flexWrap` from `"wrap"` to `"nowrap"`
-3. Reduce badge font size to 11px and padding to 5px 10px
+Update the badge array:
+```
+{ text: "💖 +1,000", bg: "#F5F5F5", color: "#555555" },
+{ text: "⭐ Las mejores en Denver", bg: "#F5F5F5", color: "#555555" },
+{ text: "✅ Satisfacción garantizada", bg: "#F5F5F5", color: "#555555" },
+```
 
-No changes to copy, routing, images, colors, or any other section.
+Reduce font size from 11px to 10px and padding to `4px 8px` to ensure single-line fit.
 
+No other changes.
