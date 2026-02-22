@@ -148,18 +148,18 @@ const Landing: React.FC = () => {
             }}
           >
             {[
-              { text: "💖 +1,000 clientas", bg: "#F5F5F5", color: "#555555" },
-              { text: "✅ Garantizado", bg: "#F5F5F5", color: "#555555" },
-              { text: "⭐ Personalizado", bg: "#F5F5F5", color: "#555555" },
+              { text: "💖 +1,000", bg: "#F5F5F5", color: "#555555" },
+              { text: "⭐ Las mejores en Denver", bg: "#F5F5F5", color: "#555555" },
+              { text: "✅ Satisfacción garantizada", bg: "#F5F5F5", color: "#555555" },
             ].map((b, i) => (
               <span
                 key={i}
                 style={{
                   background: b.bg,
                   color: b.color,
-                  fontSize: "11px",
+                  fontSize: "10px",
                   fontWeight: 600,
-                  padding: "5px 10px",
+                  padding: "4px 8px",
                   borderRadius: "999px",
                   fontFamily: "Montserrat, sans-serif",
                 }}
