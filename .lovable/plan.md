@@ -1,50 +1,43 @@
 
 
-## Send Quiz Data to Webhook
+## Step 2 & Step 3 Copy and Layout Updates
 
-### What happens
-When the user submits the form (Step 4), we send all collected info to the LeadConnector webhook via a `fetch` POST request before showing the success screen.
+### 1. Step 2 -- Address Buttons: Rewrite Button Text
 
-### Data sent
-- `name` -- full name entered
-- `phone` -- phone number entered
-- `service` -- selected service name
-- `price` -- sale price of the selected service
+**Current buttons (lines 358-396):**
+- YES: "Si, puedo ir" / "Tengo como llegar"
+- NO: "Me queda muy lejos" / "No podria llegar"
 
-### Technical Details
+**New copy:**
+- YES button: **"Si, puedo ir"** (keep) / sub: **"Yo puedo llegar a este local sin problema"**
+- NO button: **"No, me queda lejos"** (keep bold) / sub: **"Esta muy lejos para mi y no podre llegar a la cita"**
 
-**File: `src/pages/Quiz.tsx`**
+### 2. Step 2 -- Bottom Warning: Make It More Dominant
 
-Update `handleSubmit` (line 59) to fire a `fetch` POST to the webhook URL with JSON body containing name, phone, service name, and price. The request is fire-and-forget (no `await`) so it doesn't block the UI -- the success screen shows immediately regardless of webhook response.
+**Current (line 399):** Small 13px italic gray text.
 
-```typescript
-const handleSubmit = () => {
-  if (!isFormValid) return;
-  const service = SERVICES.find((s) => s.name === selectedService);
+**New:** Bigger, bolder, more visible warning:
+- Background: `#FFF3E0` (warm orange tint) with `#FF9800` left border (4px)
+- Font size: `14px`, weight `600`, color `#BF360C` (dark orange-red)
+- Not italic -- straight, serious tone
+- Icon: warning emoji
+- Copy: **"⚠️ Por favor, solo continua si de verdad puedes llegar. Queremos respetar tu tiempo y el nuestro, y evitar citas perdidas."**
 
-  // Send to webhook (fire-and-forget)
-  fetch("https://services.leadconnectorhq.com/hooks/4cQKcpdWiqodiHPVS5wT/webhook-trigger/356f12b2-f8c0-4e49-960b-d07dfa15f4b9", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name: name.trim(),
-      phone: phoneDigits,
-      service: selectedService,
-      price: service?.salePrice ?? "",
-    }),
-  }).catch(() => {});
+### 3. Step 3 -- Add Reassurance Message Under the Service Box
 
-  // Facebook pixel
-  if (typeof window !== "undefined" && (window as any).fbq) {
-    (window as any).fbq("track", "Lead", {
-      content_name: selectedService,
-      value: service ? parseFloat(service.salePrice.replace("$", "")) : 0,
-      currency: "USD",
-    });
-  }
-  setScreen("success");
-};
-```
+After the service summary box and before the "Continuar" button (around line 517), add a paragraph:
 
-One function change, no new dependencies, no structural changes.
+- Font: 13px, color `#666`, `Montserrat`
+- Copy: **"Confirma que este es el servicio que quieres para contactarte y agendar. No pagas nada ahora — el pago es despues de tu servicio."**
 
+This tells them: (a) confirm this is the right service, (b) no upfront payment, pay after service is done.
+
+### Technical Summary
+
+**File:** `src/pages/Quiz.tsx`
+- Lines 363-364: Update YES button sub-text
+- Lines 392-394: Update NO button sub-text
+- Lines 399-401: Replace small italic warning with a bold warning box
+- Lines 516-517: Insert reassurance paragraph before the CTA button
+
+No new files, no dependencies, no structural changes. All copy in Mexican Spanish "tu" form.
