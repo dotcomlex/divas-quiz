@@ -11,6 +11,10 @@ interface ServiceTileProps {
   isSelected: boolean;
   imageSrc?: string;
   imagePosition?: string;
+  description?: string;
+  badgeText?: string;
+  badgeType?: "discount" | "flat";
+  highlightBorder?: boolean;
   onSelect: () => void;
 }
 
@@ -24,19 +28,30 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
   isSelected,
   imageSrc,
   imagePosition = "center center",
+  description,
+  badgeText,
+  badgeType = "discount",
+  highlightBorder = false,
   onSelect,
 }) => {
+  const borderColor = isSelected
+    ? "#c2185b"
+    : highlightBorder
+      ? "#F0C0D4"
+      : "#edd5df";
+  const borderWidth = isSelected ? "2px" : "1.5px";
+
   return (
     <motion.div
       whileTap={{ scale: 0.97 }}
       onClick={onSelect}
       className="relative flex flex-col cursor-pointer select-none"
       style={{
-        border: isSelected ? "2px solid #c2185b" : "1.5px solid #edd5df",
+        border: `${borderWidth} solid ${borderColor}`,
         borderRadius: "12px",
         overflow: "hidden",
-        background: "white",
-        transition: "border-color 150ms ease, box-shadow 150ms ease",
+        background: isSelected ? "#FFF0F5" : "white",
+        transition: "border-color 150ms ease, box-shadow 150ms ease, background 150ms ease",
         boxShadow: isSelected
           ? "0 2px 12px rgba(194,24,91,0.18)"
           : "0 1px 4px rgba(0,0,0,0.06)",
@@ -56,6 +71,9 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
           <img
             src={imageSrc}
             alt={name}
+            decoding="async"
+            width={175}
+            height={120}
             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: imagePosition }}
           />
         ) : (
@@ -86,7 +104,7 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
           />
         )}
 
-        {/* Favorita badge — yellow accent */}
+        {/* Favorita badge */}
         {isFavorite && (
           <span
             style={{
@@ -137,7 +155,7 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
       <div
         style={{
           padding: "9px 10px 11px",
-          background: "white",
+          background: isSelected ? "#FFF0F5" : "white",
           borderRadius: "0 0 10px 10px",
         }}
       >
@@ -147,7 +165,7 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
             fontSize: "14px",
             fontWeight: 700,
             color: "#1a1a1a",
-            margin: "0 0 3px",
+            margin: "0 0 2px",
             fontFamily: "Montserrat, sans-serif",
             lineHeight: 1.25,
           }}
@@ -155,26 +173,60 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
           {name}
         </p>
 
-        {/* Pricing */}
-        {isFlat ? (
+        {/* Description */}
+        {description && (
           <p
             style={{
-              fontSize: "13px",
-              fontWeight: 700,
-              color: "#c2185b",
-              margin: 0,
+              fontSize: "12px",
+              fontWeight: 400,
+              color: "#555",
+              margin: "0 0 4px",
               fontFamily: "Montserrat, sans-serif",
+              lineHeight: 1.3,
             }}
           >
-            {salePrice}
+            {description}
           </p>
+        )}
+
+        {/* Pricing */}
+        {isFlat ? (
+          <>
+            <p
+              style={{
+                fontSize: "15px",
+                fontWeight: 700,
+                color: "#c2185b",
+                margin: "0 0 3px",
+                fontFamily: "Montserrat, sans-serif",
+              }}
+            >
+              {salePrice}
+            </p>
+            {badgeText && (
+              <span
+                style={{
+                  display: "inline-block",
+                  fontSize: "11px",
+                  fontWeight: 700,
+                  color: "#666",
+                  background: "#F5F5F5",
+                  borderRadius: "99px",
+                  padding: "3px 8px",
+                  fontFamily: "Montserrat, sans-serif",
+                }}
+              >
+                {badgeText}
+              </span>
+            )}
+          </>
         ) : (
           <>
             {originalPrice && (
               <p
                 style={{
                   fontSize: "12px",
-                  color: "#888888",
+                  color: "#999",
                   textDecoration: "line-through",
                   margin: "0 0 1px",
                   fontFamily: "Montserrat, sans-serif",
@@ -183,7 +235,7 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
                 {originalPrice}
               </p>
             )}
-            <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "5px", flexWrap: "wrap" }}>
               <p
                 style={{
                   fontSize: "15px",
@@ -195,22 +247,40 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
               >
                 {salePrice}
               </p>
-              <span
-                style={{
-                  fontSize: "10px",
-                  fontWeight: 700,
-                  color: "#7a5c00",
-                  background: "#fff8e1",
-                  border: "1px solid #ffe082",
-                  borderRadius: "4px",
-                  padding: "1px 5px",
-                  fontFamily: "Montserrat, sans-serif",
-                  letterSpacing: "0.02em",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                -10%
-              </span>
+              {badgeText ? (
+                <span
+                  style={{
+                    fontSize: "11px",
+                    fontWeight: 700,
+                    color: "#7a5c00",
+                    background: "#FFF3CD",
+                    border: "1px solid #f5c842",
+                    borderRadius: "99px",
+                    padding: "3px 8px",
+                    fontFamily: "Montserrat, sans-serif",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {badgeText}
+                </span>
+              ) : (
+                <span
+                  style={{
+                    fontSize: "10px",
+                    fontWeight: 700,
+                    color: "#7a5c00",
+                    background: "#fff8e1",
+                    border: "1px solid #ffe082",
+                    borderRadius: "4px",
+                    padding: "1px 5px",
+                    fontFamily: "Montserrat, sans-serif",
+                    letterSpacing: "0.02em",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  -10%
+                </span>
+              )}
             </div>
           </>
         )}
