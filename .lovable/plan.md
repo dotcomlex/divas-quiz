@@ -1,31 +1,25 @@
 
 
-## Improve Trust Signals & Add Reviews Title
+## Clean Up Trust Badges & Update Promo Text
 
 ### Changes to `src/pages/Landing.tsx`
 
-#### 1. Replace trust signals text with styled pill badges
-The current trust line (`+1,000 clientas · 5 estrellas Google · Garantizado`) is tiny 11px gray text that's barely visible. Replace it with three individual pill badges that are larger and more readable:
+#### 1. Make all trust badges one solid color
+Right now each badge has a different background and text color (rose, green, blue) which looks busy. Change all three to use the same subtle rose theme so they feel cohesive:
+- Background: `#FFF0F3` (light rose) for all three
+- Text color: `#C2185B` (brand rose) for all three
+- Keep the emoji icons as visual differentiators
 
-- **"+1,000 clientas felices"** — light rose background (#FFF0F3), rose text (#C2185B), with a heart or sparkle icon
-- **"Satisfaccion garantizada"** — light green background (#F0FFF4), green text (#2E7D32), with a checkmark icon  
-- **"Atencion personalizada"** — light blue background (#F0F4FF), blue text (#1565C0), with a star icon
+#### 2. Update promo badge text
+Change from:
+> "Clientas nuevas — 10% de descuento este mes"
 
-Each badge: 13px font, 600 weight, rounded-full, padding 6px 14px, inline-flex with gap. No mention of Google per the request.
+To:
+> "10% de descuento este mes"
 
-#### 2. Add a reviews section title
-Before the review cards scroller, add a short heading like:
-
-> **"Lo que dicen nuestras clientas"**
-
-Style: 15px, weight 700, color #1a1a1a, center-aligned, marginTop 16px, marginBottom 8px.
-
-#### 3. Spacing adjustments
-- Trust badges container: `marginTop: 12px`, flex-wrap with gap 8px, centered
-- Reviews title: `marginTop: 16px`
-- Reviews scroller: `marginTop: 8px` (reduced from 18px since the title now provides separation)
+Remove the "Clientas nuevas" / "for new clients" qualifier as requested.
 
 ### No changes to
-- Copy in headline, subheadline, CTA button, or promo badge
-- Routing, images, colors, fonts, or any other page
+- Headline, subheadline, CTA button text
+- Reviews section, routing, images, colors, fonts
 
