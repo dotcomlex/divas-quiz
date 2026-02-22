@@ -35,7 +35,7 @@ const Landing: React.FC = () => {
         <div
           className="landing-card w-full flex flex-col items-center"
           style={{
-            padding: "20px 20px 20px",
+            padding: "20px 12px 20px",
             height: "100dvh",
             overflowY: "auto",
             WebkitOverflowScrolling: "touch",
@@ -108,7 +108,7 @@ const Landing: React.FC = () => {
               lineHeight: 1.6,
               fontFamily: "Montserrat, sans-serif",
               fontWeight: 400,
-              maxWidth: "320px",
+              maxWidth: "100%",
             }}
           >
             Más de 1,000 mujeres en Denver ya lucen pestañas increíbles. Toca el botón y agenda tu cita hoy.
@@ -152,34 +152,65 @@ const Landing: React.FC = () => {
             +1,000 clientas · 5 estrellas Google · Garantizado
           </p>
 
-          {/* Testimonial */}
-          <div style={{ textAlign: "center", marginTop: "12px", maxWidth: "300px" }}>
-            <p style={{ margin: "0 0 4px", fontSize: "14px", color: "#f5a623", lineHeight: 1 }}>
-              ⭐⭐⭐⭐⭐
-            </p>
-            <p
-              style={{
-                fontSize: "12px",
-                fontStyle: "italic",
-                color: "#555",
-                margin: "0 0 3px",
-                fontFamily: "Montserrat, sans-serif",
-                lineHeight: 1.5,
-              }}
-            >
-              "¡Me encantaron mis pestañas! María es una artista. 100% recomendado."
-            </p>
-            <p
-              style={{
-                fontSize: "11px",
-                fontWeight: 600,
-                color: "#888",
-                margin: 0,
-                fontFamily: "Montserrat, sans-serif",
-              }}
-            >
-              — Sandra M., Denver, CO
-            </p>
+          {/* Reviews scroller */}
+          <div
+            style={{
+              marginTop: "18px",
+              width: "100%",
+              overflowX: "auto",
+              WebkitOverflowScrolling: "touch",
+              scrollSnapType: "x mandatory",
+              display: "flex",
+              gap: "10px",
+              paddingBottom: "4px",
+              msOverflowStyle: "none",
+              scrollbarWidth: "none",
+            }}
+            className="[&::-webkit-scrollbar]:hidden"
+          >
+            {[
+              { quote: "¡Me encantaron mis pestañas! María es una artista. 100% recomendado.", name: "Sandra M." },
+              { quote: "Mis pestañas duran semanas. Ya no uso rímel. ¡Las amo!", name: "Lucía R." },
+              { quote: "El mejor servicio en Denver. Súper profesional y rápido.", name: "Ana G." },
+            ].map((r, i) => (
+              <div
+                key={i}
+                style={{
+                  minWidth: "240px",
+                  maxWidth: "240px",
+                  scrollSnapAlign: "start",
+                  background: "#fff",
+                  borderRadius: "8px",
+                  padding: "10px 12px",
+                  boxShadow: "0 1px 6px rgba(0,0,0,0.07)",
+                }}
+              >
+                <p style={{ margin: 0, fontSize: "12px", color: "#f5a623", lineHeight: 1 }}>⭐⭐⭐⭐⭐</p>
+                <p
+                  style={{
+                    margin: "6px 0 4px",
+                    fontSize: "11px",
+                    fontStyle: "italic",
+                    color: "#555",
+                    fontFamily: "Montserrat, sans-serif",
+                    lineHeight: 1.45,
+                  }}
+                >
+                  "{r.quote}"
+                </p>
+                <p
+                  style={{
+                    margin: 0,
+                    fontSize: "10px",
+                    fontWeight: 600,
+                    color: "#999",
+                    fontFamily: "Montserrat, sans-serif",
+                  }}
+                >
+                  — {r.name}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
