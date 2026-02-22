@@ -15,6 +15,8 @@ interface ServiceTileProps {
   badgeText?: string;
   badgeType?: "discount" | "flat";
   highlightBorder?: boolean;
+  loading?: "eager" | "lazy";
+  fetchPriority?: "high" | "low" | "auto";
   onSelect: () => void;
 }
 
@@ -32,6 +34,8 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
   badgeText,
   badgeType = "discount",
   highlightBorder = false,
+  loading = "lazy",
+  fetchPriority = "auto",
   onSelect,
 }) => {
   const borderColor = isSelected
@@ -72,7 +76,8 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
             src={imageSrc}
             alt={name}
             decoding="async"
-            fetchPriority="high"
+            loading={loading}
+            fetchPriority={fetchPriority}
             width={175}
             height={120}
             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: imagePosition }}
