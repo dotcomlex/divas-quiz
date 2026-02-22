@@ -4,10 +4,10 @@ import ProgressBar from "@/components/ProgressBar";
 import ServiceTile from "@/components/ServiceTile";
 import FaqAccordion from "@/components/FaqAccordion";
 import logoSrc from "@/assets/logo.png";
-import imgHybrid from "@/assets/services/hybrid.jpg";
-import imgClasico from "@/assets/services/clasico.jpg";
-import imgVolumen from "@/assets/services/volumen.jpg";
-import imgMega from "@/assets/services/mega.jpg";
+import imgHybrid from "@/assets/services/hybrid.png";
+import imgClasico from "@/assets/services/clasico.png";
+import imgVolumen from "@/assets/services/volumen.png";
+import imgMega from "@/assets/services/mega.png";
 import imgLashlift from "@/assets/services/lashlift.jpg";
 import imgCejas from "@/assets/services/cejas.jpg";
 
