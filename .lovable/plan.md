@@ -1,67 +1,68 @@
 
 
-## Optimize Loading Speed — Services Page Focus
+## Make Every Screen Fit the Viewport — No Page Scroll, Native Feel
 
-### 1. Delete 11 Unused Image Duplicates
+The root cause is that every screen uses `minHeight: 100dvh`, which lets content grow beyond the viewport and triggers page-level scrolling. On mobile, this feels like a web page, not an app.
 
-The `src/assets/services/` folder contains `.jpg` and `.png` files that are never imported (only `.webp` versions are used). Removing them reduces build time and bundle size.
-
-**Delete these files:**
-- `cejas.jpg`
-- `clasico.jpg`, `clasico.png`
-- `hybrid.jpg`, `hybrid.png`
-- `lashlift.jpg`, `lashlift2.jpg`
-- `mega.jpg`, `mega.png`
-- `volumen.jpg`, `volumen.png`
-
-### 2. Memoize All Step Components
-
-Currently `Step1`, `Step2`, `Step3Confirm`, `Step4Contact`, and `SuccessScreen` re-render on every parent state change (e.g. typing in the phone field re-renders Step1 even though it's not visible). Wrap each with `React.memo`.
-
-**File: `src/pages/Quiz.tsx`**
-
-### 3. Lazy-Load FaqAccordion
-
-`FaqAccordion` is no longer used in Quiz.tsx (removed during the redesign), but the file still exists. No action needed here — it's already excluded from the bundle since it's not imported.
-
-### 4. Add `fetchpriority="high"` to Service Tile Images
-
-The 6 service images are above-the-fold on Step 1. Adding `fetchpriority="high"` tells the browser to prioritize downloading them.
-
-**File: `src/components/ServiceTile.tsx`**
-- Add `fetchPriority="high"` to the `<img>` tag (already has `decoding="async"` and `width`/`height`)
-
-### 5. Defer Framer Motion Animations for Non-Visible Steps
-
-Currently all steps import and use `motion` components. The `whileTap` on ServiceTile uses the full `motion.div`. This is already efficient since Framer Motion tree-shakes, but we can ensure the `AnimatePresence` doesn't mount hidden steps.
-
-Already handled — `AnimatePresence mode="wait"` only renders the active step. No change needed.
-
-### 6. Optimize Google Fonts Loading
-
-Add `<link rel="preload">` for the Montserrat font CSS to start downloading it earlier, before the browser parses the render-blocking stylesheet.
-
-**File: `index.html`**
-- Add `<link rel="preload" as="style" href="...montserrat..." />` before the existing font link
-
-### 7. Add Preload Hint for Logo Image
-
-The logo appears on both Landing and Quiz pages. Adding a modulepreload won't help since Vite hashes assets, but we can add `fetchpriority="high"` to the logo `<img>` in `Landing.tsx`.
-
-**File: `src/pages/Landing.tsx`**
-- Add `fetchPriority="high"`, `width`, `height`, and `decoding="async"` to the logo `<img>`
+The fix: lock the outer shell to exactly `100dvh` on mobile, and if any step has more content than fits (like the 6-card service grid), scroll only the content area internally — not the whole page.
 
 ---
 
-### Technical Summary
+### Changes
 
-| File | Changes |
-|---|---|
-| `src/assets/services/*.jpg, *.png` | Delete 11 unused duplicate image files |
-| `src/pages/Quiz.tsx` | Wrap Step1, Step2, Step3Confirm, Step4Contact, SuccessScreen with React.memo |
-| `src/components/ServiceTile.tsx` | Add `fetchPriority="high"` to img tag |
-| `src/pages/Landing.tsx` | Add `fetchPriority="high"`, `width`, `height`, `decoding="async"` to logo img |
-| `index.html` | Add font preload hint |
+#### 1. `src/pages/Quiz.tsx` — PageWrapper
+
+Change the outer wrapper from `minHeight: 100dvh` to `height: 100dvh` with `overflow: hidden`. Restructure the quiz layout into a fixed 3-row layout:
+
+- **Top**: Progress bar (fixed height)
+- **Middle**: Step content (flex-grow, `overflow-y: auto` so it scrolls internally if needed)
+- **Bottom**: Back button (fixed height)
+
+This keeps the shell locked to the screen and only scrolls the content area if it overflows.
+
+```
+PageWrapper (height: 100dvh, overflow: hidden)
+  |-- quiz-card (height: 100%, display: flex, flex-direction: column)
+        |-- Progress bar area (flex-shrink: 0)
+        |-- Content area (flex: 1, overflow-y: auto, -webkit-overflow-scrolling: touch)
+        |-- Back button area (flex-shrink: 0)
+```
+
+On desktop (min-width 480px), keep the current card behavior with `max-height` and border-radius.
+
+#### 2. `src/pages/Quiz.tsx` — Disqualification and Success screens
+
+Same treatment: wrap in the fixed-height shell so they don't scroll the page. Content is centered within the available space.
+
+#### 3. `src/pages/Landing.tsx` — Lock to viewport
+
+Change `minHeight: 100dvh` to `height: 100dvh` on the outer container and `landing-card`. Add `overflow-y: auto` on the card so if content is slightly taller on very small screens, it scrolls internally, not the page.
+
+#### 4. `src/index.css` — Prevent body scroll
+
+Add `overflow: hidden` to `html, body, #root` so the page itself never scrolls. All scrolling happens inside the app shell.
+
+---
+
+### Technical Details
+
+**`src/index.css`** — Add `overflow: hidden; height: 100dvh;` to `html, body, #root`
+
+**`src/pages/Landing.tsx`**:
+- Outer div: `height: 100dvh` (not `minHeight`)
+- Inner `.landing-card`: `height: 100dvh` (not `minHeight`), add `overflow-y: auto`, add `-webkit-overflow-scrolling: touch`
+- On desktop media query: keep `min-height: auto`
+
+**`src/pages/Quiz.tsx`**:
+- `PageWrapper` outer div: `height: 100dvh` (not `minHeight`), `overflow: hidden`
+- `.quiz-card` inner div: `height: 100dvh` (not `minHeight`), `display: flex`, `flex-direction: column`
+- Move the quiz rendering so that:
+  - Progress bar div gets `flexShrink: 0`
+  - Content area (AnimatePresence wrapper) gets `flex: 1`, `overflow-y: auto`, `-webkit-overflow-scrolling: touch`
+  - Back button div gets `flexShrink: 0`
+- Disqualified screen: same flex layout, content centered with `flex: 1` and `justify-content: center`
+- Success screen: same flex layout, content centered
 
 ### No Changes To
-- Copy, layout, colors, routing, Pixel events, or any visual element
+- Copy, colors, images, routing, Pixel events, ServiceTile, ProgressBar
+
