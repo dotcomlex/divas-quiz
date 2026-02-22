@@ -1,47 +1,55 @@
 
 
-## Fix Quiz Funnel — Simplify and Correct Copy
+## Optimize Loading Speed — Services Page Focus
 
-The redesign over-complicated several screens and used incorrect CTAs that make it sound like we're sending a discount, when really we're collecting info to contact them for booking. Here are the specific fixes:
+### 1. Delete 11 Unused Image Duplicates
 
----
+The `src/assets/services/` folder contains `.jpg` and `.png` files that are never imported (only `.webp` versions are used). Removing them reduces build time and bundle size.
 
-### 1. Reorder Services (Step 1)
+**Delete these files:**
+- `cejas.jpg`
+- `clasico.jpg`, `clasico.png`
+- `hybrid.jpg`, `hybrid.png`
+- `lashlift.jpg`, `lashlift2.jpg`
+- `mega.jpg`, `mega.png`
+- `volumen.jpg`, `volumen.png`
 
-Change order to: **Hibrido first**, then Clasico, Volumen (remove "Set de"), Mega Volumen, Lash Lift, Laminado de Cejas.
+### 2. Memoize All Step Components
 
-### 2. Step 1 — Headline / Subheadline
+Currently `Step1`, `Step2`, `Step3Confirm`, `Step4Contact`, and `SuccessScreen` re-render on every parent state change (e.g. typing in the phone field re-renders Step1 even though it's not visible). Wrap each with `React.memo`.
 
-- Headline: **"Elige tu Servicio — Ahorra el 10%"** (restore the original style with discount mention)
-- Subheadline: **"Precio especial de clienta nueva ya incluido 👇"** (keep as-is)
+**File: `src/pages/Quiz.tsx`**
 
-### 3. Step 2 — Fix Subheadline
+### 3. Lazy-Load FaqAccordion
 
-Current (awkward): "Para agendar tu cita, necesitas poder visitarnos."
-New: **"Antes de continuar, por favor confirma que puedes llegar a nuestro local."**
+`FaqAccordion` is no longer used in Quiz.tsx (removed during the redesign), but the file still exists. No action needed here — it's already excluded from the bundle since it's not imported.
 
-### 4. Step 3 — Simplify Dramatically
+### 4. Add `fetchpriority="high"` to Service Tile Images
 
-Remove the testimonial, location reminder, and trust bullets. Keep it simple — just the service summary card and CTA.
+The 6 service images are above-the-fold on Step 1. Adding `fetchpriority="high"` tells the browser to prioritize downloading them.
 
-- Headline: **"Confirma tu servicio:"** (simpler)
-- Service card: keep as-is (thumbnail, name, prices, "Ahorras 10%")
-- CTA: **"Continuar →"** (not "Recibir mi oferta")
-- Remove: testimonial block, location reminder, trust bullets
+**File: `src/components/ServiceTile.tsx`**
+- Add `fetchPriority="high"` to the `<img>` tag (already has `decoding="async"` and `width`/`height`)
 
-### 5. Step 4 — Fix All Copy
+### 5. Defer Framer Motion Animations for Non-Visible Steps
 
-- Headline: **"¡Ya casi! ¿Cómo te contactamos?"** (we're asking for their info to contact them)
-- Subheadline: **"Déjanos tu nombre y celular para agendar tu cita."**
-- Phone microcopy: **"📱 Te escribimos por mensaje para confirmar tu cita. No spam, prometido."**
-- CTA: **"Enviar mi info →"** (not "Quiero mi descuento")
-- Trust badge: Change "10% de descuento" pill to **"💅 10% de descuento incluido"**
+Currently all steps import and use `motion` components. The `whileTap` on ServiceTile uses the full `motion.div`. This is already efficient since Framer Motion tree-shakes, but we can ensure the `AnimatePresence` doesn't mount hidden steps.
 
-### 6. Success Screen — Fix "10% OFF"
+Already handled — `AnimatePresence mode="wait"` only renders the active step. No change needed.
 
-Never write "10% OFF" — change service pill to: **"[Service Name] — $[price] (10% de descuento)"**
+### 6. Optimize Google Fonts Loading
 
-Also update body text: **"Te vamos a escribir muy pronto para agendar tu cita 💛 Revisa tus mensajes."**
+Add `<link rel="preload">` for the Montserrat font CSS to start downloading it earlier, before the browser parses the render-blocking stylesheet.
+
+**File: `index.html`**
+- Add `<link rel="preload" as="style" href="...montserrat..." />` before the existing font link
+
+### 7. Add Preload Hint for Logo Image
+
+The logo appears on both Landing and Quiz pages. Adding a modulepreload won't help since Vite hashes assets, but we can add `fetchpriority="high"` to the logo `<img>` in `Landing.tsx`.
+
+**File: `src/pages/Landing.tsx`**
+- Add `fetchPriority="high"`, `width`, `height`, and `decoding="async"` to the logo `<img>`
 
 ---
 
@@ -49,8 +57,11 @@ Also update body text: **"Te vamos a escribir muy pronto para agendar tu cita �
 
 | File | Changes |
 |---|---|
-| `src/pages/Quiz.tsx` | Reorder SERVICES array (Hibrido first, remove "Set de" from Volumen), fix Step 1 headline, fix Step 2 subheadline, simplify Step 3 (remove testimonial/trust/location), fix Step 4 headline/subheadline/microcopy/CTA, fix success screen pill badge text and body |
+| `src/assets/services/*.jpg, *.png` | Delete 11 unused duplicate image files |
+| `src/pages/Quiz.tsx` | Wrap Step1, Step2, Step3Confirm, Step4Contact, SuccessScreen with React.memo |
+| `src/components/ServiceTile.tsx` | Add `fetchPriority="high"` to img tag |
+| `src/pages/Landing.tsx` | Add `fetchPriority="high"`, `width`, `height`, `decoding="async"` to logo img |
+| `index.html` | Add font preload hint |
 
 ### No Changes To
-- Landing page, ProgressBar, ServiceTile component, images, routing, Pixel events
-
+- Copy, layout, colors, routing, Pixel events, or any visual element
