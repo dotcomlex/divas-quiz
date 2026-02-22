@@ -137,25 +137,56 @@ const Landing: React.FC = () => {
             Quiero mi 10% de descuento →
           </motion.button>
 
-          {/* Trust signals — inline text */}
-          <p
+          {/* Trust badges */}
+          <div
             style={{
-              marginTop: "10px",
-              fontSize: "11px",
-              color: "#888",
-              fontFamily: "Montserrat, sans-serif",
-              fontWeight: 500,
-              textAlign: "center",
-              letterSpacing: "0.01em",
+              marginTop: "12px",
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              gap: "8px",
             }}
           >
-            +1,000 clientas · 5 estrellas Google · Garantizado
+            {[
+              { text: "💖 +1,000 clientas felices", bg: "#FFF0F3", color: "#C2185B" },
+              { text: "✅ Satisfacción garantizada", bg: "#F0FFF4", color: "#2E7D32" },
+              { text: "⭐ Atención personalizada", bg: "#F0F4FF", color: "#1565C0" },
+            ].map((b, i) => (
+              <span
+                key={i}
+                style={{
+                  background: b.bg,
+                  color: b.color,
+                  fontSize: "11px",
+                  fontWeight: 600,
+                  padding: "5px 12px",
+                  borderRadius: "999px",
+                  fontFamily: "Montserrat, sans-serif",
+                }}
+              >
+                {b.text}
+              </span>
+            ))}
+          </div>
+
+          {/* Reviews title */}
+          <p
+            style={{
+              marginTop: "16px",
+              fontSize: "15px",
+              fontWeight: 700,
+              color: "#1a1a1a",
+              textAlign: "center",
+              fontFamily: "Montserrat, sans-serif",
+            }}
+          >
+            Lo que dicen nuestras clientas
           </p>
 
           {/* Reviews scroller */}
           <div
             style={{
-              marginTop: "18px",
+              marginTop: "8px",
               width: "100%",
               overflowX: "auto",
               WebkitOverflowScrolling: "touch",
