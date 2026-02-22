@@ -1,30 +1,37 @@
 
 
-## Replace All 5 Service Images
+## Optimize Service Tile Images for Instant Style Recognition
 
-You uploaded 5 official lash photos. Here's the mapping:
+The 5 new images are loading correctly. To ensure customers immediately see each lash style, I'll make two improvements:
 
-| Image | Service | File path |
+### 1. Increase image height
+The current 100px height crops the lash photos too aggressively. Bumping to **120px** gives more room to show the lash style while keeping tiles compact on mobile.
+
+### 2. Add per-service focal point positioning
+Each photo has the lashes in a slightly different position. Using `objectPosition` per image ensures the lash style is always centered in the crop:
+
+| Service | Focus | objectPosition |
 |---|---|---|
-| Image 1 (natural classic lashes) | Set Clasico | `src/assets/services/clasico.webp` |
-| Image 2 (fuller hybrid lashes) | Set Hibrido | `src/assets/services/hybrid.webp` |
-| Image 3 (dramatic volume lashes) | Set de Volumen | `src/assets/services/volumen.webp` |
-| Image 4 (mega volume lashes) | Mega Volumen | `src/assets/services/mega.webp` |
-| Image 5 (lifted natural lashes) | Lash Lift | `src/assets/services/lashlift.webp` |
+| Set Hibrido | Eye/lashes center | `center 40%` |
+| Set Clasico | Eye/lashes center | `center 40%` |
+| Set de Volumen | Eye/lashes center | `center 40%` |
+| Mega Volumen | Eye/lashes center | `center 40%` |
+| Lash Lift | Natural lifted lashes | `center 30%` |
+| Laminado de Cejas | Brows | `center center` (default) |
 
 ### Technical Details
 
-- Copy each uploaded image to `src/assets/services/` as `.webp` files
-- Update all 5 import statements in `Quiz.tsx` to use the new `.webp` extensions (currently 4 are `.png` and 1 is `.jpg`)
+**ServiceTile.tsx**
+- Add optional `imagePosition` prop (string, defaults to `"center center"`)
+- Apply it as `objectPosition` on the `<img>` tag
+- Change image container height from `100px` to `120px`
+
+**Quiz.tsx (SERVICES array)**
+- Add `imagePosition` field to each service entry with the appropriate focal point value
 
 ### Files Changed
 
 | File | What |
 |---|---|
-| `src/assets/services/clasico.webp` | New image |
-| `src/assets/services/hybrid.webp` | New image |
-| `src/assets/services/volumen.webp` | New image |
-| `src/assets/services/mega.webp` | New image |
-| `src/assets/services/lashlift.webp` | New image |
-| `src/pages/Quiz.tsx` | Update 5 import paths to `.webp` |
-
+| `src/components/ServiceTile.tsx` | Add `imagePosition` prop, increase image height to 120px |
+| `src/pages/Quiz.tsx` | Add `imagePosition` values to SERVICES array |
