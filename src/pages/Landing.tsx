@@ -79,7 +79,7 @@ const Landing: React.FC = () => {
               letterSpacing: "0.01em",
             }}
           >
-            🎟️ Clientas nuevas — 10% de descuento este mes
+            🎟️ 10% de descuento este mes
           </div>
 
           {/* Headline */}
@@ -149,8 +149,8 @@ const Landing: React.FC = () => {
           >
             {[
               { text: "💖 +1,000 clientas felices", bg: "#FFF0F3", color: "#C2185B" },
-              { text: "✅ Satisfacción garantizada", bg: "#F0FFF4", color: "#2E7D32" },
-              { text: "⭐ Atención personalizada", bg: "#F0F4FF", color: "#1565C0" },
+              { text: "✅ Satisfacción garantizada", bg: "#FFF0F3", color: "#C2185B" },
+              { text: "⭐ Atención personalizada", bg: "#FFF0F3", color: "#C2185B" },
             ].map((b, i) => (
               <span
                 key={i}
