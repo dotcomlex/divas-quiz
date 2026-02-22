@@ -13,9 +13,9 @@ import imgCejas from "@/assets/services/cejas.webp";
 type Screen = "quiz" | "disqualified" | "success";
 
 const SERVICES = [
-  { emoji: "🌸", name: "Set Clásico", originalPrice: "$99.99", salePrice: "$89.99", isFavorite: false, isFlat: false, imageSrc: imgClasico, imagePosition: "center 40%", description: "Natural y bonito. Un pelo a la vez.", badgeText: "Precio Especial", badgeType: "discount" as const },
   { emoji: "✨", name: "Set Híbrido", originalPrice: "$149.99", salePrice: "$134.99", isFavorite: true, isFlat: false, imageSrc: imgHybrid, imagePosition: "center 40%", description: "Natural con más volumen. El favorito de nuestras clientas.", highlightBorder: true },
-  { emoji: "💎", name: "Set de Volumen", originalPrice: "$179.99", salePrice: "$161.99", isFavorite: false, isFlat: false, imageSrc: imgVolumen, imagePosition: "center 40%", description: "Más lleno y dramático. Ojos grandes y hermosos.", badgeText: "Precio Especial", badgeType: "discount" as const },
+  { emoji: "🌸", name: "Set Clásico", originalPrice: "$99.99", salePrice: "$89.99", isFavorite: false, isFlat: false, imageSrc: imgClasico, imagePosition: "center 40%", description: "Natural y bonito. Un pelo a la vez.", badgeText: "Precio Especial", badgeType: "discount" as const },
+  { emoji: "💎", name: "Volumen", originalPrice: "$179.99", salePrice: "$161.99", isFavorite: false, isFlat: false, imageSrc: imgVolumen, imagePosition: "center 40%", description: "Más lleno y dramático. Ojos grandes y hermosos.", badgeText: "Precio Especial", badgeType: "discount" as const },
   { emoji: "👑", name: "Mega Volumen", originalPrice: "$119.99", salePrice: "$107.99", isFavorite: false, isFlat: false, imageSrc: imgMega, imagePosition: "center 40%", description: "El look más llamativo. Para las que quieren brillar.", badgeText: "Precio Especial", badgeType: "discount" as const },
   { emoji: "🌿", name: "Lash Lift", originalPrice: "$79.99", salePrice: "$71.99", isFavorite: false, isFlat: false, imageSrc: imgLashlift, imagePosition: "center 60%", description: "Riza tus pestañas naturales. Sin extensiones.", badgeText: "Precio Especial", badgeType: "discount" as const },
   { emoji: "🍃", name: "Laminado de Cejas", originalPrice: undefined, salePrice: "$49.99", isFavorite: false, isFlat: true, imageSrc: imgCejas, imagePosition: "center 25%", description: "Cejas peinadas y definidas. Sin maquillaje.", badgeText: "Precio Fijo", badgeType: "flat" as const },
@@ -247,7 +247,7 @@ const Step1: React.FC<{
         lineHeight: 1.3,
       }}
     >
-      ¿Qué pestañas quieres?
+      Elige tu Servicio — Ahorra el 10%
     </h2>
     <p style={{ fontSize: "15px", fontWeight: 400, color: "#555", marginBottom: "18px", fontFamily: "Montserrat, sans-serif" }}>
       Precio especial de clienta nueva ya incluido 👇
@@ -295,7 +295,7 @@ const Step2: React.FC<{
       ¡Casi lista! 🎉
     </h2>
     <p style={{ fontSize: "15px", color: "#555", marginBottom: "18px", fontFamily: "Montserrat, sans-serif" }}>
-      Para agendar tu cita, necesitas poder visitarnos.
+      Antes de continuar, por favor confirma que puedes llegar a nuestro local.
     </p>
 
     {/* Address box — soft rose */}
@@ -417,7 +417,7 @@ const Step3Confirm: React.FC<{
           lineHeight: 1.3,
         }}
       >
-        Esto es lo que escogiste:
+        Confirma tu servicio:
       </h2>
 
       {/* Service summary card */}
@@ -430,7 +430,7 @@ const Step3Confirm: React.FC<{
             overflow: "hidden",
             background: "white",
             boxShadow: "0 2px 12px rgba(0,0,0,0.07)",
-            marginBottom: "16px",
+            marginBottom: "24px",
           }}
         >
           {/* Thumbnail */}
@@ -511,75 +511,6 @@ const Step3Confirm: React.FC<{
         </div>
       )}
 
-      {/* Location reminder */}
-      <p
-        style={{
-          fontSize: "14px",
-          fontWeight: 500,
-          color: "#555",
-          fontFamily: "Montserrat, sans-serif",
-          marginBottom: "20px",
-        }}
-      >
-        📍 Thornton, CO — 2121 W 84th Ave
-      </p>
-
-      {/* Trust bullets */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "20px" }}>
-        {[
-          "Satisfacción garantizada",
-          "Pagas al terminar el servicio",
-          "Te contactamos hoy mismo",
-          "Cualquier pregunta, estamos aquí",
-        ].map((text) => (
-          <div
-            key={text}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-              fontSize: "15px",
-              fontWeight: 500,
-              color: "#333",
-              fontFamily: "Montserrat, sans-serif",
-            }}
-          >
-            <span style={{ color: "#2e7d32" }}>✅</span>
-            {text}
-          </div>
-        ))}
-      </div>
-
-      {/* Testimonial */}
-      <div style={{ textAlign: "center", marginBottom: "24px" }}>
-        <p style={{ margin: "0 0 6px", fontSize: "18px", color: "#f5a623", lineHeight: 1 }}>
-          ⭐⭐⭐⭐⭐
-        </p>
-        <p
-          style={{
-            fontSize: "14px",
-            fontStyle: "italic",
-            color: "#555",
-            margin: "0 0 4px",
-            fontFamily: "Montserrat, sans-serif",
-            lineHeight: 1.5,
-          }}
-        >
-          "No puedo creer lo bonitas que quedaron. Ya no uso ni rímel."
-        </p>
-        <p
-          style={{
-            fontSize: "13px",
-            fontWeight: 600,
-            color: "#888",
-            margin: 0,
-            fontFamily: "Montserrat, sans-serif",
-          }}
-        >
-          — Karla T., Denver
-        </p>
-      </div>
-
       {/* CTA */}
       <button
         onClick={onContinue}
@@ -598,7 +529,7 @@ const Step3Confirm: React.FC<{
           letterSpacing: "0.01em",
         }}
       >
-        Recibir mi oferta →
+        Continuar →
       </button>
     </div>
   );
@@ -647,10 +578,10 @@ const Step4Contact: React.FC<{
           lineHeight: 1.3,
         }}
       >
-        ¿A dónde te mandamos tu descuento? 🎁
+        ¡Ya casi! ¿Cómo te contactamos?
       </h2>
       <p style={{ fontSize: "15px", color: "#555", marginBottom: "20px", fontFamily: "Montserrat, sans-serif", lineHeight: 1.5 }}>
-        Solo necesitamos tu nombre y celular. ¡Nosotras te escribimos!
+        Déjanos tu nombre y celular para agendar tu cita.
       </p>
 
       {/* Name field */}
@@ -763,7 +694,7 @@ const Step4Contact: React.FC<{
             lineHeight: 1.4,
           }}
         >
-          📱 Te mandamos tu descuento por mensaje. No spam, prometido.
+          📱 Te escribimos por mensaje para confirmar tu cita. No spam, prometido.
         </p>
       </div>
 
@@ -781,7 +712,7 @@ const Step4Contact: React.FC<{
         {[
           { icon: "🔒", label: "Seguro", bg: "#F5F5F5" },
           { icon: "⚡", label: "Respuesta rápida", bg: "#FFF8E1" },
-          { icon: "🎁", label: "10% de descuento", bg: "#FFF0F5" },
+          { icon: "💅", label: "10% de descuento incluido", bg: "#FFF0F5" },
         ].map((badge) => (
           <span
             key={badge.label}
@@ -825,7 +756,7 @@ const Step4Contact: React.FC<{
           letterSpacing: "0.01em",
         }}
       >
-        ¡Quiero mi descuento! 🎉
+        Enviar mi info →
       </button>
 
       {/* SMS consent */}
@@ -932,7 +863,7 @@ const SuccessScreen: React.FC<{ firstName: string; selectedService: string }> = 
           maxWidth: "320px",
         }}
       >
-        Te vamos a escribir muy pronto con tu oferta especial 💛 Revisa tus mensajes.
+        Te vamos a escribir muy pronto para agendar tu cita 💛 Revisa tus mensajes.
       </p>
 
       {/* Service pill badge */}
@@ -951,7 +882,7 @@ const SuccessScreen: React.FC<{ firstName: string; selectedService: string }> = 
             marginBottom: "16px",
           }}
         >
-          {service.name} — {service.salePrice} (10% OFF)
+          {service.name} — {service.salePrice} (10% de descuento)
         </span>
       )}
 
