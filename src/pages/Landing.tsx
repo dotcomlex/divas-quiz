@@ -141,31 +141,34 @@ const Landing: React.FC = () => {
           <div
             style={{
               marginTop: "12px",
-              display: "flex",
-              flexWrap: "nowrap",
-              justifyContent: "center",
-              gap: "8px",
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gap: "0",
+              textAlign: "center",
+              width: "100%",
             }}
           >
             {[
-              { text: "💖 +1,000", bg: "#F5F5F5", color: "#555555" },
-              { text: "⭐ Las mejores en Denver", bg: "#F5F5F5", color: "#555555" },
-              { text: "✅ Satisfacción garantizada", bg: "#F5F5F5", color: "#555555" },
+              { emoji: "💖", label: "+1,000\nclientas" },
+              { emoji: "⭐", label: "Las mejores en\nDenver" },
+              { emoji: "✅", label: "Satisfacción\ngarantizada" },
             ].map((b, i) => (
-              <span
-                key={i}
-                style={{
-                  background: b.bg,
-                  color: b.color,
-                  fontSize: "10px",
-                  fontWeight: 600,
-                  padding: "4px 8px",
-                  borderRadius: "999px",
-                  fontFamily: "Montserrat, sans-serif",
-                }}
-              >
-                {b.text}
-              </span>
+              <div key={i}>
+                <p style={{ margin: 0, fontSize: "16px", lineHeight: 1 }}>{b.emoji}</p>
+                <p
+                  style={{
+                    margin: "2px 0 0",
+                    fontSize: "10px",
+                    fontWeight: 600,
+                    color: "#888",
+                    fontFamily: "Montserrat, sans-serif",
+                    lineHeight: 1.3,
+                    whiteSpace: "pre-line",
+                  }}
+                >
+                  {b.label}
+                </p>
+              </div>
             ))}
           </div>
 
