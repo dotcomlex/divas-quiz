@@ -8,6 +8,7 @@ import imgClasico from "@/assets/services/clasico.webp";
 import imgVolumen from "@/assets/services/volumen.webp";
 import imgMega from "@/assets/services/mega.webp";
 import imgLashlift from "@/assets/services/lashlift.webp";
+import avatarSandra from "@/assets/avatar-sandra.webp";
 import imgCejas from "@/assets/services/cejas.webp";
 
 type Screen = "quiz" | "disqualified" | "success";
@@ -734,7 +735,7 @@ const Step4Contact: React.FC<{
       <div style={{ textAlign: "center", marginTop: "20px" }}>
         <div style={{ display: "flex", justifyContent: "center", marginBottom: "8px" }}>
           <img
-            src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sandra"
+            src={avatarSandra}
             alt="Sandra M."
             style={{
               width: "40px",
