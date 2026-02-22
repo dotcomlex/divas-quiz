@@ -1,22 +1,31 @@
 
 
-## Make Landing Page More Compact — Fill the Empty Space
+## Improve Trust Signals & Add Reviews Title
 
-### Problem
-The landing page content (logo, headline, CTA, reviews) sits at the top of a `100dvh` container, leaving a large empty gap at the bottom on taller phones. The content only takes up about 60-70% of the screen.
+### Changes to `src/pages/Landing.tsx`
 
-### Solution
-Vertically center all content within the card so it sits in the middle of the screen instead of being pinned to the top. This eliminates the dead space at the bottom and makes the page feel balanced on any phone size.
+#### 1. Replace trust signals text with styled pill badges
+The current trust line (`+1,000 clientas · 5 estrellas Google · Garantizado`) is tiny 11px gray text that's barely visible. Replace it with three individual pill badges that are larger and more readable:
 
-### Technical Details
+- **"+1,000 clientas felices"** — light rose background (#FFF0F3), rose text (#C2185B), with a heart or sparkle icon
+- **"Satisfaccion garantizada"** — light green background (#F0FFF4), green text (#2E7D32), with a checkmark icon  
+- **"Atencion personalizada"** — light blue background (#F0F4FF), blue text (#1565C0), with a star icon
 
-**File: `src/pages/Landing.tsx`**
+Each badge: 13px font, 600 weight, rounded-full, padding 6px 14px, inline-flex with gap. No mention of Google per the request.
 
-1. **Change the inner card from top-aligned to vertically centered**: Add `justify-content: center` to the `.landing-card` flex container so content sits in the middle of the viewport rather than the top.
+#### 2. Add a reviews section title
+Before the review cards scroller, add a short heading like:
 
-2. **Tighten spacing slightly**: Reduce some of the top margins (e.g., headline `marginTop` from 18px to 14px, CTA `marginTop` from 20px to 16px) so the content block is more compact as a unit.
+> **"Lo que dicen nuestras clientas"**
 
-3. **Keep `overflowY: auto`** so on very short screens (older iPhones, landscape) it still scrolls if needed.
+Style: 15px, weight 700, color #1a1a1a, center-aligned, marginTop 16px, marginBottom 8px.
 
-No changes to copy, routing, images, colors, or any other page.
+#### 3. Spacing adjustments
+- Trust badges container: `marginTop: 12px`, flex-wrap with gap 8px, centered
+- Reviews title: `marginTop: 16px`
+- Reviews scroller: `marginTop: 8px` (reduced from 18px since the title now provides separation)
+
+### No changes to
+- Copy in headline, subheadline, CTA button, or promo badge
+- Routing, images, colors, fonts, or any other page
 
