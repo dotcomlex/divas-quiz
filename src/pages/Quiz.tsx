@@ -59,6 +59,19 @@ const Quiz: React.FC = () => {
   const handleSubmit = () => {
     if (!isFormValid) return;
     const service = SERVICES.find((s) => s.name === selectedService);
+
+    // Send to webhook (fire-and-forget)
+    fetch("https://services.leadconnectorhq.com/hooks/4cQKcpdWiqodiHPVS5wT/webhook-trigger/356f12b2-f8c0-4e49-960b-d07dfa15f4b9", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: name.trim(),
+        phone: phoneDigits,
+        service: selectedService,
+        price: service?.salePrice ?? "",
+      }),
+    }).catch(() => {});
+
     if (typeof window !== "undefined" && (window as any).fbq) {
       (window as any).fbq("track", "Lead", {
         content_name: selectedService,
