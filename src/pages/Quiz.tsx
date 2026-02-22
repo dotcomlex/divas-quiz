@@ -4,11 +4,11 @@ import ProgressBar from "@/components/ProgressBar";
 import ServiceTile from "@/components/ServiceTile";
 import FaqAccordion from "@/components/FaqAccordion";
 import logoSrc from "@/assets/logo.png";
-import imgHybrid from "@/assets/services/hybrid.png";
-import imgClasico from "@/assets/services/clasico.png";
-import imgVolumen from "@/assets/services/volumen.png";
-import imgMega from "@/assets/services/mega.png";
-import imgLashlift from "@/assets/services/lashlift.jpg";
+import imgHybrid from "@/assets/services/hybrid.webp";
+import imgClasico from "@/assets/services/clasico.webp";
+import imgVolumen from "@/assets/services/volumen.webp";
+import imgMega from "@/assets/services/mega.webp";
+import imgLashlift from "@/assets/services/lashlift.webp";
 import imgCejas from "@/assets/services/cejas.jpg";
 
 type Screen = "quiz" | "disqualified" | "success";
