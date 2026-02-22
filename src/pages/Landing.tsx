@@ -33,7 +33,7 @@ const Landing: React.FC = () => {
           }
         `}</style>
         <div
-          className="landing-card w-full flex flex-col items-center"
+          className="landing-card w-full flex flex-col items-center justify-center"
           style={{
             padding: "20px 12px 20px",
             height: "100dvh",
@@ -89,7 +89,7 @@ const Landing: React.FC = () => {
               fontWeight: 800,
               color: "#1a1a1a",
               textAlign: "center",
-              marginTop: "18px",
+              marginTop: "14px",
               lineHeight: 1.25,
               fontFamily: "Montserrat, sans-serif",
             }}
@@ -119,7 +119,7 @@ const Landing: React.FC = () => {
             whileTap={{ scale: 0.98 }}
             onClick={handleCTA}
             style={{
-              marginTop: "20px",
+              marginTop: "16px",
               width: "100%",
               height: "56px",
               background: "#c2185b",
