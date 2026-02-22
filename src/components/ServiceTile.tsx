@@ -114,9 +114,9 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
               left: "6px",
               background: "#f5c842",
               color: "#7a5c00",
-              fontSize: "9px",
+              fontSize: "10px",
               fontWeight: 700,
-              padding: "2px 7px",
+              padding: "3px 9px",
               borderRadius: "4px",
               lineHeight: 1.5,
               fontFamily: "Montserrat, sans-serif",
@@ -226,8 +226,8 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
             {originalPrice && (
               <p
                 style={{
-                  fontSize: "12px",
-                  color: "#999",
+                  fontSize: "13px",
+                  color: "#888",
                   textDecoration: "line-through",
                   margin: "0 0 1px",
                   fontFamily: "Montserrat, sans-serif",
@@ -264,24 +264,7 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
                 >
                   {badgeText}
                 </span>
-              ) : (
-                <span
-                  style={{
-                    fontSize: "10px",
-                    fontWeight: 700,
-                    color: "#7a5c00",
-                    background: "#fff8e1",
-                    border: "1px solid #ffe082",
-                    borderRadius: "4px",
-                    padding: "1px 5px",
-                    fontFamily: "Montserrat, sans-serif",
-                    letterSpacing: "0.02em",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  -10%
-                </span>
-              )}
+              ) : null}
             </div>
           </>
         )}

@@ -13,11 +13,11 @@ import imgCejas from "@/assets/services/cejas.webp";
 type Screen = "quiz" | "disqualified" | "success";
 
 const SERVICES = [
-  { emoji: "✨", name: "Set Híbrido", originalPrice: "$149.99", salePrice: "$134.99", isFavorite: true, isFlat: false, imageSrc: imgHybrid, imagePosition: "center 40%", description: "Natural con más volumen. El favorito de nuestras clientas.", highlightBorder: true },
-  { emoji: "🌸", name: "Set Clásico", originalPrice: "$99.99", salePrice: "$89.99", isFavorite: false, isFlat: false, imageSrc: imgClasico, imagePosition: "center 40%", description: "Natural y bonito. Un pelo a la vez.", badgeText: "Precio Especial", badgeType: "discount" as const },
-  { emoji: "💎", name: "Volumen", originalPrice: "$179.99", salePrice: "$161.99", isFavorite: false, isFlat: false, imageSrc: imgVolumen, imagePosition: "center 40%", description: "Más lleno y dramático. Ojos grandes y hermosos.", badgeText: "Precio Especial", badgeType: "discount" as const },
-  { emoji: "👑", name: "Mega Volumen", originalPrice: "$119.99", salePrice: "$107.99", isFavorite: false, isFlat: false, imageSrc: imgMega, imagePosition: "center 40%", description: "El look más llamativo. Para las que quieren brillar.", badgeText: "Precio Especial", badgeType: "discount" as const },
-  { emoji: "🌿", name: "Lash Lift", originalPrice: "$79.99", salePrice: "$71.99", isFavorite: false, isFlat: false, imageSrc: imgLashlift, imagePosition: "center 60%", description: "Riza tus pestañas naturales. Sin extensiones.", badgeText: "Precio Especial", badgeType: "discount" as const },
+  { emoji: "🌸", name: "Set Clásico", originalPrice: "$99.99", salePrice: "$89.99", isFavorite: false, isFlat: false, imageSrc: imgClasico, imagePosition: "center 40%", description: "Natural y bonito. Un pelo a la vez.", badgeText: "Incluye 10% desc.", badgeType: "discount" as const },
+  { emoji: "✨", name: "Set Híbrido", originalPrice: "$149.99", salePrice: "$134.99", isFavorite: true, isFlat: false, imageSrc: imgHybrid, imagePosition: "center 40%", description: "Natural con más volumen. El favorito de nuestras clientas.", highlightBorder: true, badgeText: "Incluye 10% desc.", badgeType: "discount" as const },
+  { emoji: "💎", name: "Volumen", originalPrice: "$179.99", salePrice: "$161.99", isFavorite: false, isFlat: false, imageSrc: imgVolumen, imagePosition: "center 40%", description: "Más lleno y dramático. Ojos grandes y hermosos.", badgeText: "Incluye 10% desc.", badgeType: "discount" as const },
+  { emoji: "👑", name: "Mega Volumen", originalPrice: "$119.99", salePrice: "$107.99", isFavorite: false, isFlat: false, imageSrc: imgMega, imagePosition: "center 40%", description: "El look más llamativo. Para las que quieren brillar.", badgeText: "Incluye 10% desc.", badgeType: "discount" as const },
+  { emoji: "🌿", name: "Lash Lift", originalPrice: "$79.99", salePrice: "$71.99", isFavorite: false, isFlat: false, imageSrc: imgLashlift, imagePosition: "center 60%", description: "Riza tus pestañas naturales. Sin extensiones.", badgeText: "Incluye 10% desc.", badgeType: "discount" as const },
   { emoji: "🍃", name: "Laminado de Cejas", originalPrice: undefined, salePrice: "$49.99", isFavorite: false, isFlat: true, imageSrc: imgCejas, imagePosition: "center 25%", description: "Cejas peinadas y definidas. Sin maquillaje.", badgeText: "Precio Fijo", badgeType: "flat" as const },
 ];
 
@@ -253,10 +253,10 @@ const Step1: React.FC<{
         lineHeight: 1.3,
       }}
     >
-      Elige tu Servicio — Ahorra el 10%
+      Elige tu Servicio
     </h2>
     <p style={{ fontSize: "15px", fontWeight: 400, color: "#555", marginBottom: "18px", fontFamily: "Montserrat, sans-serif" }}>
-      Precio especial de clienta nueva ya incluido 👇
+      Todos los precios ya incluyen tu 10% de descuento de clienta nueva 👇
     </p>
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
       {SERVICES.map((svc) => (
@@ -479,8 +479,8 @@ const Step3Confirm: React.FC<{
             {!service.isFlat && service.originalPrice && (
               <p
                 style={{
-                  fontSize: "14px",
-                  color: "#999",
+                  fontSize: "15px",
+                  color: "#888",
                   textDecoration: "line-through",
                   margin: "0 0 2px",
                   fontFamily: "Montserrat, sans-serif",
@@ -510,7 +510,7 @@ const Step3Confirm: React.FC<{
                   fontFamily: "Montserrat, sans-serif",
                 }}
               >
-                ✅ Ahorras 10%
+                ✅ 10% de descuento ya aplicado
               </p>
             )}
           </div>

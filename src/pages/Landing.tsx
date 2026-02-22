@@ -67,7 +67,7 @@ const Landing: React.FC = () => {
           {/* Promo badge */}
           <div
             style={{
-              marginTop: "10px",
+            marginTop: "14px",
               background: "#fff3cd",
               color: "#7a5c00",
               fontSize: "11px",
@@ -89,7 +89,7 @@ const Landing: React.FC = () => {
               fontWeight: 800,
               color: "#1a1a1a",
               textAlign: "center",
-              marginTop: "14px",
+              marginTop: "18px",
               lineHeight: 1.25,
               fontFamily: "Montserrat, sans-serif",
             }}
@@ -104,7 +104,7 @@ const Landing: React.FC = () => {
               fontSize: "14px",
               color: "#555555",
               textAlign: "center",
-              marginTop: "8px",
+              marginTop: "12px",
               lineHeight: 1.6,
               fontFamily: "Montserrat, sans-serif",
               fontWeight: 400,
@@ -119,7 +119,7 @@ const Landing: React.FC = () => {
             whileTap={{ scale: 0.98 }}
             onClick={handleCTA}
             style={{
-              marginTop: "16px",
+              marginTop: "20px",
               width: "100%",
               height: "56px",
               background: "#c2185b",
