@@ -2,6 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import logoSrc from "@/assets/logo.png";
+import avatarJessica from "@/assets/avatar-jessica.webp";
+import avatarLucia from "@/assets/avatar-lucia.webp";
+import avatarAna from "@/assets/avatar-ana.webp";
 
 const Landing: React.FC = () => {
   const navigate = useNavigate();
@@ -203,9 +206,9 @@ const Landing: React.FC = () => {
             className="[&::-webkit-scrollbar]:hidden"
           >
             {[
-              { quote: "¡Me encantaron mis pestañas! María es una artista. 100% recomendado.", name: "Sandra M." },
-              { quote: "Mis pestañas duran semanas. Ya no uso rímel. ¡Las amo!", name: "Lucía R." },
-              { quote: "El mejor servicio en Denver. Súper profesional y rápido.", name: "Ana G." },
+              { quote: "Llevo 3 meses yendo a Divas Beauty y mis pestañas siempre quedan perfectas. El equipo es súper profesional y te hacen sentir como en casa. Ya no uso rímel para nada.", name: "Jessica L.", avatar: avatarJessica },
+              { quote: "Mi amiga me recomendó Divas Beauty y desde la primera vez quedé encantada. Las pestañas duran semanas y se ven súper naturales. 100% recomendado.", name: "Lucía R.", avatar: avatarLucia },
+              { quote: "El mejor lugar de pestañas en Denver. En Divas Beauty siempre me atienden rápido y el resultado es increíble. Todas mis amigas ya van ahí.", name: "Ana G.", avatar: avatarAna },
             ].map((r, i) => (
               <div
                 key={i}
@@ -232,17 +235,26 @@ const Landing: React.FC = () => {
                 >
                   "{r.quote}"
                 </p>
-                <p
-                  style={{
-                    margin: 0,
-                    fontSize: "10px",
-                    fontWeight: 600,
-                    color: "#999",
-                    fontFamily: "Montserrat, sans-serif",
-                  }}
-                >
-                  — {r.name}
-                </p>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px", marginTop: "4px" }}>
+                  <img
+                    src={r.avatar}
+                    alt={r.name}
+                    width={28}
+                    height={28}
+                    style={{ width: "28px", height: "28px", borderRadius: "50%", objectFit: "cover" }}
+                  />
+                  <p
+                    style={{
+                      margin: 0,
+                      fontSize: "10px",
+                      fontWeight: 600,
+                      color: "#999",
+                      fontFamily: "Montserrat, sans-serif",
+                    }}
+                  >
+                    — {r.name}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
