@@ -1,17 +1,16 @@
 
 
-## Restyle "No sé cuál elegir" as a Clear Button
+## Make "No sé cuál elegir" a Prominent, Clickable Button
 
-**File: `src/pages/Quiz.tsx`** (Step1 component)
+The current dark charcoal (`#2d2d2d`) blends into the bottom of the page and looks like a footer element. The fix is to use the brand's primary pink/magenta (`#c2185b`) as the background -- the same color used for the submit button. This makes it unmistakably a clickable button that matches the rest of the UI.
 
-Replace the current dashed-border pink card with a solid, clearly clickable button:
+### Changes
 
-- **Background**: Warm neutral tone like `#2d2d2d` (dark charcoal) or `#5c4033` (warm brown) so it contrasts against the pink/cream page instead of blending in
-- **Text**: White, bold, single line -- "No sé cuál elegir"
-- **Subtitle**: Light gray/white subtitle below -- "Te ayudamos a escoger el mejor estilo →"
-- **Shape**: Full-width rounded button (`border-radius: 14px`), solid background, no dashed border
-- **Height**: ~56px to match the submit button feel
-- Same click behavior (calls `onSelect("No sé cuál elegir")`)
+**File: `src/pages/Quiz.tsx`** (Step1 component, the "No sé cuál elegir" button)
 
-This makes it unmistakably a button and the dark color creates strong contrast against the light pink page.
+- **Background**: Change from `#2d2d2d` to `#c2185b` (the brand pink already used for the submit button)
+- **Add shadow**: `box-shadow: 0 4px 16px rgba(194,24,91,0.25)` to give it depth and make it pop off the page
+- **Keep everything else the same**: white text, 56px height, 14px border-radius, same click behavior
+
+This reuses the brand's action color so it reads as a primary button, not a passive footer.
 
