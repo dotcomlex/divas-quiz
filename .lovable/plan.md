@@ -1,43 +1,51 @@
 
 
-## Step 2 & Step 3 Copy and Layout Updates
+## Simplify Funnel: 4 Steps to 2 Steps
 
-### 1. Step 2 -- Address Buttons: Rewrite Button Text
+### The Problem
+$100 spent on Facebook ads with zero leads. Current funnel has too many steps before capturing contact info. Every extra screen is a drop-off point.
 
-**Current buttons (lines 358-396):**
-- YES: "Si, puedo ir" / "Tengo como llegar"
-- NO: "Me queda muy lejos" / "No podria llegar"
+### Current Flow (4 steps + landing)
+Landing page -> Pick service -> Address check -> Service confirmation -> Contact form -> Success
 
-**New copy:**
-- YES button: **"Si, puedo ir"** (keep) / sub: **"Yo puedo llegar a este local sin problema"**
-- NO button: **"No, me queda lejos"** (keep bold) / sub: **"Esta muy lejos para mi y no podre llegar a la cita"**
+### New Flow (2 steps, no landing)
+Pick service -> Contact form -> Success
 
-### 2. Step 2 -- Bottom Warning: Make It More Dominant
+### What Changes
 
-**Current (line 399):** Small 13px italic gray text.
+**1. Remove Landing Page**
+- Update `src/App.tsx`: Change the `/` route to render `Quiz` directly (lazy-loaded) instead of `Landing`
+- Remove the `Landing` import
+- Users from Facebook ads land straight on the service picker -- zero wasted clicks
 
-**New:** Bigger, bolder, more visible warning:
-- Background: `#FFF3E0` (warm orange tint) with `#FF9800` left border (4px)
-- Font size: `14px`, weight `600`, color `#BF360C` (dark orange-red)
-- Not italic -- straight, serious tone
-- Icon: warning emoji
-- Copy: **"⚠️ Por favor, solo continua si de verdad puedes llegar. Queremos respetar tu tiempo y el nuestro, y evitar citas perdidas."**
+**2. Remove Step 2 (Address Confirmation)**
+- Delete the entire address qualification step from `src/pages/Quiz.tsx`
+- Remove the "disqualified" screen since there's no longer a disqualification path
+- The Thornton address can be mentioned on the success screen instead ("Tu cita sera en nuestro local en Thornton...")
 
-### 3. Step 3 -- Add Reassurance Message Under the Service Box
+**3. Remove Step 3 (Service Confirmation)**
+- Delete the service summary/confirmation step
+- After picking a service, go straight to the contact form
 
-After the service summary box and before the "Continuar" button (around line 517), add a paragraph:
+**4. Update Step Numbering**
+- Old Step 1 (services) becomes Step 1
+- Old Step 4 (contact form) becomes Step 2
+- Update `ProgressBar` to show 2 total steps instead of 4
+- Update `goBack` logic accordingly
 
-- Font: 13px, color `#666`, `Montserrat`
-- Copy: **"Confirma que este es el servicio que quieres para contactarte y agendar. No pagas nada ahora — el pago es despues de tu servicio."**
+**5. Update handleServiceSelect**
+- After selecting a service, go to step 2 (contact form) instead of step 2 (address)
 
-This tells them: (a) confirm this is the right service, (b) no upfront payment, pay after service is done.
+**6. Success Screen: Add Address Info**
+- Move the Thornton address mention to the success screen so they know where to go after booking, without it being a blocker before they submit their info
 
-### Technical Summary
+### Files Modified
+- `src/App.tsx` -- route change (/ serves Quiz)
+- `src/pages/Quiz.tsx` -- remove steps 2 and 3, renumber, update progress bar
+- `src/components/ProgressBar.tsx` -- may need update if total steps is hardcoded
 
-**File:** `src/pages/Quiz.tsx`
-- Lines 363-364: Update YES button sub-text
-- Lines 392-394: Update NO button sub-text
-- Lines 399-401: Replace small italic warning with a bold warning box
-- Lines 516-517: Insert reassurance paragraph before the CTA button
-
-No new files, no dependencies, no structural changes. All copy in Mexican Spanish "tu" form.
+### Why This Works
+- Facebook ad already sold them -- no need for a landing page pitch
+- Qualify location AFTER you have their phone number, not before
+- Every removed screen = fewer drop-offs
+- Target: service pick (1 tap) then name + phone (type + submit) = lead captured in under 30 seconds
