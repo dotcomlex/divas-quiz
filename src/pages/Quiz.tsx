@@ -310,7 +310,8 @@ const Step4Contact: React.FC<{
           style={{
             width: "100%",
             height: "52px",
-            border: nameFocused ? "2px solid #c2185b" : "1px solid #E0E0E0",
+            border: nameFocused ? "2px solid #c2185b" : "1px solid #e0c0cc",
+            boxShadow: "0 2px 8px rgba(194,24,91,0.08)",
             borderRadius: "12px",
             fontSize: "16px",
             fontFamily: "Montserrat, sans-serif",
@@ -354,7 +355,8 @@ const Step4Contact: React.FC<{
             style={{
               width: "100%",
               height: "52px",
-              border: phoneFocused ? "2px solid #c2185b" : "1px solid #E0E0E0",
+              border: phoneFocused ? "2px solid #c2185b" : "1px solid #e0c0cc",
+              boxShadow: "0 2px 8px rgba(194,24,91,0.08)",
               borderRadius: "12px",
               fontSize: "16px",
               fontFamily: "Montserrat, sans-serif",
