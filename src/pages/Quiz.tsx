@@ -191,10 +191,10 @@ const Step1: React.FC<{
         lineHeight: 1.3,
       }}
     >
-      Elige tu Servicio
+      🔥 Oferta Solo Este Mes
     </h2>
     <p style={{ fontSize: "15px", fontWeight: 400, color: "#555", marginBottom: "18px", fontFamily: "Montserrat, sans-serif" }}>
-      Todos los precios ya incluyen tu 10% de descuento solo por este mes 👇
+      10% de descuento en todos los servicios. Elige el tuyo y te contactamos hoy 👇
     </p>
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
       {SERVICES.map((svc, i) => (
