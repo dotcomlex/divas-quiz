@@ -448,9 +448,11 @@ const Step4Contact: React.FC<{
             fontStyle: "normal",
           }}
         >
-          — Sandra M., Thornton
+        — Sandra M., Thornton
         </p>
       </div>
+
+      <FaqAccordion />
     </div>
   );
 });
@@ -525,9 +527,6 @@ const SuccessScreen: React.FC<{ firstName: string; selectedService: string }> = 
         📍 Federal Heights, CO — 2121 W 84th Ave
       </p>
 
-      <div style={{ width: "100%", textAlign: "left" }}>
-        <FaqAccordion />
-      </div>
     </div>
   );
 });
