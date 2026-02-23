@@ -228,8 +228,8 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
           </>
         ) : (
           (() => {
-            const savings = originalPrice
-              ? (parseFloat(originalPrice.replace("$", "")) - parseFloat(salePrice.replace("$", ""))).toFixed(2)
+            const savingsPercent = originalPrice
+              ? Math.round((parseFloat(originalPrice.replace("$", "")) - parseFloat(salePrice.replace("$", ""))) / parseFloat(originalPrice.replace("$", "")) * 100)
               : null;
             return (
               <>
@@ -257,7 +257,7 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
                 >
                   {salePrice}
                 </p>
-                {savings && parseFloat(savings) > 0 && (
+                {savingsPercent && savingsPercent > 0 && (
                   <p
                     style={{
                       fontSize: "12px",
@@ -267,7 +267,7 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
                       fontFamily: "Montserrat, sans-serif",
                     }}
                   >
-                    🏷️ Ahorras ${savings}
+                    🏷️ Ahorras {savingsPercent}%
                   </p>
                 )}
               </>
