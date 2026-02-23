@@ -19,7 +19,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ step }) => {
 
   return (
     <div className="flex w-full gap-[6px]" style={{ height: "6px" }}>
-      {[1, 2, 3, 4].map((seg) => {
+      {[1, 2].map((seg) => {
         const isFilled = seg <= step;
         const isEndowed = seg === 1 && step === 1;
 
