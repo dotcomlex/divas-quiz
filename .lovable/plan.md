@@ -1,24 +1,17 @@
 
 
-## Add "No sé cuál elegir" Option to Service Selection
+## Restyle "No sé cuál elegir" as a Clear Button
 
-### What
+**File: `src/pages/Quiz.tsx`** (Step1 component)
 
-Add a friendly, visible call-to-action at the bottom of the service grid (Step 1) for clients who are unsure which service to pick. When tapped, it skips service selection and goes straight to the contact form so the team can help them choose.
+Replace the current dashed-border pink card with a solid, clearly clickable button:
 
-### Design
+- **Background**: Warm neutral tone like `#2d2d2d` (dark charcoal) or `#5c4033` (warm brown) so it contrasts against the pink/cream page instead of blending in
+- **Text**: White, bold, single line -- "No sé cuál elegir"
+- **Subtitle**: Light gray/white subtitle below -- "Te ayudamos a escoger el mejor estilo →"
+- **Shape**: Full-width rounded button (`border-radius: 14px`), solid background, no dashed border
+- **Height**: ~56px to match the submit button feel
+- Same click behavior (calls `onSelect("No sé cuál elegir")`)
 
-- Placed below the 6 service tiles
-- Styled as a soft, rounded pill/card with a warm background (light rose or similar) so it stands out but doesn't compete with the service tiles
-- Text like: "¿No sabes cuál elegir? Nosotras te ayudamos a escoger el mejor estilo para ti"
-- A subtle arrow or tap indicator
-- When clicked, sets selectedService to something like "No sé cuál elegir" and advances to Step 2
-
-### File Changed
-
-**`src/pages/Quiz.tsx`**
-
-- In the `Step1` component, add a clickable card/button below the service grid
-- When clicked, call `onSelect("No sé cuál elegir")` which will set the service name and advance to the contact form
-- The webhook submission will send "No sé cuál elegir" as the service name so the team knows to assist
+This makes it unmistakably a button and the dark color creates strong contrast against the light pink page.
 
