@@ -15,7 +15,7 @@ const FAQ_ITEMS: FaqItem[] = [
   {
     question: "¿Cómo llego al studio?",
     answer:
-      "Estamos en 2121 W 84th Ave, Thornton, CO 80260. Hay estacionamiento disponible frente al local.",
+      "Estamos en 2121 W 84th Ave, Federal Heights, CO 80260. Hay estacionamiento disponible frente al local.",
   },
   {
     question: "¿Cuánto duran las extensiones?",
