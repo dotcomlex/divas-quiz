@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import ProgressBar from "@/components/ProgressBar";
 import ServiceTile from "@/components/ServiceTile";
 import logoSrc from "@/assets/logo.png";
+import FaqAccordion from "@/components/FaqAccordion";
 import imgHybrid from "@/assets/services/hybrid.webp";
 import imgClasico from "@/assets/services/clasico.webp";
 import imgVolumen from "@/assets/services/volumen.webp";
@@ -466,8 +467,8 @@ const SuccessScreen: React.FC<{ firstName: string; selectedService: string }> = 
 
   return (
     <div
-      className="flex flex-col items-center justify-center text-center"
-      style={{ flex: 1, padding: "60px 28px", overflowY: "auto", WebkitOverflowScrolling: "touch" }}
+      className="flex flex-col items-center text-center"
+      style={{ flex: 1, padding: "32px 24px", overflowY: "auto", WebkitOverflowScrolling: "touch" }}
     >
       <span style={{ fontSize: "48px", display: "block", marginBottom: "16px" }}>🎉</span>
       <h2
@@ -494,7 +495,6 @@ const SuccessScreen: React.FC<{ firstName: string; selectedService: string }> = 
         Te vamos a escribir muy pronto para agendar tu cita 💛 Revisa tus mensajes.
       </p>
 
-      {/* Service pill badge */}
       {service && (
         <span
           style={{
@@ -514,7 +514,6 @@ const SuccessScreen: React.FC<{ firstName: string; selectedService: string }> = 
         </span>
       )}
 
-      {/* Location */}
       <p
         style={{
           fontSize: "14px",
@@ -523,8 +522,12 @@ const SuccessScreen: React.FC<{ firstName: string; selectedService: string }> = 
           fontFamily: "Montserrat, sans-serif",
         }}
       >
-        📍 Thornton, CO — 2121 W 84th Ave
+        📍 Federal Heights, CO — 2121 W 84th Ave
       </p>
+
+      <div style={{ width: "100%", textAlign: "left" }}>
+        <FaqAccordion />
+      </div>
     </div>
   );
 });
