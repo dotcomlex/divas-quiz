@@ -1,12 +1,22 @@
 
 
-## Remove Testimonial/Review from Contact Form
+## Update FAQ Questions to Handle Common Objections
 
-Remove the Sandra M. review section (avatar, stars, quote, and name) from the `Step4Contact` component in `src/pages/Quiz.tsx`, keeping only the FAQ accordion below the submit button.
+Replace the current FAQ items in `src/components/FaqAccordion.tsx` with questions that address common objections and concerns potential clients have before booking.
 
-### Change
+### Updated Questions
 
-**File: `src/pages/Quiz.tsx`**
+1. **"¿Duelen las extensiones de pestañas?"** -- No, el proceso es relajante. Muchas clientas se quedan dormidas durante la cita.
 
-Delete the entire testimonial block (avatar image, stars, quote text, and "Sandra M., Thornton" name) from `Step4Contact`, leaving `<FaqAccordion />` directly after the submit button.
+2. **"¿Dañan mis pestañas naturales?"** -- No, cuando se aplican correctamente por una profesional, no dañan tus pestañas. Usamos productos de alta calidad y técnicas seguras.
+
+3. **"¿Cuánto duran las extensiones?"** -- Con el cuidado adecuado, entre 3 y 4 semanas. Recomendamos relleno cada 2-3 semanas para mantenerlas perfectas.
+
+4. **"¿Cómo llego al studio?"** -- Estamos en 2121 W 84th Ave, Federal Heights, CO 80260. Hay estacionamiento disponible frente al local.
+
+5. **"¿Se ven naturales?"** -- Totalmente. Personalizamos el largo, curvatura y volumen según la forma de tus ojos para un look que te favorezca.
+
+### File Changed
+
+**`src/components/FaqAccordion.tsx`** -- Replace the `FAQ_ITEMS` array with the new objection-handling questions above.
 
