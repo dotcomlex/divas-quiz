@@ -1,12 +1,16 @@
 
 
-## Fix Set Hibrido Image Position
+## Remove FAVORITA Badge and Fix Hybrid Image Position
 
-The image for Set Hibrido is positioned too high at `center 30%`, making the eye barely visible. Need to move it down so the eye and lashes are properly centered in the frame.
+### Changes
 
-### Change
+**1. Remove FAVORITA badge (`src/pages/Quiz.tsx`, line 18)**
+- Set `isFavorite: false` on the Set Hibrido service entry
+- This removes the gold "FAVORITA" badge from the card entirely
 
-**File: `src/pages/Quiz.tsx`, line 18**
+**2. Move Hybrid image up (`src/pages/Quiz.tsx`, line 18)**
+- Change `imagePosition` from `"center 40%"` to `"center 35%"`
+- At 40%, the bottom of the eye gets hidden behind the white gradient fade. Moving to 35% shifts the image up so the full eye and lash line are visible above the gradient overlay.
 
-Update `imagePosition` for Set Hibrido from `"center 30%"` to `"center 40%"`. The previous adjustment overcompensated — 40% will center the eye nicely in the 110px frame while keeping it above the gradient fade.
+Both changes are on line 18 of `src/pages/Quiz.tsx` in the SERVICES array -- a single line edit.
 
