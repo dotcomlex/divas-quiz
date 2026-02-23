@@ -1,16 +1,12 @@
 
 
-## Remove FAVORITA Badge and Fix Hybrid Image Position
+## Move Set Hibrido Image Up Further
 
-### Changes
+The eye is still partially hidden behind the gradient. Since this is your most popular service, it needs to look perfect.
 
-**1. Remove FAVORITA badge (`src/pages/Quiz.tsx`, line 18)**
-- Set `isFavorite: false` on the Set Hibrido service entry
-- This removes the gold "FAVORITA" badge from the card entirely
+### Change
 
-**2. Move Hybrid image up (`src/pages/Quiz.tsx`, line 18)**
-- Change `imagePosition` from `"center 40%"` to `"center 35%"`
-- At 40%, the bottom of the eye gets hidden behind the white gradient fade. Moving to 35% shifts the image up so the full eye and lash line are visible above the gradient overlay.
+**File: `src/pages/Quiz.tsx`, line 18**
 
-Both changes are on line 18 of `src/pages/Quiz.tsx` in the SERVICES array -- a single line edit.
+Update `imagePosition` for Set Hibrido from `"center 35%"` to `"center 25%"`. This is a more aggressive shift upward to ensure the full eye and lash line sit well above the gradient fade area. Going from 35% to 25% should give enough clearance.
 
