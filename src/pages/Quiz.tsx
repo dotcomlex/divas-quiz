@@ -186,16 +186,26 @@ const Step1: React.FC<{
         fontSize: "26px",
         fontWeight: 800,
         color: "#1a1a1a",
-        marginBottom: "6px",
+        marginBottom: "10px",
         fontFamily: "Montserrat, sans-serif",
         lineHeight: 1.3,
       }}
     >
-      🔥 Oferta Solo Este Mes
+      Elige Tu Servicio ✨
     </h2>
-    <p style={{ fontSize: "15px", fontWeight: 400, color: "#555", marginBottom: "18px", fontFamily: "Montserrat, sans-serif" }}>
-      10% de descuento en todos los servicios. Elige el tuyo y te contactamos hoy 👇
-    </p>
+    <div
+      style={{
+        background: "hsl(340, 92%, 95%)",
+        borderRadius: "10px",
+        padding: "8px 14px",
+        marginBottom: "14px",
+        textAlign: "center",
+      }}
+    >
+      <p style={{ fontSize: "13px", fontWeight: 600, color: "hsl(336, 78%, 43%)", margin: 0, fontFamily: "Montserrat, sans-serif" }}>
+        🎉 10% de descuento este mes en todos los servicios
+      </p>
+    </div>
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
       {SERVICES.map((svc, i) => (
         <ServiceTile

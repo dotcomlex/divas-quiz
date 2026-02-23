@@ -54,10 +54,10 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
         border: `${borderWidth} solid ${borderColor}`,
         borderRadius: "12px",
         overflow: "hidden",
-        background: isSelected ? "#FFF0F5" : "white",
+        background: isSelected ? "#FFFBFC" : "white",
         transition: "border-color 150ms ease, box-shadow 150ms ease, background 150ms ease",
         boxShadow: isSelected
-          ? "0 2px 12px rgba(194,24,91,0.18)"
+          ? "inset 0 1px 6px rgba(194,24,91,0.10), 0 1px 4px rgba(0,0,0,0.04)"
           : "0 1px 4px rgba(0,0,0,0.06)",
       }}
     >
@@ -65,7 +65,7 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
       <div
         style={{
           position: "relative",
-          height: "120px",
+          height: "110px",
           borderRadius: "10px 10px 0 0",
           overflow: "hidden",
           flexShrink: 0,
@@ -99,6 +99,19 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
           </div>
         )}
 
+        {/* Bottom gradient fade */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: "30px",
+            background: "linear-gradient(to bottom, transparent, white)",
+            pointerEvents: "none",
+          }}
+        />
+
         {/* Selected tint overlay */}
         {isSelected && (
           <div
@@ -117,15 +130,16 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
               position: "absolute",
               top: "6px",
               left: "6px",
-              background: "#f5c842",
-              color: "#7a5c00",
-              fontSize: "10px",
+              background: "linear-gradient(135deg, #f5c842, #e6b830)",
+              color: "white",
+              fontSize: "9px",
               fontWeight: 700,
-              padding: "3px 9px",
-              borderRadius: "4px",
+              padding: "3px 8px",
+              borderRadius: "99px",
               lineHeight: 1.5,
               fontFamily: "Montserrat, sans-serif",
-              letterSpacing: "0.04em",
+              letterSpacing: "0.05em",
+              textShadow: "0 1px 2px rgba(0,0,0,0.15)",
             }}
           >
             ⭐ FAVORITA
@@ -161,7 +175,7 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
       <div
         style={{
           padding: "9px 10px 11px",
-          background: isSelected ? "#FFF0F5" : "white",
+          background: isSelected ? "#FFFBFC" : "white",
           borderRadius: "0 0 10px 10px",
         }}
       >
@@ -233,42 +247,45 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
               : null;
             return (
               <>
-                {originalPrice && (
-                  <p
+                <div style={{ display: "flex", alignItems: "baseline", gap: "5px", margin: "0 0 3px" }}>
+                  {originalPrice && (
+                    <span
+                      style={{
+                        fontSize: "12px",
+                        color: "#aa7777",
+                        textDecoration: "line-through",
+                        fontFamily: "Montserrat, sans-serif",
+                      }}
+                    >
+                      {originalPrice}
+                    </span>
+                  )}
+                  <span
                     style={{
-                      fontSize: "14px",
-                      color: "#aa7777",
-                      textDecoration: "line-through",
-                      margin: "0 0 1px",
+                      fontSize: "17px",
+                      fontWeight: 700,
+                      color: "hsl(336, 78%, 43%)",
                       fontFamily: "Montserrat, sans-serif",
                     }}
                   >
-                    {originalPrice}
-                  </p>
-                )}
-                <p
-                  style={{
-                    fontSize: "17px",
-                    fontWeight: 700,
-                    color: "#c2185b",
-                    margin: "0 0 2px",
-                    fontFamily: "Montserrat, sans-serif",
-                  }}
-                >
-                  {salePrice}
-                </p>
+                    {salePrice}
+                  </span>
+                </div>
                 {savingsPercent && savingsPercent > 0 && (
-                  <p
+                  <span
                     style={{
-                      fontSize: "12px",
+                      display: "inline-block",
+                      fontSize: "10px",
                       fontWeight: 700,
                       color: "#2e7d32",
-                      margin: 0,
+                      background: "#e8f5e9",
+                      borderRadius: "99px",
+                      padding: "2px 8px",
                       fontFamily: "Montserrat, sans-serif",
                     }}
                   >
-                    🏷️ Ahorras {savingsPercent}%
-                  </p>
+                    Ahorras {savingsPercent}%
+                  </span>
                 )}
               </>
             );
