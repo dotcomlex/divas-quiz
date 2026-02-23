@@ -8,6 +8,11 @@ interface FaqItem {
 
 const FAQ_ITEMS: FaqItem[] = [
   {
+    question: "¿Cómo llego al studio?",
+    answer:
+      "Estamos en 2121 W 84th Ave, Federal Heights, CO 80260. Hay estacionamiento disponible frente al local.",
+  },
+  {
     question: "¿Duelen las extensiones de pestañas?",
     answer:
       "No, el proceso es relajante. Muchas clientas se quedan dormidas durante la cita.",
@@ -26,11 +31,6 @@ const FAQ_ITEMS: FaqItem[] = [
     question: "¿Se ven naturales?",
     answer:
       "Totalmente. Personalizamos el largo, curvatura y volumen según la forma de tus ojos para un look que te favorezca.",
-  },
-  {
-    question: "¿Cómo llego al studio?",
-    answer:
-      "Estamos en 2121 W 84th Ave, Federal Heights, CO 80260. Hay estacionamiento disponible frente al local.",
   },
 ];
 
