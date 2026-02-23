@@ -230,6 +230,30 @@ const Step1: React.FC<{
         />
       ))}
     </div>
+
+    {/* "No sé cuál elegir" CTA */}
+    <button
+      onClick={() => onSelect("No sé cuál elegir")}
+      style={{
+        width: "100%",
+        marginTop: "14px",
+        padding: "14px 18px",
+        background: "hsl(340, 60%, 96%)",
+        border: "1.5px dashed hsl(340, 50%, 80%)",
+        borderRadius: "14px",
+        cursor: "pointer",
+        textAlign: "center",
+        fontFamily: "Montserrat, sans-serif",
+        transition: "background 150ms ease",
+      }}
+    >
+      <p style={{ fontSize: "14px", fontWeight: 600, color: "hsl(336, 78%, 43%)", margin: 0, lineHeight: 1.4 }}>
+        ¿No sabes cuál elegir?
+      </p>
+      <p style={{ fontSize: "12.5px", fontWeight: 400, color: "#888", margin: "4px 0 0", lineHeight: 1.4 }}>
+        Nosotras te ayudamos a escoger el mejor estilo para ti →
+      </p>
+    </button>
   </div>
 ));
 
