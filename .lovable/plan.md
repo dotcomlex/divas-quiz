@@ -1,16 +1,12 @@
 
 
-## Move FAQ to Contact Form Page (Step 2)
+## Remove Testimonial/Review from Contact Form
 
-The FAQ section was added to the thank-you/success screen, but you want it on the contact form page shown in the screenshot (Step 2).
+Remove the Sandra M. review section (avatar, stars, quote, and name) from the `Step4Contact` component in `src/pages/Quiz.tsx`, keeping only the FAQ accordion below the submit button.
 
-### Changes
+### Change
 
 **File: `src/pages/Quiz.tsx`**
 
-1. **Remove FaqAccordion from SuccessScreen** - Delete the `<div>` wrapping `<FaqAccordion />` from the success screen component.
-
-2. **Add FaqAccordion to Step4Contact** - Place `<FaqAccordion />` below the testimonial section (after the "Sandra M." quote), so it appears beneath the form and social proof on the contact step.
-
-No new files or dependencies needed -- just moving the component from one screen to another.
+Delete the entire testimonial block (avatar image, stars, quote text, and "Sandra M., Thornton" name) from `Step4Contact`, leaving `<FaqAccordion />` directly after the submit button.
 
