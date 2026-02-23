@@ -280,7 +280,7 @@ const Step4Contact: React.FC<{
         ¡Ya casi! ¿Cómo te contactamos?
       </h2>
       <p style={{ fontSize: "15px", color: "#555", marginBottom: "20px", fontFamily: "Montserrat, sans-serif", lineHeight: 1.5 }}>
-        Déjanos tu nombre y celular para agendar tu cita.
+        Déjanos tu nombre y número de teléfono para contactarte y agendar tu cita con Divas Beauty.
       </p>
 
       {/* Name field */}
