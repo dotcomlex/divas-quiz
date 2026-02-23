@@ -23,14 +23,14 @@ const FAQ_ITEMS: FaqItem[] = [
       "Con el cuidado adecuado, entre 3 y 4 semanas. Recomendamos relleno cada 2-3 semanas para mantenerlas perfectas.",
   },
   {
-    question: "¿Cómo llego al studio?",
-    answer:
-      "Estamos en 2121 W 84th Ave, Federal Heights, CO 80260. Hay estacionamiento disponible frente al local.",
-  },
-  {
     question: "¿Se ven naturales?",
     answer:
       "Totalmente. Personalizamos el largo, curvatura y volumen según la forma de tus ojos para un look que te favorezca.",
+  },
+  {
+    question: "¿Cómo llego al studio?",
+    answer:
+      "Estamos en 2121 W 84th Ave, Federal Heights, CO 80260. Hay estacionamiento disponible frente al local.",
   },
 ];
 
@@ -41,26 +41,33 @@ const FaqAccordion: React.FC = () => {
     <div style={{ marginTop: "24px" }}>
       <p
         style={{
-          fontSize: "13px",
+          fontSize: "14px",
           fontWeight: 700,
           color: "#1a1a1a",
           marginBottom: "12px",
           fontFamily: "Montserrat, sans-serif",
         }}
       >
-        Preguntas frecuentes
+        ✨ Preguntas frecuentes
       </p>
-      <div style={{ border: "1px solid #f0f0f0", borderRadius: "10px", overflow: "hidden" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
         {FAQ_ITEMS.map((item, index) => {
           const isOpen = openIndex === index;
           return (
-            <div key={index} style={{ borderBottom: index < FAQ_ITEMS.length - 1 ? "1px solid #f0f0f0" : "none" }}>
-              {/* Question row */}
+            <div
+              key={index}
+              style={{
+                borderRadius: "14px",
+                background: isOpen ? "#fff0f5" : "#fff5f8",
+                borderLeft: isOpen ? "3px solid #c2185b" : "3px solid transparent",
+                transition: "background 200ms ease, border-color 200ms ease",
+              }}
+            >
               <button
                 onClick={() => setOpenIndex(isOpen ? null : index)}
                 className="w-full text-left"
                 style={{
-                  padding: "14px 16px",
+                  padding: "12px 16px",
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
@@ -74,9 +81,10 @@ const FaqAccordion: React.FC = () => {
                   style={{
                     fontSize: "13px",
                     fontWeight: 600,
-                    color: "#1a1a1a",
+                    color: isOpen ? "#c2185b" : "#1a1a1a",
                     lineHeight: 1.4,
                     paddingRight: "12px",
+                    transition: "color 200ms ease",
                   }}
                 >
                   {item.question}
@@ -87,7 +95,7 @@ const FaqAccordion: React.FC = () => {
                   style={{
                     fontSize: "18px",
                     fontWeight: 400,
-                    color: "#9e9e9e",
+                    color: isOpen ? "#c2185b" : "#9e9e9e",
                     flexShrink: 0,
                     lineHeight: 1,
                   }}
@@ -96,7 +104,6 @@ const FaqAccordion: React.FC = () => {
                 </motion.span>
               </button>
 
-              {/* Answer with height animation */}
               <AnimatePresence initial={false}>
                 {isOpen && (
                   <motion.div
@@ -112,7 +119,7 @@ const FaqAccordion: React.FC = () => {
                         fontSize: "13px",
                         color: "#757575",
                         lineHeight: 1.6,
-                        padding: "0 16px 14px",
+                        padding: "0 16px 12px",
                         margin: 0,
                         fontFamily: "Montserrat, sans-serif",
                       }}
