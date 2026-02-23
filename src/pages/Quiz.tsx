@@ -237,22 +237,27 @@ const Step1: React.FC<{
       style={{
         width: "100%",
         marginTop: "14px",
-        padding: "14px 18px",
-        background: "hsl(340, 60%, 96%)",
-        border: "1.5px dashed hsl(340, 50%, 80%)",
+        height: "56px",
+        background: "#2d2d2d",
+        border: "none",
         borderRadius: "14px",
         cursor: "pointer",
         textAlign: "center",
         fontFamily: "Montserrat, sans-serif",
         transition: "background 150ms ease",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "2px",
       }}
     >
-      <p style={{ fontSize: "14px", fontWeight: 600, color: "hsl(336, 78%, 43%)", margin: 0, lineHeight: 1.4 }}>
-        ¿No sabes cuál elegir?
-      </p>
-      <p style={{ fontSize: "12.5px", fontWeight: 400, color: "#888", margin: "4px 0 0", lineHeight: 1.4 }}>
-        Nosotras te ayudamos a escoger el mejor estilo para ti →
-      </p>
+      <span style={{ fontSize: "14px", fontWeight: 700, color: "#ffffff", lineHeight: 1.3 }}>
+        No sé cuál elegir
+      </span>
+      <span style={{ fontSize: "12px", fontWeight: 400, color: "rgba(255,255,255,0.7)", lineHeight: 1.3 }}>
+        Te ayudamos a escoger el mejor estilo →
+      </span>
     </button>
   </div>
 ));
