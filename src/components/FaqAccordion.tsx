@@ -8,9 +8,19 @@ interface FaqItem {
 
 const FAQ_ITEMS: FaqItem[] = [
   {
-    question: "¿Cuánto dura la cita?",
+    question: "¿Duelen las extensiones de pestañas?",
     answer:
-      "Set Clásico y Lash Lift: aprox. 90 min a 2 hrs. Set de Volumen y Mega Volumen: 2–3 hrs. Laminado de Cejas: 60–90 min.",
+      "No, el proceso es relajante. Muchas clientas se quedan dormidas durante la cita.",
+  },
+  {
+    question: "¿Dañan mis pestañas naturales?",
+    answer:
+      "No, cuando se aplican correctamente por una profesional, no dañan tus pestañas. Usamos productos de alta calidad y técnicas seguras.",
+  },
+  {
+    question: "¿Cuánto duran las extensiones?",
+    answer:
+      "Con el cuidado adecuado, entre 3 y 4 semanas. Recomendamos relleno cada 2-3 semanas para mantenerlas perfectas.",
   },
   {
     question: "¿Cómo llego al studio?",
@@ -18,18 +28,9 @@ const FAQ_ITEMS: FaqItem[] = [
       "Estamos en 2121 W 84th Ave, Federal Heights, CO 80260. Hay estacionamiento disponible frente al local.",
   },
   {
-    question: "¿Cuánto duran las extensiones?",
+    question: "¿Se ven naturales?",
     answer:
-      "Con el cuidado adecuado, entre 3 y 4 semanas. Recomendamos relleno cada 2–3 semanas.",
-  },
-  {
-    question: "¿Hacen rellenos?",
-    answer: "¡Sí! Pregúntanos el precio al confirmar tu cita.",
-  },
-  {
-    question: "¿Puedo cambiar o cancelar?",
-    answer:
-      "Sí, con 24 horas de anticipación. Solo mándanos un mensaje y lo coordinamos.",
+      "Totalmente. Personalizamos el largo, curvatura y volumen según la forma de tus ojos para un look que te favorezca.",
   },
 ];
 
