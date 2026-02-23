@@ -11,6 +11,7 @@ import imgMega from "@/assets/services/mega.webp";
 import imgLashlift from "@/assets/services/lashlift.webp";
 import avatarSandra from "@/assets/avatar-sandra.webp";
 import imgCejas from "@/assets/services/cejas.webp";
+import SuccessScreen from "@/components/SuccessScreen";
 
 type Screen = "quiz" | "success";
 
@@ -87,10 +88,12 @@ const Quiz: React.FC = () => {
     if (step === 2) setStep(1);
   };
 
+  const selectedServiceData = SERVICES.find((s) => s.name === selectedService);
+
   if (screen === "success") {
     return (
       <PageWrapper>
-        <SuccessScreen firstName={firstName} selectedService={selectedService} />
+        <SuccessScreen firstName={firstName} selectedService={selectedService} service={selectedServiceData} />
       </PageWrapper>
     );
   }
@@ -443,80 +446,6 @@ const Step4Contact: React.FC<{
 
 
       <FaqAccordion />
-    </div>
-  );
-});
-
-/* ─── Success / Confirmation Screen ─── */
-const SuccessScreen: React.FC<{ firstName: string; selectedService: string }> = React.memo(({ firstName, selectedService }) => {
-  const service = SERVICES.find((s) => s.name === selectedService);
-
-  useEffect(() => {
-    if (typeof window !== "undefined" && (window as any).fbq) {
-      (window as any).fbq("track", "CompleteRegistration");
-    }
-  }, []);
-
-  return (
-    <div
-      className="flex flex-col items-center text-center"
-      style={{ flex: 1, padding: "32px 24px", overflowY: "auto", WebkitOverflowScrolling: "touch" }}
-    >
-      <span style={{ fontSize: "48px", display: "block", marginBottom: "16px" }}>🎉</span>
-      <h2
-        style={{
-          fontSize: "26px",
-          fontWeight: 800,
-          color: "#1a1a1a",
-          fontFamily: "Montserrat, sans-serif",
-          marginBottom: "12px",
-        }}
-      >
-        ¡Listo, {firstName}!
-      </h2>
-      <p
-        style={{
-          fontSize: "16px",
-          color: "#555",
-          fontFamily: "Montserrat, sans-serif",
-          lineHeight: 1.6,
-          marginBottom: "16px",
-          maxWidth: "320px",
-        }}
-      >
-        Te vamos a escribir muy pronto para agendar tu cita 💛 Revisa tus mensajes.
-      </p>
-
-      {service && (
-        <span
-          style={{
-            display: "inline-block",
-            background: "#FFF0F5",
-            border: "1px solid #F0C0D4",
-            borderRadius: "99px",
-            padding: "8px 18px",
-            fontSize: "14px",
-            fontWeight: 600,
-            color: "#c2185b",
-            fontFamily: "Montserrat, sans-serif",
-            marginBottom: "16px",
-          }}
-        >
-          {service.name} — {service.salePrice} (incluye 10% de descuento)
-        </span>
-      )}
-
-      <p
-        style={{
-          fontSize: "14px",
-          fontWeight: 500,
-          color: "#888",
-          fontFamily: "Montserrat, sans-serif",
-        }}
-      >
-        📍 Federal Heights, CO — 2121 W 84th Ave
-      </p>
-
     </div>
   );
 });
