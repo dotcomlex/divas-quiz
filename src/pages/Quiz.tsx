@@ -410,48 +410,6 @@ const Step4Contact: React.FC<{
       </button>
 
 
-      {/* Testimonial with avatar */}
-      <div style={{ textAlign: "center", marginTop: "14px" }}>
-        <div style={{ display: "flex", justifyContent: "center", marginBottom: "8px" }}>
-          <img
-            src={avatarSandra}
-            alt="Sandra M."
-            style={{
-              width: "40px",
-              height: "40px",
-              borderRadius: "50%",
-            }}
-          />
-        </div>
-        <p style={{ margin: "0 0 4px", fontSize: "13px", color: "#f5a623", lineHeight: 1 }}>
-          ⭐⭐⭐⭐⭐
-        </p>
-        <p
-          style={{
-            fontSize: "12px",
-            fontStyle: "italic",
-            color: "#555",
-            margin: "0 0 4px",
-            fontFamily: "Montserrat, sans-serif",
-            lineHeight: 1.6,
-          }}
-        >
-          "¡Divas Beauty es increíble! Las pestañas me duran semanas."
-        </p>
-        <p
-          style={{
-            fontSize: "13px",
-            fontWeight: 600,
-            color: "#888",
-            margin: 0,
-            fontFamily: "Montserrat, sans-serif",
-            fontStyle: "normal",
-          }}
-        >
-        — Sandra M., Thornton
-        </p>
-      </div>
-
       <FaqAccordion />
     </div>
   );
