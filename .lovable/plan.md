@@ -1,51 +1,61 @@
 
 
-## Simplify Funnel: 4 Steps to 2 Steps
+## Improve Service Cards to "Wow" with Discount Visibility
 
-### The Problem
-$100 spent on Facebook ads with zero leads. Current funnel has too many steps before capturing contact info. Every extra screen is a drop-off point.
+### Headline and Subheadline
 
-### Current Flow (4 steps + landing)
-Landing page -> Pick service -> Address check -> Service confirmation -> Contact form -> Success
+**Current:**
+- Headline: "Elige tu Servicio"
+- Sub: "Todos los precios ya incluyen tu 10% de descuento solo por este mes"
 
-### New Flow (2 steps, no landing)
-Pick service -> Contact form -> Success
+**New -- more urgent, emotional, discount-forward:**
+- Headline: "🔥 Oferta Solo Este Mes" (bigger, bolder, creates urgency)
+- Sub: "10% de descuento en todos los servicios. Elige el tuyo y te contactamos hoy 👇"
 
-### What Changes
+This leads with the deal, not the action. People scroll Facebook, see an ad, land here -- they need to immediately feel "this is a deal I can't miss."
 
-**1. Remove Landing Page**
-- Update `src/App.tsx`: Change the `/` route to render `Quiz` directly (lazy-loaded) instead of `Landing`
-- Remove the `Landing` import
-- Users from Facebook ads land straight on the service picker -- zero wasted clicks
+### Service Tile Pricing Redesign
 
-**2. Remove Step 2 (Address Confirmation)**
-- Delete the entire address qualification step from `src/pages/Quiz.tsx`
-- Remove the "disqualified" screen since there's no longer a disqualification path
-- The Thornton address can be mentioned on the success screen instead ("Tu cita sera en nuestro local en Thornton...")
+The current tiles show the original price small and gray (easy to miss), and the discount badge is a tiny pill. We need to make the savings impossible to ignore.
 
-**3. Remove Step 3 (Service Confirmation)**
-- Delete the service summary/confirmation step
-- After picking a service, go straight to the contact form
+**Changes to `ServiceTile.tsx` pricing section (non-flat services only):**
 
-**4. Update Step Numbering**
-- Old Step 1 (services) becomes Step 1
-- Old Step 4 (contact form) becomes Step 2
-- Update `ProgressBar` to show 2 total steps instead of 4
-- Update `goBack` logic accordingly
+1. **Original price**: Bump to `14px`, keep strikethrough, but use a slightly more visible red-gray (`#999` to `#aa7777`) so it reads as "was this much"
+2. **Sale price**: Increase to `17px`, keep bold rose color -- make it the hero number
+3. **Savings callout**: Replace the small "Incluye 10% desc." pill with a bold green savings line: **"Ahorras $X.XX"** in green (`#2e7d32`) with a small tag icon, positioned right below the sale price. This is the "wow" moment -- people see exactly how many dollars they save, not just a percentage.
+4. **Remove the badge pill** for discounted services -- the savings line replaces it and is more impactful
 
-**5. Update handleServiceSelect**
-- After selecting a service, go to step 2 (contact form) instead of step 2 (address)
+**Example for Set Hibrido:**
+```
+  $149.99  (strikethrough, visible)
+  $134.99  (big, bold, rose)
+  Ahorras $15.00  (green, bold)
+```
 
-**6. Success Screen: Add Address Info**
-- Move the Thornton address mention to the success screen so they know where to go after booking, without it being a blocker before they submit their info
+### Calculated Savings
 
-### Files Modified
-- `src/App.tsx` -- route change (/ serves Quiz)
-- `src/pages/Quiz.tsx` -- remove steps 2 and 3, renumber, update progress bar
-- `src/components/ProgressBar.tsx` -- may need update if total steps is hardcoded
+We add a `savings` field or compute it on the fly in `ServiceTile`:
+- Set Clasico: $99.99 - $89.99 = **$10.00**
+- Set Hibrido: $149.99 - $134.99 = **$15.00**
+- Volumen: $179.99 - $161.99 = **$18.00**
+- Mega Volumen: $119.99 - $107.99 = **$12.00**
+- Lash Lift: $79.99 - $71.99 = **$8.00**
+- Laminado de Cejas: no discount (flat price, stays as-is)
 
-### Why This Works
-- Facebook ad already sold them -- no need for a landing page pitch
-- Qualify location AFTER you have their phone number, not before
-- Every removed screen = fewer drop-offs
-- Target: service pick (1 tap) then name + phone (type + submit) = lead captured in under 30 seconds
+### Technical Changes
+
+**File: `src/components/ServiceTile.tsx`**
+- In the non-flat pricing block (lines 229-274):
+  - Compute savings from `originalPrice` and `salePrice` (parse the dollar values, subtract)
+  - Show original price at 14px with strikethrough
+  - Show sale price at 17px bold rose
+  - Show "Ahorras $X.XX" in green bold below
+  - Remove the `badgeText` pill for discount-type services
+- Keep the flat pricing section unchanged (Laminado de Cejas stays with "Precio Fijo" badge)
+
+**File: `src/pages/Quiz.tsx`**
+- Lines 184-198: Update headline to "Oferta Solo Este Mes" with fire emoji, update subheadline copy
+
+### No structural changes
+Same files, same components, same props. Just visual and copy tweaks to make the discount feel real and urgent.
+
