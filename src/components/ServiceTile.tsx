@@ -227,51 +227,52 @@ const ServiceTile: React.FC<ServiceTileProps> = ({
             )}
           </>
         ) : (
-          <>
-            {originalPrice && (
-              <p
-                style={{
-                  fontSize: "13px",
-                  color: "#888",
-                  textDecoration: "line-through",
-                  margin: "0 0 1px",
-                  fontFamily: "Montserrat, sans-serif",
-                }}
-              >
-                {originalPrice}
-              </p>
-            )}
-            <div style={{ display: "flex", alignItems: "center", gap: "5px", flexWrap: "wrap" }}>
-              <p
-                style={{
-                  fontSize: "15px",
-                  fontWeight: 700,
-                  color: "#c2185b",
-                  margin: 0,
-                  fontFamily: "Montserrat, sans-serif",
-                }}
-              >
-                {salePrice}
-              </p>
-              {badgeText ? (
-                <span
+          (() => {
+            const savings = originalPrice
+              ? (parseFloat(originalPrice.replace("$", "")) - parseFloat(salePrice.replace("$", ""))).toFixed(2)
+              : null;
+            return (
+              <>
+                {originalPrice && (
+                  <p
+                    style={{
+                      fontSize: "14px",
+                      color: "#aa7777",
+                      textDecoration: "line-through",
+                      margin: "0 0 1px",
+                      fontFamily: "Montserrat, sans-serif",
+                    }}
+                  >
+                    {originalPrice}
+                  </p>
+                )}
+                <p
                   style={{
-                    fontSize: "11px",
+                    fontSize: "17px",
                     fontWeight: 700,
-                    color: "#7a5c00",
-                    background: "#FFF3CD",
-                    border: "1px solid #f5c842",
-                    borderRadius: "99px",
-                    padding: "3px 8px",
+                    color: "#c2185b",
+                    margin: "0 0 2px",
                     fontFamily: "Montserrat, sans-serif",
-                    whiteSpace: "nowrap",
                   }}
                 >
-                  {badgeText}
-                </span>
-              ) : null}
-            </div>
-          </>
+                  {salePrice}
+                </p>
+                {savings && parseFloat(savings) > 0 && (
+                  <p
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: 700,
+                      color: "#2e7d32",
+                      margin: 0,
+                      fontFamily: "Montserrat, sans-serif",
+                    }}
+                  >
+                    🏷️ Ahorras ${savings}
+                  </p>
+                )}
+              </>
+            );
+          })()
         )}
       </div>
     </motion.div>
